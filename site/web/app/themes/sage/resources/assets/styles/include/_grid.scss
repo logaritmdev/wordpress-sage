@@ -1,0 +1,116 @@
+/**
+ * @function breakpoint-next
+ * @since 1.0.0
+ */
+ @function breakpoint-next($name, $breakpoints: $grid, $breakpoint-names: map-keys($breakpoints)) {
+	$n: index($breakpoint-names, $name);
+	@return if($n < length($breakpoint-names), nth($breakpoint-names, $n + 1), null);
+}
+
+/**
+ * @function breakpoint-min
+ * @since 1.0.0
+ */
+@function breakpoint-min($name, $breakpoints: $grid) {
+	$min: map-get($breakpoints, $name);
+	@return if($min != 0, $min, null);
+}
+
+/**
+ * @function breakpoint-max
+ * @since 1.0.0
+ */
+@function breakpoint-max($name, $breakpoints: $grid) {
+	$next: breakpoint-next($name, $breakpoints);
+	@return if($next, breakpoint-min($next, $breakpoints) - 1px, null);
+}
+
+/**
+ * @mixin media-breakpoint-up
+ * @since 1.0.0
+ */
+@mixin media-breakpoint-up($name, $breakpoints: $grid) {
+	$min: breakpoint-min($name, $breakpoints);
+	@if $min {
+		@media (min-width: $min) {
+			@content;
+		}
+	} @else {
+		@content;
+	}
+}
+
+/**
+ * @mixin media-breakpoint-down
+ * @since 1.0.0
+ */
+@mixin media-breakpoint-down($name, $breakpoints: $grid) {
+	$max: breakpoint-max($name, $breakpoints);
+	@if $max {
+		@media (max-width: $max) {
+			@content;
+		}
+	} @else {
+		@content;
+	}
+}
+
+/**
+ * @mixin media-breakpoint-between
+ * @since 1.0.0
+ */
+@mixin media-breakpoint-between($lower, $upper, $breakpoints: $grid) {
+	@include media-breakpoint-up($lower, $breakpoints) {
+		@include media-breakpoint-down($upper, $breakpoints) {
+			@content;
+		}
+	}
+}
+
+/**
+ * @mixin media-breakpoint-only
+ * @since 1.0.0
+ */
+@mixin media-breakpoint-only($name, $breakpoints: $grid) {
+	@include media-breakpoint-between($name, $name, $breakpoints) {
+		@content;
+	}
+}
+
+/**
+ * @mixin media-break-down
+ * @since 1.0.0
+ */
+@mixin media-break-down($args...) {
+
+	@if length($args) == 0 {
+		$args: $breakpoints;
+	} @else if (type-of(nth($args, 1)) == list) {
+		$args: nth($args, 1);
+	}
+
+	@each $bp in $args {
+		@include media-breakpoint-down($bp) {
+			@content ($bp);
+		}
+	}
+}
+
+/**
+ * @mixin media-break-down
+ * @since 1.0.0
+ */
+@mixin media-break-only($args...) {
+
+	@if length($args) == 0 {
+		$args: $breakpoints;
+	} @else if (type-of(nth($args, 1)) == list) {
+		$args: nth($args, 1);
+	}
+
+	@each $bp in $args {
+		@include media-breakpoint-only($bp) {
+			@content ($bp);
+		}
+	}
+}

@@ -1,0 +1,17 @@
+/* Create / Update Block Modal */
+
+.cortex-create-block-modal,
+.cortex-update-block-modal {
+	iframe {
+		height: 100%;
+		width: 100%;
+	}
+}
+
+.cortex-admin-blocks-page {
+	.wp-list-table {
+		.column-icon {
+			width: 20px;
+		}
+	}
+}

@@ -1,0 +1,6 @@
+/documents
+/site/dump.sql
+/site/web/app/cache
+/site/web/app/debug.log
+/site/web/app/themes/sage/vendor
+dist

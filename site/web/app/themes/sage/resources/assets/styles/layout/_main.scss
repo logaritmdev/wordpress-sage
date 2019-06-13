@@ -1,0 +1,320 @@
+//------------------------------------------------------------------------------
+// Container
+//------------------------------------------------------------------------------
+
+.container {
+
+	margin-left: auto;
+	margin-right: auto;
+	width: 1920px - 60px - get-block-spacing-h(xxxl) * 2;
+
+	@include media-break-down using ($bp) {
+		margin-left: scaled-margin-left($bp, 60px);
+		margin-right: scaled-margin-right($bp, 60px);
+	}
+
+
+}
+
+.container-inset {
+
+	margin-left: auto;
+	margin-right: auto;
+	width: 1920px - 60px - get-block-spacing-h(xxxl) * 4;
+
+	@include media-break-down using ($bp) {
+		margin-left: scaled-margin-left($bp, 90px);
+		margin-right: scaled-margin-right($bp, 90px);
+	}
+
+	@include media-breakpoint-down(xxl) {
+		width: auto;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Main Layout
+//------------------------------------------------------------------------------
+
+.main-layout {
+	.smooth-scrolling & {
+		overflow: hidden;
+		height: 100%;
+		width: 100%;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Main Layout Scroller
+//------------------------------------------------------------------------------
+
+.main-layout-scroller {
+
+	.smooth-scrolling & {
+		height: 100%;
+		width: 100%;
+	}
+
+	.scroll-content {
+
+		padding: 0;
+		padding-right: 15px;
+
+		/**
+		 * This pevents some visual glitches on chome while
+		 * scrolling.
+		 */
+
+		will-change: transform;
+	}
+
+	 .scrollbar-track {
+		border: none;
+		border-left: 1px solid rgba(200, 200, 200, 0.25);
+		background: #fafafa;
+		opacity: 1;
+		user-select: none;
+		width: 15px;
+		z-index: 10000;
+	}
+
+	 .scrollbar-track:hover {
+		opacity: 1;
+	}
+
+	 .scrollbar-thumb {
+		background: transparent;
+		width: 14px;
+	}
+
+	.scrollbar-thumb::after {
+		@include absolute(top 3px left 3px right 3px bottom 3px);
+		background: #c1c1c1;
+		border: none;
+		border-radius: 4px;
+		content: "";
+		display: block;
+		transition-property: background-color;
+		transition-duration: transition-duration(fast);
+		transition-timing-function: transition-equation(fast);
+	}
+
+	.scrollbar-thumb:hover::after {
+		background: #7d7d7d;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Main Layout Header
+//------------------------------------------------------------------------------
+
+.main-layout-header {
+
+	@include absolute(top 0 left 0 right 0);
+	z-index: 100;
+
+	.container {
+		@include relative;
+		@include flex-box;
+		@include flex-row(center, flex-start);
+		height: rem(120px);
+		transition-property: height;
+		transition-duration: transition-duration(fast);
+		transition-timing-function: transition-equation(fast);
+	}
+}
+
+.main-layout-header-logo {
+
+	@include relative;
+	@include flex-box;
+	@include flex-row(center, flex-start);
+	@include flex(none);
+
+	a {
+
+		@include absolute(top 0 left 0);
+		height: 100%;
+		width: 100%;
+
+		span {
+			visibility: hidden;
+		}
+	}
+}
+
+.main-layout-header-menu {
+
+	@include flex-box;
+	@include flex-row(center, flex-start);
+	height: 100%;
+
+	.menu {
+
+		@include flex-box;
+		@include flex-row(center, center);
+		@include flex(none);
+		margin: 0;
+		padding: 0;
+	}
+
+	.menu-item {
+
+		@include relative;
+		font-size: rem(15px);
+		font-weight: normal;
+		list-style: none;
+		list-style-position: outside;
+		text-transform: uppercase;
+		white-space: nowrap;
+
+		@include media-break-down using ($bp) {
+			padding-left: scaled-padding-left($bp, 30px);
+			padding-right: scaled-padding-right($bp, 30px);
+		}
+
+		.no-touchevents &:hover {
+			.children {
+				opacity: 1;
+				visibility: visible;
+			}
+		}
+
+		.children {
+
+			@include absolute(top 100% left 50%);
+			@include flex-box;
+			@include flex-col(center, center);
+			background: #000fff;
+			padding: rem(30px);
+			opacity: 0;
+			transition-property: opacity, visibility;
+			transition-duration: transition-duration(hover);
+			transition-timing-function: transition-equation(hover);
+			visibility: hidden;
+			width: rem(320px);
+
+			.menu-item {
+
+				font-size: rem(15px);
+				font-weight: normal;
+				margin-top: rem(15px);
+				margin-bottom: rem(15px);
+				padding: 0;
+				text-align: center;
+				text-transform: none;
+
+				&:after {
+					@include media-break-down using ($bp) {
+						left: scaled-left($bp, 0px);
+						right: scaled-right($bp, 0px);
+					}
+				}
+			}
+		}
+
+
+		&.current-menu-item,
+		&.current-menu-item-ancestor {
+			&:after {
+				transform: none;
+			}
+		}
+
+		&.wpml-ls-current-language {
+			&:after {
+				transform: none;
+			}
+		}
+
+		.no-touchevents &:hover {
+			&:after {
+				transform: none;
+			}
+		}
+
+		a {
+			color: inherit;
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// Main Layout Content
+//------------------------------------------------------------------------------
+
+.main-layout-content {
+
+	overflow: hidden;
+	width: 100%;
+
+	.smooth-scrolling & {
+		width: 100%;
+	}
+}
+
+
+//------------------------------------------------------------------------------
+// Main Layout Footer
+//------------------------------------------------------------------------------
+
+.main-layout-footer {
+
+	@include relative;
+
+	.container {
+		@include relative;
+		@include flex-box;
+		@include flex-col(flex-start, stretch);
+	}
+}
+
+//------------------------------------------------------------------------------
+// Main Layout Loader
+//------------------------------------------------------------------------------
+
+.main-layout-loader {
+
+	@include fixed(top 0 left 0 right 0 bottom 0);
+
+	&.main-layout-loader--enter {
+
+		transform: translateY(100%);
+
+		&.main-layout-loader--enter-active {
+			transform: none;
+			transition-property: transform;
+			transition-duration: transition-duration(soft);
+			transition-timing-function: transition-equation(soft);
+
+		}
+	}
+
+	&.main-layout-loader--leave {
+
+		transform: none;
+
+		&.main-layout-loader--leave-active {
+			transform: translateY(-100%);
+			transition-property: transform;
+			transition-duration: transition-duration(soft);
+			transition-timing-function: transition-equation(soft);
+		}
+	}
+
+	&.main-layout-loader--unload {
+
+		transform: translateY(100%);
+
+		&.main-layout-loader--unload-active {
+			transform: translateX(0%);
+			transition-property: transform;
+			transition-duration: transition-duration(soft);
+			transition-timing-function: transition-equation(soft);
+		}
+	}
+
+	&.main-layout-loader--gone {
+		display: none;
+	}
+}

@@ -1,0 +1,402 @@
+@import "mixins/flex";
+@import "mixins/position";
+@import "components/cortex-modal";
+@import "components/cortex-admin-blocks-page";
+@import "components/cortex-admin-settings-page";
+
+#cortex_block_editor {
+
+	.inside {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.cortex-block-editor {
+		height: 400px;
+	}
+}
+
+#cortex_style_editor {
+
+	.inside {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.cortex-style-editor {
+		height: 400px;
+	}
+}
+
+#cortex_script_editor {
+
+	.inside {
+		margin: 0px;
+		padding: 0px;
+	}
+
+	.cortex-script-editor {
+		height: 400px;
+	}
+}
+
+#cortex_create_block {
+	.inside {
+		padding: 0px;
+		margin: 0px;
+	}
+}
+
+#cortex_update_block {
+	.inside {
+		padding: 0px;
+		margin: 0px;
+	}
+}
+
+@keyframes cortex-reload-rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
+
+.cortex-text-editor {
+
+	&.invalid {
+		@include relative;
+		border: 5px solid #dc3232;
+	}
+
+	.cortex-reload {
+
+		@include absolute(top 12px left 12px);
+		background: #dc3232 url(../images/reload.svg) no-repeat center center;
+		background-size: 18px 18px;
+		border-radius: 22px;
+		cursor: pointer;
+		height: 32px;
+		width: 32px;
+		z-index: 1000;
+
+		&.cortex-reload-reloading {
+			animation: cortex-reload-rotate infinite 1s linear;
+		}
+
+		&:hover {
+			background-color: #f73a3a;
+		}
+	}
+}
+
+.cortex-create-block-page,
+.cortex-update-block-page {
+
+	.wrap {
+		margin: 12px;
+		margin-left: 54px;
+		margin-right: 54px;
+	}
+
+	.media-modal {
+		bottom: 100px;
+	}
+
+	#wpcontent {
+		margin: 0px !important;
+		padding: 0px;
+		padding-bottom: 100px;
+	}
+
+	#wpadminbar {
+		display: none !important;
+	}
+
+	#adminmenumain {
+		display: none !important;
+	}
+
+	#footer-left,
+	#footer-upgrade {
+		display: none !important;
+	}
+
+	#screen-meta-links {
+		display: none !important;
+	}
+
+	.wp-header-end {
+		display: none !important;
+	}
+
+	.wp-heading-inline {
+		display: none !important;
+	}
+
+	.update-nag {
+		display: none;
+	}
+
+	.page-title-action {
+		display: none !important;
+	}
+
+	#postbox-container-1 {
+		@include absolute(left 0 right 0 bottom 0);
+	}
+
+	#poststuff {
+		margin: 0px !important;
+		padding: 0px !important;
+	}
+
+	#post-body.columns-1,
+	#post-body.columns-2,
+	#post-body.columns-3 {
+		margin: 0px !important;
+	}
+
+	// #post-body-content {
+	// 	display: none !important;
+	// }
+
+	#submitdiv {
+		@include fixed(left 0 right 0 bottom 0);
+		border: none;
+		border-top: 1px solid #e5e5e5;
+		box-shadow: none;
+		margin: 0px;
+		z-index: 1000000;
+	}
+
+	#submitdiv h2,
+	#submitdiv h3,
+	#submitdiv .handlediv,
+	#submitdiv #minor-publishing {
+		display: none;
+	}
+
+	#submitdiv #major-publishing-actions {
+		border: none;
+		background: #fff;
+	}
+
+	#delete-action {
+		display: none;
+	}
+
+	#acf-field-group-locations,
+	#acf-field-group-options,
+	#commentstatusdiv,
+	#commentsdiv {
+		display: none !important;
+	}
+}
+
+.cortex-update-block-page {
+
+	#delete-action {
+		display: none;
+	}
+
+	.page-title-action {
+		display: none;
+	}
+}
+
+/* Preview */
+
+.cortex-preview {
+
+	@include relative;
+	min-height: 100px;
+	max-height: 500px;
+
+	.cortex-preview-image, canvas {
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: contain;
+		display: block;
+		max-width: none;
+		max-height: none;
+		height: auto;
+		width: 100%;
+	}
+}
+
+.cortex-preview-spinner {
+	@include absolute(top 50% left 50%);
+	background: url(../images/spinner.gif) no-repeat;
+	background-size: 20px 20px;
+	content: "";
+	display: block;
+	margin-top: -10px;
+	margin-left: -10px;
+	height: 20px;
+	width: 20px;
+}
+
+/* Gutenberg */
+
+.edit-post-layout__content {
+	overflow-x: hidden;
+}
+
+.wp-block {
+
+	max-width: 960px;
+	padding-top: 36px;
+	padding-bottom: 36px;
+
+	&:first-child:before {
+		@include absolute(left -1000px right -1000px top 0);
+		background: rgba(#b3bcc0, 0.5);
+		content: "";
+		display: block;
+		height: 1px;
+	}
+
+	&:not(:last-child):after {
+		@include absolute(left -1000px right -1000px top 0);
+		background: rgba(#b3bcc0, 0.5);
+		content: "";
+		display: block;
+		height: 1px;
+	}
+
+	.editor-post-title & {
+
+		margin-bottom: 0px;
+		padding-top: 0px;
+		padding-bottom: 0px;
+
+		&:after,
+		&:before {
+			display: none;
+		}
+	}
+
+	.mce-tinymce {
+		box-shadow: none !important;
+	}
+
+	.mce-top-part::before {
+		box-shadow: none !important
+	}
+}
+
+.editor-post-title {
+	&:before {
+		@include absolute(top 0 left 0 right 0);
+		background: rgba(#f5f5f5, 0.25);
+		content: "";
+		display: block;
+		height: 145px;
+	}
+}
+
+.editor-block-list__block-edit {
+
+	&:after {
+		@include absolute(top -50px left -50px);
+		border-radius: 12px;
+		background: #0073aa;
+		content: "";
+		display: block;
+		opacity: 0;
+		transition: opacity;
+		transition-duration: 350ms;
+		height: 24px;
+		width: 24px;
+	}
+
+	.is-hovered & {
+		&:after {
+			opacity: 0.25;
+		}
+	}
+
+	.is-selected & {
+		&:after {
+			opacity: 1;
+		}
+	}
+}
+
+.block-editor-block-list__layout .block-editor-block-list__block.is-selected > .block-editor-block-list__block-edit::before {
+	display: none;
+}
+
+.block-editor-block-list__layout .block-editor-block-list__block.is-hovered > .block-editor-block-list__block-edit::before {
+	display: none;
+}
+
+.block-list-appender {
+	padding-top: 46px;
+}
+
+.wp-block[data-align=wide] {
+    max-width: none;
+}
+
+.wp-block[data-align=full] {
+    max-width: none;
+}
+
+/* ACF */
+
+.acf-label {
+	font-size: 13.5px;
+}
+
+.acf-block-preview {
+
+	@include relative;
+	border: 1px solid #e5e5e5;
+	min-height: 100px !important;
+	max-height: 600px !important;
+	overflow: hidden;
+	padding: 12px;
+
+	&:before {
+		background: #f5f5f5;
+		border-bottom: 1px solid #e5e5e5;
+		content: "Preview";
+		display: block;
+		font-family: Sans-Serif;
+		font-size: 11px;
+		font-weight: normal;
+		margin-top: -12px;
+		margin-left: -12px;
+		margin-right: -12px;
+		margin-bottom: 12px;
+		padding: 12px;
+		padding-top: 6px;
+		padding-bottom: 6px;
+		text-transform: uppercase;
+		z-index: 1000;
+	}
+
+	&:after {
+		@include absolute(left 0 right 0 bottom 0);
+		background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+		content: "";
+		display: block;
+		height: 50px;
+		z-index: 1000;
+	}
+}
+
+.acf-block-body .acf-block-fields {
+	border: none !important;
+}
+
+.acf-block-component .acf-block-fields {
+	background: transparent !important;
+}
+
+.acf-block-body > div > .acf-block-fields > .acf-field {
+	padding: 0px 0px 20px 0px !important;
+}

@@ -1,0 +1,212 @@
+
+/**
+ * @mixin placeholder
+ * @since 1.0.0
+ */
+ @mixin placeholder {
+	::-webkit-input-placeholder { @content; }
+	:-moz-placeholder           { @content; }
+	::-moz-placeholder          { @content; }
+	:-ms-input-placeholder      { @content; }
+}
+
+/**
+ * @mixin selection
+ * @since 1.0.0
+ */
+@mixin selection {
+	::selection      { @content; }
+	::-moz-selection { @content; }
+}
+
+/**
+ * Convenience nth-child mixin to improve loop readability.
+ * @function nth-child
+ * @sinc 1.0.0
+ */
+ @mixin nth-child($i) {
+	&:nth-child(#{$i}) {
+		@content;
+	}
+}
+
+/**
+ * Convenience nth-child mixin to improve loop readability.
+ * @function nth-of-type
+ * @sinc 1.0.0
+ */
+ @mixin nth-of-type($i) {
+	&:nth-of-type(#{$i}) {
+		@content;
+	}
+}
+
+/**
+ * Convenience nth-child mixin to improve loop readability.
+ * @function nth-last-child
+ * @sinc 1.0.0
+ */
+ @mixin nth-last-child($i) {
+	&:nth-last-child(#{$i}) {
+		@content;
+	}
+}
+
+/**
+ * Convenience nth-last-of-type mixin to improve loop readability.
+ * @function nth-last-of-type
+ * @sinc 1.0.0
+ */
+ @mixin nth-last-of-type($i) {
+	&:nth-last-of-type(#{$i}) {
+		@content;
+	}
+}
+
+/**
+ * Targets the last row of a sepcified amount of columns.
+ * @mixin last-row
+ * @since 1.0.0
+ */
+ @mixin last-row($of) {
+	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}),
+	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}) ~ & {
+   		@content;
+	}
+}
+
+/**
+ * Targets the last row of a sepcified amount of columns.
+ * @mixin last-row-media
+ * @since 1.0.0
+ */
+@mixin last-row-in($of, $args...) {
+
+	@if length($args) == 0 {
+		$args: $breakpoints;
+	} @else if (type-of(nth($args, 1)) == list) {
+		$args: nth($args, 1);
+	}
+
+	@each $bp in $args {
+		@include media-breakpoint-only($bp) {
+			&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}),
+			&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}) ~ & {
+				@content;
+			}
+		}
+	}
+}
+
+/**
+ * Positions an element.
+ * @mixin position
+ * @since 1.0.0
+ */
+ @mixin position($position, $args: ()) {
+
+	$offsets: top right bottom left;
+
+	position: $position;
+
+	@each $offset in $offsets {
+
+		$index: index($args, $offset);
+
+		@if $index {
+
+			@if $index == length($args) {
+				#{$offset}: 0;
+			} @else {
+
+				$next: nth($args, $index + 1);
+
+				@if is-valid-length($next) {
+					#{$offset}: $next;
+				} @else if index($offsets, $next) {
+					#{$offset}: 0;
+				} @else {
+					@warn "Invalid value `#{$next}` for offset `#{$offset}`.";
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Position an element with fixed type.
+ * @mixin fixed
+ * @since 1.0.0
+ */
+ @mixin fixed($args: ()) {
+	@include position(fixed, $args);
+}
+
+/**
+ * Position an element with absolute type.
+ * @mixin absolute
+ * @since 1.0.0
+ */
+@mixin absolute($args: ()) {
+	@include position(absolute, $args);
+}
+
+/**
+ * Position an element with relative type.
+ * @mixin relative
+ * @since 1.0.0
+ */
+@mixin relative($args: ()) {
+	@include position(relative, $args);
+}
+
+/**
+ * Position an element with sticky type.
+ * @mixin sticky
+ * @since 1.0.0
+ */
+@mixin sticky($args: ()) {
+	@include position(sticky, $args);
+}
+
+/**
+ * Sets the text antialias;
+ * @mixin text-antialias
+ * @since 1.0.0
+ */
+@mixin text-antialias() {
+	-moz-osx-font-smoothing: grayscale;
+	 -webkit-font-smoothing: antialiased;
+			 font-smoothing: antialiased;
+}
+
+/**
+ * Convenience mixin to support special writing direction.
+ * @function text-dir
+ * @sinc 1.0.0
+ */
+@mixin text-dir($dir) {
+	@if $dir == ttb { @include text-dir-ttb; }
+	@if $dir == btt { @include text-dir-btt; }
+}
+
+/**
+ * @function text-dir-ttb
+ * @sinc 1.0.0
+ * @hidden
+ */
+@mixin text-dir-ttb {
+	writing-mode: tb;
+	writing-mode: vertical-lr;
+}
+
+/**
+ * Convenience mixin to support special writing direction.
+ * @function text-dir-btt
+ * @sinc 1.0.0
+ */
+@mixin text-dir-btt {
+	transform: rotate(180deg);
+	writing-mode: tb;
+	writing-mode: vertical-lr;
+}

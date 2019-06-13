@@ -1,0 +1,56 @@
+/* ==========================================================================
+  Error 404 View
+  ========================================================================== */
+
+.error-404 {
+
+	@include relative;
+	height: calc-sub(100vh, rem(60px));
+
+	.container {
+		@include flex-box;
+		@include flex-col(center, center);
+		height: 100%;
+	}
+}
+
+.error-404-content {
+
+	font-size: rem(30px);
+	font-weight: bold;
+	text-align: center;
+
+	@include media-breakpoint-down(xs) {
+	   font-size: rem(18px);
+   }
+
+	> * {
+		opacity: 0;
+		transform: translateY(rem(30px));
+		transition-property: opacity, transform;
+		transition-duration: transition-duration(soft);
+		transition-timing-function: transition-equation(soft);
+	}
+
+	h1:first-child,
+	h2:first-child {
+		transform: translateY(rem(15px));
+		transition-property: opacity, transform;
+		transition-duration: transition-duration(soft);
+		transition-timing-function: transition-equation(soft);
+	}
+
+	.ready .visible-on-screen & {
+
+		> * {
+			opacity: 1;
+			transform: none;
+		}
+
+		h1:first-child,
+		h2:first-child,
+		h3:first-child {
+			transform: none;
+		}
+	}
+}

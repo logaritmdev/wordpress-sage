@@ -1,0 +1,1104 @@
+# WordPress Blank Pot
+# Copyright (C) 2014 ...
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Starter\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@example.com>\n"
+"POT-Creation-Date: 2019-06-12 09:35-0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Your Team <translations@example.com>\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: ;__;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,"
+"_nc:4c,1,2\n"
+"X-Poedit-Basepath: ../..\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: node_modules\n"
+
+#: resources/views/404.blade.php:8
+msgid "Not found"
+msgstr "Introuvable"
+
+#: resources/views/404.blade.php:9
+msgid "The page you are trying to access does not exist."
+msgstr "La page que vous tentez d’accéder n’existe pas."
+
+#: resources/views/search.blade.php:9
+msgid "Sorry, no results were found."
+msgstr "Désolé, aucun résultat n’a été trouvé."
+
+#: app/Controllers/App.php:27
+msgid "Latest Posts"
+msgstr "Derniers articles"
+
+#: app/Controllers/App.php:35
+#, php-format
+msgid "Search Results for %s"
+msgstr "Résultats pour %s"
+
+#: app/Controllers/App.php:39
+msgid "Not Found"
+msgstr "Introuvable"
+
+#: app/Controllers/App.php:66
+msgid "By"
+msgstr "Par"
+
+#: app/filters.php:31
+msgid "Continued"
+msgstr "Lire la suite"
+
+#: app/setup.php:67
+msgid "Primary Navigation"
+msgstr "Navigation primaire"
+
+#: resources/functions.php:17
+msgid "Sage &rsaquo; Error"
+msgstr "Erreur"
+
+#: resources/functions.php:27
+msgid "You must be using PHP 7.1 or greater."
+msgstr "Vous devez utiliser PHP 7.1 ou plus récent."
+
+#: resources/functions.php:27
+msgid "Invalid PHP version"
+msgstr "Version de PHP invalide"
+
+#: resources/functions.php:34
+msgid "You must be using WordPress 4.7.0 or greater."
+msgstr "Vous devez utiliser Wordpress 4.7.0 ou plus récent."
+
+#: resources/functions.php:34
+msgid "Invalid WordPress version"
+msgstr "Version de WordPress invalide"
+
+#: resources/functions.php:43
+msgid "You must run <code>composer install</code> from the Sage directory."
+msgstr ""
+"Vous devez exécuter <code>composer install</code> à partir du répertoire "
+"Sage."
+
+#: resources/functions.php:44
+msgid "Autoloader not found."
+msgstr "Autoloader non trouvé."
+
+#: resources/functions.php:59
+#, php-format
+msgid "Error locating <code>%s</code> for inclusion."
+msgstr "Impossible de trouver <code>%s</code> pour inclusion."
+
+#~ msgid "And more cities to come"
+#~ msgstr "Et plus à venir"
+
+#~ msgid "Newsletter"
+#~ msgstr "Infolettre"
+
+#~ msgid "Back to top"
+#~ msgstr "Remonter"
+
+#~ msgid "All rights reserved."
+#~ msgstr "Tous droits réservés."
+
+#~ msgid "Send"
+#~ msgstr "Envoyer"
+
+#~ msgid "enteryouremail@here.com"
+#~ msgstr "votrecourriel@ici.com"
+
+#~ msgid "Close"
+#~ msgstr "Fermer"
+
+#~ msgid "Langue"
+#~ msgstr "Langue"
+
+#~ msgid "Principal"
+#~ msgstr "Principale"
+
+#~ msgctxt "post type general name"
+#~ msgid "Editions"
+#~ msgstr "Éditions"
+
+#~ msgctxt "post type Edition name"
+#~ msgid "Edition"
+#~ msgstr "Édition"
+
+#~ msgctxt "admin menu"
+#~ msgid "Editions"
+#~ msgstr "Éditions"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Edition"
+#~ msgstr "Édition"
+
+#~ msgctxt "Edition"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Edition"
+#~ msgstr "Ajouter une édition"
+
+#~ msgid "New Edition"
+#~ msgstr "Nouvelle édition"
+
+#~ msgid "Edit Edition"
+#~ msgstr "Modifier l'édition"
+
+#~ msgid "View Edition"
+#~ msgstr "Voir l'édition"
+
+#~ msgid "All Editions"
+#~ msgstr "Toutes les éditions"
+
+#~ msgid "Search Editions"
+#~ msgstr "Rechercher une édition"
+
+#~ msgid "Parent Editions:"
+#~ msgstr "Édition parente:"
+
+#~ msgid "No Editions found."
+#~ msgstr "Aucun édition trouvé."
+
+#~ msgid "No Editions found in Trash."
+#~ msgstr "Aucun édition trouvé dans Trash."
+
+#~ msgid "Editions."
+#~ msgstr "Éditions."
+
+#~ msgctxt "post type general name"
+#~ msgid "Pictures"
+#~ msgstr "Photos"
+
+#~ msgctxt "post type Picture name"
+#~ msgid "Picture"
+#~ msgstr "Photo"
+
+#~ msgctxt "admin menu"
+#~ msgid "Pictures"
+#~ msgstr "Photos"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Picture"
+#~ msgstr "Photo"
+
+#~ msgctxt "Picture"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Picture"
+#~ msgstr "Ajouter une photo"
+
+#~ msgid "New Picture"
+#~ msgstr "Nouvelle photo"
+
+#~ msgid "Edit Picture"
+#~ msgstr "Modifier la photo"
+
+#~ msgid "View Picture"
+#~ msgstr "Voir la photo"
+
+#~ msgid "All Pictures"
+#~ msgstr "Toutes les photos"
+
+#~ msgid "Search Pictures"
+#~ msgstr "Rechercher une photo"
+
+#~ msgid "Parent Pictures:"
+#~ msgstr "Photo parente:"
+
+#~ msgid "No Pictures found."
+#~ msgstr "Aucune photo trouvé."
+
+#~ msgid "No Pictures found in Trash."
+#~ msgstr "Aucune photo trouvé dans la corbeille."
+
+#~ msgid "Pictures."
+#~ msgstr "Photos."
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Cities"
+#~ msgstr "Villes"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "City"
+#~ msgstr "Ville"
+
+#~ msgid "Search Cities"
+#~ msgstr "Rechercher une ville"
+
+#~ msgid "All Cities"
+#~ msgstr "Toutes les villes"
+
+#~ msgid "Parent City"
+#~ msgstr "Ville parente"
+
+#~ msgid "Parent City:"
+#~ msgstr "Ville parente:"
+
+#~ msgid "Edit City"
+#~ msgstr "Modifier la ville"
+
+#~ msgid "Update City"
+#~ msgstr "Modifier la ville"
+
+#~ msgid "Add New City"
+#~ msgstr "Ajouter une ville"
+
+#~ msgid "New City Name"
+#~ msgstr "Nouveau nom de ville"
+
+#~ msgid "City"
+#~ msgstr "Ville"
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Years"
+#~ msgstr "Années"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Year"
+#~ msgstr "Année"
+
+#~ msgid "Search Years"
+#~ msgstr "Rechercher une année"
+
+#~ msgid "All Years"
+#~ msgstr "Toutes les années"
+
+#~ msgid "Parent Year"
+#~ msgstr "Sport parentAnnée parente"
+
+#~ msgid "Parent Year:"
+#~ msgstr "Année parente:"
+
+#~ msgid "Edit Year"
+#~ msgstr "Modifier l'année"
+
+#~ msgid "Update Year"
+#~ msgstr "Modifier l'année"
+
+#~ msgid "Add New Year"
+#~ msgstr "Anouter une nouvelle année"
+
+#~ msgid "New Year Name"
+#~ msgstr "Nom de la nouvelle année"
+
+#~ msgid "Year"
+#~ msgstr "Année"
+
+#~ msgctxt "post type general name"
+#~ msgid "Athletes"
+#~ msgstr "Athlètes"
+
+#~ msgctxt "post type Athlete name"
+#~ msgid "Athlete"
+#~ msgstr "Athlète"
+
+#~ msgctxt "admin menu"
+#~ msgid "Athletes"
+#~ msgstr "Athlètes"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Athlete"
+#~ msgstr "Athlète"
+
+#~ msgctxt "Athlete"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Athlete"
+#~ msgstr "Ajouter un athlète"
+
+#~ msgid "New Athlete"
+#~ msgstr "Nouvel athlète"
+
+#~ msgid "Edit Athlete"
+#~ msgstr "Modifier l’athlète"
+
+#~ msgid "View Athlete"
+#~ msgstr "Voir l'atlhète"
+
+#~ msgid "All Athletes"
+#~ msgstr "Tous les athlètes"
+
+#~ msgid "Search Athletes"
+#~ msgstr "Rechercher un athlète"
+
+#~ msgid "Parent Athletes:"
+#~ msgstr "Athlète parent:"
+
+#~ msgid "No Athletes found."
+#~ msgstr "Aucun athlète trouvé."
+
+#~ msgid "No Athletes found in Trash."
+#~ msgstr "Aucun athlète trouvé dans la corbeille."
+
+#~ msgid "Athletes."
+#~ msgstr "Athlètes."
+
+#~ msgctxt "post type general name"
+#~ msgid "Events"
+#~ msgstr "Évènements"
+
+#~ msgctxt "post type Event name"
+#~ msgid "Event"
+#~ msgstr "Évènement"
+
+#~ msgctxt "admin menu"
+#~ msgid "Schedule"
+#~ msgstr "Horaire"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Event"
+#~ msgstr "Évènement"
+
+#~ msgctxt "Event"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Event"
+#~ msgstr "Ajouter un évènement"
+
+#~ msgid "New Event"
+#~ msgstr "Nouvel évènement"
+
+#~ msgid "Edit Event"
+#~ msgstr "Modifier l'évènement"
+
+#~ msgid "View Event"
+#~ msgstr "Voir l'évèneemnt"
+
+#~ msgid "All Events"
+#~ msgstr "Tous les évènements"
+
+#~ msgid "Search Events"
+#~ msgstr "Rechercher un évènement"
+
+#~ msgid "Parent Events:"
+#~ msgstr "Évènements parent:"
+
+#~ msgid "No Events found."
+#~ msgstr "Aucun évènement trouvé."
+
+#~ msgid "No Events found in Trash."
+#~ msgstr "Aucun évènement trouvé dans la corbeille."
+
+#~ msgid "Events."
+#~ msgstr "Évènements."
+
+#~ msgctxt "post type general name"
+#~ msgid "Competitions"
+#~ msgstr "Compétitions"
+
+#~ msgctxt "post type Competition name"
+#~ msgid "Competition"
+#~ msgstr "Compétition"
+
+#~ msgctxt "admin menu"
+#~ msgid "Competitions"
+#~ msgstr "Compétitions"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Competition"
+#~ msgstr "Compétition"
+
+#~ msgctxt "Competition"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Competition"
+#~ msgstr "Ajouter une compétition"
+
+#~ msgid "New Competition"
+#~ msgstr "Nouveau compétition"
+
+#~ msgid "Edit Competition"
+#~ msgstr "Modifier la compétition"
+
+#~ msgid "View Competition"
+#~ msgstr "Voir la compétition"
+
+#~ msgid "All Competitions"
+#~ msgstr "Toutes les compétitions"
+
+#~ msgid "Search Competitions"
+#~ msgstr "Rechercher une compétition"
+
+#~ msgid "Parent Competitions:"
+#~ msgstr "Compétition parente:"
+
+#~ msgid "No Competitions found."
+#~ msgstr "Aucune compétition trouvée."
+
+#~ msgid "No Competitions found in Trash."
+#~ msgstr "Aucune compétition trouvé dans la corbeille."
+
+#~ msgid "Competitions."
+#~ msgstr "Compétitions."
+
+#~ msgctxt "post type general name"
+#~ msgid "Activities"
+#~ msgstr "Activités"
+
+#~ msgctxt "post type Activity name"
+#~ msgid "Activity"
+#~ msgstr "Activité de formulaire"
+
+#~ msgctxt "admin menu"
+#~ msgid "Activities"
+#~ msgstr "Activités"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Activity"
+#~ msgstr "Activité de formulaire"
+
+#~ msgctxt "Activity"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Activity"
+#~ msgstr "Ajouter une activité"
+
+#~ msgid "New Activity"
+#~ msgstr "Nouvelle activité"
+
+#~ msgid "Edit Activity"
+#~ msgstr "Modifier l'activité"
+
+#~ msgid "View Activity"
+#~ msgstr "Voir l’activité"
+
+#~ msgid "All Activities"
+#~ msgstr "Toutes les activités"
+
+#~ msgid "Search Activities"
+#~ msgstr "Rechercher une activité"
+
+#~ msgid "Parent Activities:"
+#~ msgstr "Activité parente:"
+
+#~ msgid "No Activities found."
+#~ msgstr "Aucune activitée trouvée."
+
+#~ msgid "No Activities found in Trash."
+#~ msgstr "Aucune activité trouvé dans la corbeille."
+
+#~ msgid "Activities."
+#~ msgstr "Activités."
+
+#~ msgctxt "post type general name"
+#~ msgid "Foods"
+#~ msgstr "Aliments"
+
+#~ msgctxt "post type Food name"
+#~ msgid "Food"
+#~ msgstr "Aliments"
+
+#~ msgctxt "admin menu"
+#~ msgid "Foods"
+#~ msgstr "Aliments"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Food"
+#~ msgstr "Aliments"
+
+#~ msgctxt "Food"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Food"
+#~ msgstr "Ajouter un aliemnt"
+
+#~ msgid "New Food"
+#~ msgstr "Nouvel aliment"
+
+#~ msgid "Edit Food"
+#~ msgstr "Modifier l’aliment"
+
+#~ msgid "View Food"
+#~ msgstr "Voir l'aliment"
+
+#~ msgid "All Foods"
+#~ msgstr "Toutes les aliments"
+
+#~ msgid "Search Foods"
+#~ msgstr "Rechercher un aliment"
+
+#~ msgid "Parent Foods:"
+#~ msgstr "Alimentation parente:"
+
+#~ msgid "No Foods found."
+#~ msgstr "Aucun aliemtn trouvé."
+
+#~ msgid "No Foods found in Trash."
+#~ msgstr "Aucun aliment trouvé dans la corbeille."
+
+#~ msgid "Foods."
+#~ msgstr "Aliments."
+
+#~ msgctxt "post type general name"
+#~ msgid "Shops"
+#~ msgstr "Magasins"
+
+#~ msgctxt "post type Shop name"
+#~ msgid "Shop"
+#~ msgstr "Magasin"
+
+#~ msgctxt "admin menu"
+#~ msgid "Shops"
+#~ msgstr "Magasins"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Shop"
+#~ msgstr "Magasin"
+
+#~ msgctxt "Shop"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Shop"
+#~ msgstr "Ajouter un magasin"
+
+#~ msgid "New Shop"
+#~ msgstr "Nouveau magasin"
+
+#~ msgid "Edit Shop"
+#~ msgstr "Modifier le magasin"
+
+#~ msgid "View Shop"
+#~ msgstr "Voir le magasin"
+
+#~ msgid "All Shops"
+#~ msgstr "Tous les magasins"
+
+#~ msgid "Search Shops"
+#~ msgstr "Rechercher un magasin"
+
+#~ msgid "Parent Shops:"
+#~ msgstr "Boutique parente:"
+
+#~ msgid "No Shops found."
+#~ msgstr "Aucun magasin trouvé."
+
+#~ msgid "No Shops found in Trash."
+#~ msgstr "Aucun magasin trouvé dans la corbeile."
+
+#~ msgid "Shops."
+#~ msgstr "Magasins."
+
+#~ msgctxt "post type general name"
+#~ msgid "Musics"
+#~ msgstr "Musiques"
+
+#~ msgctxt "post type Music name"
+#~ msgid "Music"
+#~ msgstr "Musique"
+
+#~ msgctxt "admin menu"
+#~ msgid "Musics"
+#~ msgstr "Musiques"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Music"
+#~ msgstr "Musique"
+
+#~ msgctxt "Music"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Music"
+#~ msgstr "Ajouter une musique"
+
+#~ msgid "New Music"
+#~ msgstr "Nouvelle musique"
+
+#~ msgid "Edit Music"
+#~ msgstr "Modifier la musique"
+
+#~ msgid "View Music"
+#~ msgstr "Voir la musique"
+
+#~ msgid "All Musics"
+#~ msgstr "Tous les musics"
+
+#~ msgid "Search Musics"
+#~ msgstr "Rechercher une musique"
+
+#~ msgid "Parent Musics:"
+#~ msgstr "Musique parente:"
+
+#~ msgid "No Musics found."
+#~ msgstr "Aucune musique trouvée."
+
+#~ msgid "No Musics found in Trash."
+#~ msgstr "Aucun musique trouvée dans la corbeille."
+
+#~ msgid "Musics."
+#~ msgstr "Musiques."
+
+#~ msgctxt "post type general name"
+#~ msgid "Results"
+#~ msgstr "Résultats"
+
+#~ msgctxt "post type Result name"
+#~ msgid "Result"
+#~ msgstr "Résultat"
+
+#~ msgctxt "admin menu"
+#~ msgid "Results"
+#~ msgstr "Résultats"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Result"
+#~ msgstr "Résultat"
+
+#~ msgctxt "Result"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Result"
+#~ msgstr "Ajouter un résultat"
+
+#~ msgid "New Result"
+#~ msgstr "Nouveau résultat"
+
+#~ msgid "Edit Result"
+#~ msgstr "Modifier le résultat"
+
+#~ msgid "View Result"
+#~ msgstr "Voir le résultat"
+
+#~ msgid "All Results"
+#~ msgstr "Tous les résultats"
+
+#~ msgid "Search Results"
+#~ msgstr "Rechercher un résultat"
+
+#~ msgid "Parent Results:"
+#~ msgstr "Résultat parent:"
+
+#~ msgid "No Results found."
+#~ msgstr "Aucun résultat trouvé."
+
+#~ msgid "No Results found in Trash."
+#~ msgstr "Aucun résultat trouvé dans la corbeille."
+
+#~ msgid "Results."
+#~ msgstr "Résultats."
+
+#~ msgctxt "post type general name"
+#~ msgid "Partners"
+#~ msgstr "Partenaires"
+
+#~ msgctxt "post type Partner name"
+#~ msgid "Partner"
+#~ msgstr "Partenaire"
+
+#~ msgctxt "admin menu"
+#~ msgid "Partners"
+#~ msgstr "Partenaires"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Partner"
+#~ msgstr "Partenaire"
+
+#~ msgctxt "Partner"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Add New Partner"
+#~ msgstr "Ajouter un nouveau partenaire"
+
+#~ msgid "New Partner"
+#~ msgstr "Nouveau partenaire"
+
+#~ msgid "Edit Partner"
+#~ msgstr "Editer le partenaire"
+
+#~ msgid "View Partner"
+#~ msgstr "Voir le partenaire"
+
+#~ msgid "All Partners"
+#~ msgstr "Tous les projets"
+
+#~ msgid "Search Partners"
+#~ msgstr "Rechercher un partenaires"
+
+#~ msgid "Parent Partners:"
+#~ msgstr "Partenaires parent:"
+
+#~ msgid "No Partners found."
+#~ msgstr "Aucun partenaires trouvé."
+
+#~ msgid "No Partners found in Trash."
+#~ msgstr "Aucun partenaires trouvé dans la corbeille."
+
+#~ msgid "Partners."
+#~ msgstr "Partenaires."
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Categories"
+#~ msgstr "Catégories"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Category"
+#~ msgstr "Catégorie"
+
+#~ msgid "Search Categories"
+#~ msgstr "Rechercher une catégorie"
+
+#~ msgid "All Categories"
+#~ msgstr "Toutes les catégories"
+
+#~ msgid "Parent Category"
+#~ msgstr "Catégorie parente"
+
+#~ msgid "Parent Category:"
+#~ msgstr "Catégorie parente:"
+
+#~ msgid "Edit Category"
+#~ msgstr "Modifier la catégorie"
+
+#~ msgid "Update Category"
+#~ msgstr "Modifier la catégorie"
+
+#~ msgid "Add New Category"
+#~ msgstr "Ajouter une catégorie"
+
+#~ msgid "New Category Name"
+#~ msgstr "Nouveau nom de catégorie"
+
+#~ msgid "Category"
+#~ msgstr "Catégorie"
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Sports"
+#~ msgstr "Sports"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Sport"
+#~ msgstr "Sport"
+
+#~ msgid "Search Sports"
+#~ msgstr "Rechercher un sport"
+
+#~ msgid "All Sports"
+#~ msgstr "Toutes les sports"
+
+#~ msgid "Parent Sport"
+#~ msgstr "Sport parent"
+
+#~ msgid "Parent Sport:"
+#~ msgstr "Sport parent:"
+
+#~ msgid "Edit Sport"
+#~ msgstr "Modifier le sport"
+
+#~ msgid "Update Sport"
+#~ msgstr "Mettre à jour un sport"
+
+#~ msgid "Add New Sport"
+#~ msgstr "Ajouter un sport"
+
+#~ msgid "New Sport Name"
+#~ msgstr "Nouveau nom de sport"
+
+#~ msgid "Sport"
+#~ msgstr "Voiture de sport"
+
+#~ msgid "Editions"
+#~ msgstr "Éditions"
+
+#~ msgid "Competition"
+#~ msgstr "Compétition"
+
+#~ msgid "Athletes"
+#~ msgstr "Athlètes"
+
+#~ msgid "Things to do"
+#~ msgstr "Choses à faire"
+
+#~ msgid "Food & drinks"
+#~ msgstr "Nourriture & boissons"
+
+#~ msgid "music"
+#~ msgstr "music"
+
+#~ msgid "Music"
+#~ msgstr "Musique"
+
+#~ msgid "Everything"
+#~ msgstr "Tout"
+
+#~ msgid "All"
+#~ msgstr "Tous"
+
+#~ msgid "Cities"
+#~ msgstr "Villes"
+
+#~ msgid "Years"
+#~ msgstr "Années"
+
+#~ msgid "Sports"
+#~ msgstr "Sports"
+
+#~ msgid "food-&-drinks"
+#~ msgstr "nourriture-&-boissons"
+
+#~ msgid "Partners"
+#~ msgstr "Partenaires"
+
+#~ msgid "Popup Shop"
+#~ msgstr "Boutique Popup"
+
+#~ msgid "Featured<br>article"
+#~ msgstr "Article<br>suivant"
+
+#~ msgid "Read this <strong>Article</strong> now"
+#~ msgstr "<strong>Lire</strong>"
+
+#~ msgid "Previous Article"
+#~ msgstr "Article précédent"
+
+#~ msgid "Next Article"
+#~ msgstr "Article suivant"
+
+#~ msgid "Next<br>article"
+#~ msgstr "Article<br>suivant"
+
+#~ msgid "To meet in person:"
+#~ msgstr "Passez nous voir:"
+
+#~ msgid "By phone:"
+#~ msgstr "Ou appelez-nous:"
+
+#~ msgid "By email:"
+#~ msgstr "Par courriel:"
+
+#~ msgid "By contact form:"
+#~ msgstr "Par formulaire:"
+
+#~ msgid "T."
+#~ msgstr "T."
+
+#~ msgid "E."
+#~ msgstr "C."
+
+#~ msgid "Scroll"
+#~ msgstr "Parcourir"
+
+#~ msgid "Down"
+#~ msgstr "&nbsp;"
+
+#~ msgid "Job<br>Offer"
+#~ msgstr "Offre<br>d’emploi"
+
+#~ msgid "Previous Job Offer"
+#~ msgstr "Offre précédente"
+
+#~ msgid "Next Job Offer"
+#~ msgstr "Offre suivante"
+
+#~ msgid "Job offers"
+#~ msgstr "Offre d'emplois"
+
+#~ msgid "Publication date"
+#~ msgstr "Date de publication"
+
+#~ msgid "Read more"
+#~ msgstr "Lire la suite"
+
+#~ msgid "View fullscreen"
+#~ msgstr "Affichage plein écran"
+
+#~ msgid "More"
+#~ msgstr "Plus"
+
+#~ msgid "Read more news"
+#~ msgstr "Plus de nouvelles"
+
+#~ msgid "Media credential, information and interviews"
+#~ msgstr "Informations d’identification et interviews des médias"
+
+#~ msgid "Download press kit"
+#~ msgstr "Télécharger le dossier de presse"
+
+#~ msgid "Support?"
+#~ msgstr "Soutiens?"
+
+#~ msgid "Terms & conditions"
+#~ msgstr "Conditions générales"
+
+#~ msgid "competition"
+#~ msgstr "compétition"
+
+#~ msgid "athletes"
+#~ msgstr "athlètes"
+
+#~ msgid "things-to-do"
+#~ msgstr "Choses à faire"
+
+#~ msgid "Presented By"
+#~ msgstr "Présenté par"
+
+#~ msgid "In Collaboration With"
+#~ msgstr "En collaboration avec"
+
+#~ msgid "With the participation of"
+#~ msgstr "Avec la participation de"
+
+#~ msgid "With the support of"
+#~ msgstr "Avec le soutien de"
+
+#~ msgid "Terms and conditions"
+#~ msgstr "Conditions générales"
+
+#~ msgctxt "post type general name"
+#~ msgid "Projects"
+#~ msgstr "Projets"
+
+#~ msgctxt "post type Project name"
+#~ msgid "Project"
+#~ msgstr "Projet"
+
+#~ msgctxt "admin menu"
+#~ msgid "Projects"
+#~ msgstr "Projets"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Project"
+#~ msgstr "Projet"
+
+#~ msgid "Projects."
+#~ msgstr "Projets"
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Services Type"
+#~ msgstr "Type de services"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Service Type"
+#~ msgstr "Type de Service"
+
+#~ msgid "Search Services Type"
+#~ msgstr "Type de services de recherche"
+
+#~ msgid "All Services Type"
+#~ msgstr "Tous les types de services"
+
+#~ msgid "Parent Service Type"
+#~ msgstr "Type de service parent"
+
+#~ msgid "Parent Service Type:"
+#~ msgstr "Type de service parent:"
+
+#~ msgid "Edit Service Type"
+#~ msgstr "Modifier le type de service"
+
+#~ msgid "Update Service Type"
+#~ msgstr "Mettre à jour le type de service"
+
+#~ msgid "Add New Service Type"
+#~ msgstr "Ajouter un nouveau type de service"
+
+#~ msgid "New Service Type Name"
+#~ msgstr "Nouveau nom de type de service"
+
+#~ msgid "Service Type"
+#~ msgstr "Type de Service"
+
+#~ msgid "Parent Event Type"
+#~ msgstr "Type d’événement parent"
+
+#~ msgid "Update Event Type"
+#~ msgstr "Mettre la catégorie à jours"
+
+#~ msgid "New Event  Type Name"
+#~ msgstr "Nouveau nom de type d’événement"
+
+#~ msgid "Event  Type"
+#~ msgstr "Type d’événement"
+
+#~ msgctxt "taxonomy general name"
+#~ msgid "Locations"
+#~ msgstr "Lieux"
+
+#~ msgctxt "taxonomy singular name"
+#~ msgid "Location"
+#~ msgstr "Lieu"
+
+#~ msgid "Location"
+#~ msgstr "Lieu"
+
+#~ msgctxt "post type general name"
+#~ msgid "Jobs"
+#~ msgstr "Offres d’emplois"
+
+#~ msgctxt "post type Job name"
+#~ msgid "Job"
+#~ msgstr "Offre d’emploi"
+
+#~ msgctxt "admin menu"
+#~ msgid "Jobs"
+#~ msgstr "Offre d’emplois"
+
+#~ msgctxt "add new on admin bar"
+#~ msgid "Job"
+#~ msgstr "Offre d’emploi"
+
+#~ msgctxt "Job"
+#~ msgid "Add New"
+#~ msgstr "Ajouter"
+
+#~ msgid "Jobs."
+#~ msgstr "Offre d'emplois"
+
+#~ msgid ""
+#~ "<p class=\"small\">Read this</span><p>Article</p><p class=\"small\">Now</"
+#~ "p>"
+#~ msgstr ""
+#~ "<p class=\"small\">Lire</span><p>L'article</p><p class=\"small"
+#~ "\">maintenant</p>"
+
+#~ msgid ""
+#~ "<p class=\"small\">View this</span><p>Project</p><p class=\"small\">Now</"
+#~ "p>"
+#~ msgstr ""
+#~ "<p class=\"small\">Voir ce</span><p>Projet</p><p class=\"small"
+#~ "\">Maintenant</p>"
+
+#~ msgid "Blog"
+#~ msgstr "Blog"
+
+#~ msgid "More projects"
+#~ msgstr "Plus de projets"
+
+#~ msgid "Next<br>project"
+#~ msgstr "Projet<br>Suivant"
+
+#~ msgid "Previous Project"
+#~ msgstr "Projet précédent"
+
+#~ msgid "Next Project"
+#~ msgstr "Projet suivant"
+
+#~ msgid "Project"
+#~ msgstr "Projet"
+
+#, fuzzy
+#~| msgid "Invalid PHP version"
+#~ msgid "Invalid values:"
+#~ msgstr "Invalid PHP version"
+
+#, fuzzy
+#~| msgid "Publication date"
+#~ msgid "Implications failed:"
+#~ msgstr "Date de publication"

@@ -1,0 +1,279 @@
+/**
+ * Convenience function to negate a number.
+ * @function neg
+ * @sinc 1.0.0
+ */
+ @function neg($value) {
+    $val: $value * -1;
+    @return $val;
+}
+
+/**
+ * Converts a unit to rem.
+ * @function rem
+ * @sinc 1.0.0
+ */
+ @function rem($value) {
+    $val: $value / 16px;
+    @return #{$val}rem;
+}
+
+/**
+ * Converts a unit to vw;
+ * @function rem
+ * @sinc 1.0.0
+ */
+ @function rvw($value) {
+    $val: $value / 1440px * 100;
+    @return #{$val}vw;
+}
+
+/**
+ * Converts a photoshop tracking value to letter-spacing value.
+ * @function tracking
+ * @sinc 1.0.0
+ */
+@function tracking($value) {
+	$val: $value / 1000;
+	@return #{$val}em;
+}
+
+/**
+ * Convenience method to output a calc css property that adds 2 numbers.
+ * @function calc-add
+ * @sinc 1.0.0
+ */
+@function calc-add($a, $b, $m: 1) {
+    @return #{"calc((" + $a + " + " + $b + ") * " + $m + ")"};
+}
+
+/**
+ * Convenience method to output a calc css property that substracts 2 numbers.
+ * @function calc-add
+ * @sinc 1.0.0
+ */
+@function calc-sub($a, $b, $m: 1) {
+    @return #{"calc((" + $a + " - " + $b + ") * " + $m + ")"};
+}
+
+/**
+ * Indicates whether the number is a valig length;
+ * @function is-valid-length
+ * @since 1.0.0
+ */
+ @function is-valid-length($value) {
+	@return (type-of($value) == "number" and not unitless($value)) or (index(auto initial inherit 0, $value) != false);
+}
+
+/**
+ * Returns a scaled size value.
+ * @function size
+ * @since 1.0.0
+ */
+@function scaled-size($bp, $base, $mul: 1, $add: 0) {
+    @return rem(map-get($sizing-scales, $bp) * $base * $mul + $add);
+}
+
+/**
+ * Returns a vertical scaled value.
+ * @function spacing-v
+ * @since 1.0.0
+ */
+@function spacing-v($bp, $base, $mul: 1, $add: 0) {
+
+    @if $mul == 0 {
+        @return 0;
+    }
+
+    @return rem(map-get($spacing-scales-v, $bp) * $base * $mul + $add);
+}
+
+/**
+ * Return the general scaled spacing value.
+ * @function spacing-h
+ * @since 1.0.0
+ */
+ @function spacing-h($bp, $base, $mul: 1, $add: 0) {
+
+    @if $mul == 0 {
+        @return 0;
+    }
+
+    @return rem(map-get($spacing-scales-h, $bp) * $base * $mul + $add);
+}
+
+/**
+ * Returns a scaled padding top.
+ * @function scaled-padding-top
+ * @since 1.0.0
+ */
+@function scaled-padding-top($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled padding left.
+ * @function scaled-padding-left
+ * @since 1.0.0
+ */
+@function scaled-padding-left($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled padding right.
+ * @function scaled-padding-right
+ * @since 1.0.0
+ */
+@function scaled-padding-right($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled padding right.
+ * @function scaled-padding-right
+ * @since 1.0.0
+ */
+@function scaled-padding-bottom($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled margin top.
+ * @function scaled-margin-top
+ * @since 1.0.0
+ */
+@function scaled-margin-top($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled margin left.
+ * @function scaled-margin-left
+ * @since 1.0.0
+ */
+@function scaled-margin-left($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled margin right.
+ * @function scaled-margin-right
+ * @since 1.0.0
+ */
+@function scaled-margin-right($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled margin right.
+ * @function scaled-margin-right
+ * @since 1.0.0
+ */
+@function scaled-margin-bottom($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled top.
+ * @function scaled-top
+ * @since 1.0.0
+ */
+@function scaled-top($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled left.
+ * @function scaled-left
+ * @since 1.0.0
+ */
+@function scaled-left($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled right.
+ * @function scaled-right
+ * @since 1.0.0
+ */
+@function scaled-right($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled right.
+ * @function scaled-bottom
+ * @since 1.0.0
+ */
+@function scaled-bottom($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled width.
+ * @function scaled-width
+ * @since 1.0.0
+ */
+@function scaled-width($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-h($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled height.
+ * @function scaled-height
+ * @since 1.0.0
+ */
+@function scaled-height($bp, $base, $mul: 1, $add: 0) {
+    @return spacing-v($bp, $base, $mul, $add);
+}
+
+/**
+ * Returns a scaled translation x.
+ * @function scaled-translate-x
+ * @since 1.0.0
+ */
+@function scaled-translate-x($bp, $base, $mul: 1, $add: 0) {
+    @return translateX(#{spacing-h($bp, $base, $mul, $add)});
+}
+
+/**
+ * Returns a scaled translation y.
+ * @function scaled-translate-y
+ * @since 1.0.0
+ */
+@function scaled-translate-y($bp, $base, $mul: 1, $add: 0) {
+    @return translateY(#{spacing-v($bp, $base, $mul, $add)});
+}
+
+/**
+ * @function scaled-min
+ * @since 1.0.0
+ */
+@function scaled-min($bp, $base, $mul: 1, $add: 0) {
+
+    $v: map-get($spacing-scales-v, $bp);
+    $h: map-get($spacing-scales-h, $bp);
+
+    @if $v < $h {
+        @return rem($v * $base * $mul + $add);
+    } @else {
+        @return rem($h * $base * $mul + $add);
+    }
+}
+
+/**
+ * @function scaled-max
+ * @since 1.0.0
+ */
+@function scaled-max($bp, $base, $mul: 1, $add: 0) {
+
+    $v: map-get($spacing-scales-v, $bp);
+    $h: map-get($spacing-scales-h, $bp);
+
+    @if $v > $h {
+        @return rem($v * $base * $mul + $add);
+    } @else {
+        @return rem($h * $base * $mul + $add);
+    }
+}

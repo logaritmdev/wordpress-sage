@@ -1,0 +1,20 @@
+[
+    {
+        "title": "Petit",
+        "selector": "*",
+        "classes": "small",
+        "type": "item"
+    },
+    {
+        "title": "Bouton - Primaire",
+        "selector": "a",
+        "classes": "button button--primary",
+        "type": "item"
+    },
+    {
+        "title": "Bouton - Suite",
+        "selector": "a",
+        "classes": "button button--more",
+        "type": "item"
+    }
+]

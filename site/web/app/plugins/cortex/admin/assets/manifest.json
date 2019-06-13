@@ -1,0 +1,28 @@
+{
+  "dependencies": {
+    "main.js": {
+      "files": [
+        "scripts/plugins/jquery-attach.js",
+        "scripts/components/cortex-modal.js",
+        "scripts/components/cortex-editor.js",
+        "scripts/components/cortex-admin-blocks-page.js",
+        "scripts/components/cortex-admin-settings-page.js",
+        "scripts/main.js"
+      ],
+      "main": true
+    },
+    "main.css": {
+      "files": [
+        "styles/main.scss"
+      ],
+      "main": true
+    }
+  },
+  "config": {
+    "devUrl": "http://jackalopefest.tribu.test"
+  },
+  "paths": {
+    "dist": "../",
+    "source": "./"
+  }
+}

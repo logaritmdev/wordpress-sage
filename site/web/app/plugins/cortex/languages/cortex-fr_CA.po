@@ -1,0 +1,312 @@
+# WordPress Blank Pot
+# Copyright (C) 2014 ...
+# This file is distributed under the GNU General Public License v2 or later.
+msgid ""
+msgstr ""
+"Project-Id-Version: WP Blocks Builder\n"
+"Report-Msgid-Bugs-To: Translator Name <translations@cortex.test>\n"
+"POT-Creation-Date: 2019-05-03 10:41-0400\n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jean-Philippe Déry <jean-philippe.dery@logaritm.ca>\n"
+"Language-Team: Logaritm <jean-philippe.dery@logaritm.ca>\n"
+"Language: fr_CA\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Textdomain-Support: yesX-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e;esc_html_e;esc_html_x:1,2c;esc_html__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_attr__;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;"
+"_x:1,2c;_n:1,2;_n_noop:1,2;__ngettext:1,2;__ngettext_noop:1,2;_c,_nc:4c,1,2\n"
+"X-Poedit-Basepath: ..\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPathExcluded-0: admin/assets/node_modules\n"
+
+#: admin/class-cortex-admin.php:149 admin/class-cortex-admin.php:150
+msgid "Cortex"
+msgstr "Cortex"
+
+#: admin/class-cortex-admin.php:157 admin/class-cortex-admin.php:158
+#: includes/class-cortex-settings.php:86 includes/class-cortex-settings.php:87
+#: views/cortex-admin-blocks-page.php:4
+msgid "Blocks"
+msgstr "Blocs"
+
+#: admin/class-cortex-admin.php:198 admin/class-cortex-admin.php:202
+msgid "Options"
+msgstr "Options"
+
+#: admin/class-cortex-admin.php:206
+msgid "Block"
+msgstr "Bloc"
+
+#: admin/class-cortex-admin.php:207
+msgid "Style"
+msgstr "Style"
+
+#: admin/class-cortex-admin.php:208
+msgid "Script"
+msgstr "Script"
+
+#: admin/class-cortex-admin.php:224
+msgid "Create Block"
+msgstr "Créé un bloc"
+
+#: admin/class-cortex-admin.php:228 admin/class-cortex-admin.php:246
+msgid "Close"
+msgstr "Fermer"
+
+#: admin/class-cortex-admin.php:242
+msgid "Edit Block"
+msgstr "Modifier le bloc"
+
+#: admin/class-cortex-admin.php:284
+msgid "Settings Saved"
+msgstr "Paramêtres sauvegardés"
+
+#: includes/class-cortex-block-list.php:23
+msgid "block"
+msgstr "bloc"
+
+#: includes/class-cortex-block-list.php:24
+msgid "blocks"
+msgstr "blocs"
+
+#: includes/class-cortex-block-list.php:36
+msgid "No blocks"
+msgstr "Aucun bloc"
+
+#: includes/class-cortex-block-list.php:65
+msgid "Name"
+msgstr "Nom"
+
+#: includes/class-cortex-block-list.php:66
+msgid "Category"
+msgstr "Catégorie"
+
+#: includes/class-cortex-settings.php:88 includes/class-cortex-settings.php:89
+msgid "Styles Include Path"
+msgstr "Chemins d’accès aux styles"
+
+#: includes/class-cortex-settings.php:90
+msgid "Environment"
+msgstr "Environnement"
+
+#: includes/class-cortex-settings.php:91
+msgid "Settings"
+msgstr "Paramètres"
+
+#: includes/class-cortex-settings.php:92
+msgid "Enqueue block style on admin page"
+msgstr "Charger les styles du blocs dans l'interface d'administration"
+
+#: includes/class-cortex-settings.php:93
+msgid "Enqueue block script on admin page"
+msgstr "Charger les scripts du block dans l'interface d'administration"
+
+#: includes/class-cortex-settings.php:94
+msgid "Preview Server"
+msgstr "Serveur d'apperçu"
+
+#: includes/class-cortex-settings.php:145
+msgid "Defines options related to block scripts and styles files."
+msgstr "Options reliées au feuilles de styles et scripts."
+
+#: includes/class-cortex-settings.php:154
+msgid "General settings."
+msgstr "Préférences générales."
+
+#: includes/class-cortex-settings.php:223
+msgid "Optionnal."
+msgstr "Optionnel."
+
+#: views/cortex-admin-blocks-page.php:5
+msgid "Add New"
+msgstr "Ajouter"
+
+#: views/cortex-admin-settings-page.php:5
+msgid "Cortex Settings"
+msgstr "Paramètres Cortex"
+
+#: views/cortex-meta-box-block-options.php:9
+msgid "Location"
+msgstr "Emplacement"
+
+#: views/cortex-meta-box-block-options.php:12
+msgid "The location where the block template will be created."
+msgstr "L’emplacement où le modèle du bloc sera créé."
+
+#: views/cortex-meta-box-block-options.php:33
+msgid "Folder"
+msgstr "Dossier"
+
+#: views/cortex-meta-box-block-options.php:36
+msgid ""
+"The block template folder name, will default to the block name if empty."
+msgstr ""
+"Le nom du dossier contenant le modèle du bloc. Utilisera le nom du bloc si "
+"laissé vide."
+
+#: views/cortex-meta-box-block-options.php:51
+msgid "Template engine"
+msgstr "Engin de template"
+
+#: views/cortex-meta-box-block-options.php:76
+msgid "Preprocessor engine"
+msgstr "Engin de pré-processeur"
+
+#: views/settings/cortex-block-status-group.php:1
+msgid "Enable / disable certain blocks for the whole site."
+msgstr "Active / désactive certains blocs pour le site en entier."
+
+#~ msgid "This block will be removed from this document. Are you sure ?"
+#~ msgstr "Ce bloc sera retiré du document, êtes-vous certain ?"
+
+#~ msgid "Add New Block Template"
+#~ msgstr "Ajouter un nouveau modèle de bloc"
+
+#~ msgid "Edit Block Template"
+#~ msgstr "Modifier le modèle du bloc"
+
+#~ msgid "Hint"
+#~ msgstr "Description"
+
+#~ msgid "Group"
+#~ msgstr "Groupe"
+
+#~ msgid "Sync"
+#~ msgstr "Synchroniser"
+
+#~ msgid "Edit Fields"
+#~ msgstr "Modifier les champs"
+
+#~ msgid "All Groups"
+#~ msgstr "Tous les groupes"
+
+#~ msgid "Layout"
+#~ msgstr "Mise en page"
+
+#~ msgid "Filter"
+#~ msgstr "Filtres"
+
+#~ msgid "Post Types"
+#~ msgstr "Post Types"
+
+#~ msgid "Cortex Blocks"
+#~ msgstr "Blocs Cortex"
+
+#~ msgid "Add New Cortex Block"
+#~ msgstr "Ajouter un nouveau bloc Cortex"
+
+#~ msgid "New Cortex Block"
+#~ msgstr "Nouveau bloc Cortex"
+
+#~ msgid "View Cortex Block"
+#~ msgstr "Voir le bloc Cortex"
+
+#~ msgid "Search Cortex Blocks"
+#~ msgstr "Rechercher un bloc Cortex"
+
+#~ msgid "No Cortex Blocks found"
+#~ msgstr "Aucun bloc Cortex trouvé"
+
+#~ msgid "No Cortex Blocks found in Trash"
+#~ msgstr "Aucun bloc Cortex trouvé dans la corbeille"
+
+#~ msgid "Empty layout region"
+#~ msgstr "Région de mise en page vide"
+
+#~ msgid "Use the button below or drop a block to fill this region."
+#~ msgstr ""
+#~ "Utilisez le bouton ci-dessous ou déplacez-y un bloc pour remplir cette "
+#~ "région."
+
+#~ msgid "Add Block"
+#~ msgstr "Ajouter un bloc"
+
+#~ msgid "Show"
+#~ msgstr "Afficher"
+
+#~ msgid "Hide"
+#~ msgstr "Cacher"
+
+#~ msgid "Copy"
+#~ msgstr "Copier"
+
+#~ msgid "Move"
+#~ msgstr "Déplacer"
+
+#~ msgid "Remove"
+#~ msgstr "Retirer"
+
+#~ msgid "Edit"
+#~ msgstr "Modifier"
+
+#~ msgid "This document is empty."
+#~ msgstr "Ce document est vide."
+
+#~ msgid "Start building this page by adding a few blocks."
+#~ msgstr "Construisez cette page en y ajoutant quelques blocs."
+
+#~ msgid "Edit Content"
+#~ msgstr "Modifier le contenu"
+
+#~ msgid "Insert Block"
+#~ msgstr "Insérer un bloc"
+
+#~ msgid "All Blocks"
+#~ msgstr "Tous les blocs"
+
+#~ msgid "Layouts Blocks"
+#~ msgstr "Blocs de mise en page"
+
+#~ msgid "Search"
+#~ msgstr "Rechercher"
+
+#~ msgid "Copy Block"
+#~ msgstr "Copier le bloc"
+
+#~ msgid "Search: "
+#~ msgstr "Rechercher: "
+
+#~ msgid "Move Block"
+#~ msgstr "Déplacer le bloc"
+
+#~ msgid "Title"
+#~ msgstr "Titre"
+
+#~ msgid "Select"
+#~ msgstr "Sélectionner"
+
+#~ msgid "Empty"
+#~ msgstr "Vide"
+
+#~ msgid ""
+#~ "This post type contains more than 50 posts. You should use the search box "
+#~ "instead."
+#~ msgstr ""
+#~ "Ce type de message contient plus de 50 postes. Vous devez plutôt utiliser "
+#~ "la boîte de recherche."
+
+#~ msgid ""
+#~ "Cortex is free to use for development purposes but a licence key is "
+#~ "required for production projects."
+#~ msgstr ""
+#~ "Cortex peut être utilisé gratuitement lors du développement mais une "
+#~ "licence est requise pour un site en production."
+
+#~ msgid "Select which post types are allowed to display blocks."
+#~ msgstr "Sélectionnez quel type de posts peuvent contenir des blocs."
+
+#~ msgid "Post Type"
+#~ msgstr "Type de post"
+
+#~ msgid ""
+#~ "Defines paths that will be used with @import directive in LESS or SASS "
+#~ "files. One path per line, relative to the theme directory."
+#~ msgstr ""
+#~ "Définit les chemins qui seront utilisés avec les directives de type "
+#~ "@import dans les fichiers LESS ou SASS. Un chemin par ligne, relatif au "
+#~ "dossier du thème."

@@ -1,0 +1,271 @@
+//------------------------------------------------------------------------------
+// Headings
+//------------------------------------------------------------------------------
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+h1, h2, h3, h4, h5, p {
+
+	&:first-child {
+		margin-top: 0;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Text
+//------------------------------------------------------------------------------
+
+.line {
+	@include relative;
+	display: block;
+}
+
+.word {
+    @include relative;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.char {
+    @include relative;
+    display: inline-block;
+    white-space: nowrap;
+}
+
+//------------------------------------------------------------------------------
+// WYSIWYG Text
+//------------------------------------------------------------------------------
+
+.wysiwyg {
+
+	strong {
+		font-weight: 600;
+	}
+
+	ul, li, p {
+		margin: 0;
+	}
+
+	p {
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+	}
+
+	ul {
+
+		@include media-break-down using ($bp) {
+			padding-left: scaled-padding-left($bp, 30px);
+		}
+
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+	}
+
+	ol {
+
+		@include media-break-down using ($bp) {
+			padding-left: scaled-padding-left($bp, 30px);
+		}
+
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+	}
+
+	li {
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 15px);
+			}
+		}
+	}
+
+	blockquote {
+
+		@include relative;
+		margin: 0;
+		padding: 0;
+
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+	}
+
+	.emphasized {
+		font-size: 120%;
+	}
+
+	.small {
+		font-size: 80%;
+	}
+}
+
+//------------------------------------------------------------------------------
+// Wordpress WYSIWYG TEXT
+//------------------------------------------------------------------------------
+
+.wysiwyg {
+
+	img {
+		max-width: 100%;
+	}
+
+   .alignnone {
+
+		display: block;
+		margin: 0;
+
+		&:not(:last-child) {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+
+		p:not(:last-child) & {
+			@include media-break-down using ($bp) {
+				margin-bottom: scaled-margin-bottom($bp, 30px);
+			}
+		}
+	}
+
+	.aligncenter {
+
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+
+		@include media-break-down using ($bp) {
+			margin-bottom: scaled-margin-bottom($bp, 30px);
+		}
+	}
+
+	.alignright {
+
+		float: right;
+		margin: 0;
+
+		@include media-break-down using ($bp) {
+			margin-left: scaled-margin-bottom($bp, 30px);
+		}
+	}
+
+	.alignleft {
+
+		float: left;
+		margin: 0;
+
+		@include media-break-down using ($bp) {
+			margin-right: scaled-margin-bottom($bp, 30px);
+		}
+	}
+
+	.wp-caption {
+
+		&.alignnone {
+
+			width: 100% !important;
+
+			&:not(:last-child) {
+				@include media-break-down using ($bp) {
+					margin-bottom: scaled-margin-bottom($bp, 30px);
+				}
+			}
+		}
+
+		&.alignleft {
+			@include media-break-down using ($bp) {
+				margin-right: scaled-margin-bottom($bp, 30px);
+			}
+		}
+
+		&.alignright {
+			@include media-break-down using ($bp) {
+				margin-left: scaled-margin-bottom($bp, 30px);
+			}
+		}
+
+		img {
+			display: block;
+			height: auto;
+			width: 100%;
+		}
+
+		.wp-caption-text {
+			font-size: rem(12px);
+			margin: 0;
+			margin-top: rem(10px);
+		}
+	}
+
+	.gallery {
+		@include flex-box;
+		@include flex-row(flex-start, flex-start);
+		@include flex-wrap(wrap);
+		margin-left: rem(-15px);
+		margin-right: rem(-15px);
+	}
+
+	.gallery-item {
+		margin-left: rem(15px);
+		margin-right: rem(15px);
+		margin-bottom: rem(30px);
+	}
+
+	.screen-reader-text {
+		border: 0;
+		clip-path: inset(50%);
+		clip: rect(1px, 1px, 1px, 1px);
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		padding: 0;
+		position: absolute !important;
+		width: 1px;
+		word-wrap: normal !important;
+	}
+
+	.screen-reader-text:focus {
+		background-color: #eee;
+		clip-path: none;
+		clip: auto !important;
+		color: #444;
+		display: block;
+		font-size: 1em;
+		height: auto;
+		left: 5px;
+		line-height: normal;
+		padding: 15px 23px 14px;
+		text-decoration: none;
+		top: 5px;
+		width: auto;
+		z-index: 100000;
+	}
+}
