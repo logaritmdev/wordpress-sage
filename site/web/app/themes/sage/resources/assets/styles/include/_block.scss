@@ -24,24 +24,6 @@
 }
 
 /**
- * Retrieve the block vertical space value for the specified breakpoint.
- * @function block-padding-v
- * @sinc 1.0.0
- */
- @function block-padding-v($bp, $mul: 1, $add: 0) {
-	@return rem(map-get($block-paddings-v, $bp) * $mul + $add);
-}
-
-/**
- * Retrieve the block horizonta. space value for the specified breakpoint.
- * @function block-padding-h
- * @sinc 1.0.0
- */
-@function block-padding-h($bp, $mul: 1, $add: 0) {
-	@return rem(map-get($block-paddings-h, $bp) * $mul + $add);
-}
-
-/**
  * @function get-block-spacing-v
  * @sinc 1.0.0
  * @hidden

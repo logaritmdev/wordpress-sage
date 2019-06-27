@@ -60,6 +60,10 @@ body {
 	overflow-x: hidden;
 	padding: 0;
 
+	@include media-breakpoint-down(xs) {
+		font-size: rem(18px);
+	}
+
 	.smooth-scrolling & {
 		height: 100%;
 		overflow: hidden;
@@ -96,7 +100,7 @@ img {
 
 input, button, textarea {
 
-	font-family: sans-serif;
+	font-family: inherit;
 	font-weight: normal;
 	font-size: rem(15px);
 

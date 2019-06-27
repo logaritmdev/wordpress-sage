@@ -13,9 +13,20 @@
  * @function rem
  * @sinc 1.0.0
  */
- @function rem($value) {
+ @function rem($value, $min: 0) {
+
     $val: $value / 16px;
-    @return #{$val}rem;
+
+    @if $min == 0 {
+        @return #{$val}rem;
+    }
+
+    $val: ($value - $min) / 16px;
+
+    @return calc-add(
+        #{$min},
+        #{$val}rem
+    );
 }
 
 /**
@@ -23,9 +34,20 @@
  * @function rem
  * @sinc 1.0.0
  */
- @function rvw($value) {
-    $val: $value / 1440px * 100;
-    @return #{$val}vw;
+ @function rvw($value, $base: 1440px, $min: 0) {
+
+    $val: $value / $base * 100;
+
+    @if $min == 0 {
+        @return #{$val}vw;
+    }
+
+    $val: ($value - $min) / $base * 100;
+
+    @return calc-add(
+        #{$min},
+        #{$val}vw
+    );
 }
 
 /**

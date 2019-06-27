@@ -8,12 +8,14 @@
 	margin-right: auto;
 	width: 1920px - 60px - get-block-spacing-h(xxxl) * 2;
 
-	@include media-break-down using ($bp) {
+	@include media-breakpoint-down(xxl) {
+		width: auto;
+	}
+
+	@include media-break-down(xxl, xl, lg, md, sm, xs) using ($bp) {
 		margin-left: scaled-margin-left($bp, 60px);
 		margin-right: scaled-margin-right($bp, 60px);
 	}
-
-
 }
 
 .container-inset {
@@ -22,13 +24,13 @@
 	margin-right: auto;
 	width: 1920px - 60px - get-block-spacing-h(xxxl) * 4;
 
-	@include media-break-down using ($bp) {
-		margin-left: scaled-margin-left($bp, 90px);
-		margin-right: scaled-margin-right($bp, 90px);
-	}
-
 	@include media-breakpoint-down(xxl) {
 		width: auto;
+	}
+
+	@include media-break-down(xxl, xl, lg, md, sm, xs) using ($bp) {
+		margin-left: scaled-margin-left($bp, 90px);
+		margin-right: scaled-margin-right($bp, 90px);
 	}
 }
 

@@ -7,7 +7,7 @@
  * @var breakpoints
  * @since 1.0.0
  */
-$breakpoints: (
+ $breakpoints: (
 	xxxl,
 	xxl,
 	xl,
@@ -61,7 +61,7 @@ $grid: (
  * @since 1.0.0
  */
 $block-spacings-v: (
-	xs:   45px,
+	xs:   60px,
 	sm:   60px,
 	md:   90px,
 	lg:   90px,
@@ -76,21 +76,6 @@ $block-spacings-v: (
  * @since 1.0.0
  */
 $block-spacings-h: (
-	xs:   30px,
-	sm:   45px,
-	md:   45px,
-	lg:   60px,
-	xl:   60px,
-	xxl:  60px,
-	xxxl: 60px,
-);
-
-/**
- * The vertical padding of each block for each breakpoints.
- * @var block-paddings-v
- * @since 1.0.0
- */
-$block-paddings-v: (
 	xs:   45px,
 	sm:   60px,
 	md:   90px,
@@ -98,21 +83,6 @@ $block-paddings-v: (
 	xl:   120px,
 	xxl:  120px,
 	xxxl: 120px,
-);
-
-/**
- * The vertical padding of each block for each breakpoints.
- * @var block-v-paddings
- * @since 1.0.0
- */
-$block-paddings-h: (
-	xs:   0,
-	sm:   0,
-	md:   0,
-	lg:   0,
-	xl:   0,
-	xxl:  0,
-	xxxl: 0,
 );
 
 /**
@@ -137,9 +107,9 @@ $spacing-scales-v: (
  */
 $spacing-scales-h: (
 	xs:   0.500,
-	sm:   0.750,
+	sm:   0.500,
 	md:   0.750,
-	lg:   1.000,
+	lg:   0.750,
 	xl:   1.000,
 	xxl:  1.000,
 	xxxl: 1.000,
