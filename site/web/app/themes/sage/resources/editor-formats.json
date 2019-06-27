@@ -1,20 +1,15 @@
 [
     {
-        "title": "Petit",
+        "title": "Emphase",
         "selector": "*",
-        "classes": "small",
+        "inline": "span",
+        "classes": "emphasize",
         "type": "item"
     },
     {
         "title": "Bouton - Primaire",
         "selector": "a",
         "classes": "button button--primary",
-        "type": "item"
-    },
-    {
-        "title": "Bouton - Suite",
-        "selector": "a",
-        "classes": "button button--more",
         "type": "item"
     }
 ]
