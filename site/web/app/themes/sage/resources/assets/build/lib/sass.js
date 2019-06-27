@@ -10,7 +10,7 @@ const files = {}
  * @function fdeps
  * @since 1.0.0
  */
-const fdeps = (file) => {
+function fdeps(file) {
 
 	let options = {
 		loadPaths: [
@@ -33,18 +33,18 @@ const fdeps = (file) => {
  * @function ftime
  * @since 1.0.0
  */
-const ftime = (src) => {
+function ftime(src) {
 	return fs.statSync(src).mtime.getTime()
 }
 
 /**
  * Returns the file modification time.
- * @function ftime
+ * @function sync
  * @since 1.0.0
  */
-const collect = (file) => {
+function sync(file, force = false) {
 
-	if (files[file] == null) {
+	if (files[file] == null || force) {
 		files[file] = {
 			time: ftime(file),
 			deps: fdeps(file)
@@ -52,16 +52,16 @@ const collect = (file) => {
 	}
 
 	for (let dep of files[file].deps) {
-		collect(dep)
+		sync(dep, force)
 	}
 }
 
 /**
- * Check whether a file or one of its dependency changed.
+ * Check whether a file or one of its dependency newer.
  * @function check
  * @since 1.0.0
  */
-const check = (file) => {
+function check(file) {
 
 	let data = files[file]
 	if (data == null) {
@@ -83,45 +83,75 @@ const check = (file) => {
 	return false
 }
 
-module.exports = () => through.obj(function (file, enc, callback) {
+/**
+ * Detect whether the file or a dependency newer.
+ * @function update
+ * @since 1.0.0
+ */
+function update() {
 
-	/*
-	 * The file has not been processed before, we assume
-	 * it has changed and we compile it.
-	 */
+	const stream = function (file, enc, done) {
 
-	if (files[file.path] == null) {
-		collect(file.path)
-		callback(null, file)
-		return
-	}
+		/*
+		 * The file has not been processed before, we assume
+		 * it has newer and we compile it.
+		 */
 
-	let time = ftime(file.path)
-
-	/*
-	 * The file has been processed before but its modification
-	 * time has changed, compile it.
-	 */
-
-	if (files[file.path].time != time) {
-		files[file.path].time = time
-		files[file.path].deps = fdeps(file.path)
-		callback(null, file)
-		return
-	}
-
-	/*
-	 * At this point we check if a dependency has changed to
-	 * recompile this file
-	 */
-
-	for (let dep of files[file.path].deps) {
-		let newer = check(dep)
-		if (newer) {
-			callback(null, file)
+		if (files[file.path] == null) {
+			sync(file.path)
+			done(null, file)
 			return
 		}
+
+		let time = ftime(file.path)
+
+		/*
+		 * The file has been processed before but its modification
+ 		 * time has newer, compile it.
+		 */
+
+		if (files[file.path].time != time) {
+			files[file.path].time = time
+			files[file.path].deps = fdeps(file.path)
+			done(null, file)
+			return
+		}
+
+		/*
+		 * At this point we check if a dependency has newer to
+		 * recompile this file
+		 */
+
+		for (let dep of files[file.path].deps) {
+			let newer = check(dep)
+			if (newer) {
+				done(null, file)
+				return
+			}
+		}
+
+		this.emit('end')
 	}
 
-	this.emit('end')
-})
+	return through.obj(stream)
+}
+
+/**
+ * Sync modified time for file and deps.
+ * @function resync
+ * @since 1.0.0
+ */
+function resync() {
+
+	const stream = function (file, enc, done) {
+		sync(file.path, true)
+		done(null, file)
+	}
+
+	return through.obj(stream)
+}
+
+module.exports = {
+	update,
+	resync
+}

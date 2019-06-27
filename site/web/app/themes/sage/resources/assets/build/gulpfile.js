@@ -14,7 +14,8 @@ const merge = require('merge-stream')
 const fiber = require('fibers')
 const babelify = require('babelify')
 const browserSync = require('browser-sync').create()
-const changed = require('./lib/sass')
+const update = require('./lib/sass').update
+const resync = require('./lib/sass').resync
 
 /*
  * Loads external configurations.
@@ -157,7 +158,7 @@ gulp.task('images', function (done) {
 // Styles
 //------------------------------------------------------------------------------
 
-gulp.task('styles', function (done) {
+gulp.task('styles', function () {
 
 	const build = () => {
 
@@ -192,11 +193,31 @@ gulp.task('styles', function (done) {
 
 		merged.add(
 			gulp.src(src)
-				.pipe(changed())
+				.pipe(update())
 				.pipe(build())
 				.pipe(prefix())
 				.pipe(minify())
 				.pipe(write(dst))
+				.pipe(browserSync.stream())
+		)
+
+	})
+
+	return merged
+
+})
+
+gulp.task('styles-resync', function () {
+
+	let merged = merge()
+
+	config.files.styles.forEach(file => {
+
+		let { src, dst } = file
+
+		merged.add(
+			gulp.src(src)
+				.pipe(resync())
 		)
 
 	})
@@ -209,7 +230,7 @@ gulp.task('styles', function (done) {
 // Scripts
 //------------------------------------------------------------------------------
 
-gulp.task('scripts', function (done) {
+gulp.task('scripts', function () {
 
 	const build = () => {
 
@@ -261,16 +282,14 @@ gulp.task('scripts', function (done) {
 //------------------------------------------------------------------------------
 
 gulp.task('build', gulp.series('clean', 'styles', 'scripts', 'fonts', 'images', function (done) {
-
 	done()
-
 }))
 
 //------------------------------------------------------------------------------
 // Watch
 //------------------------------------------------------------------------------
 
-gulp.task('watch', function (done) {
+gulp.task('watch', function () {
 
 	browserSync.init({
 
@@ -296,12 +315,28 @@ gulp.task('watch', function (done) {
 
 	})
 
-	gulp.watch([path.join(config.paths.assets, 'images/**/*')], gulp.series('images'))
-	gulp.watch([path.join(config.paths.assets, 'images/**/*')], gulp.series('images'))
-	gulp.watch([path.join(config.paths.assets, 'styles/**/*')], gulp.series('styles'))
-	gulp.watch([path.join(config.paths.assets, 'scripts/**/*')], gulp.series('scripts'))
+	gulp.watch([
+		path.join(config.paths.root, 'resources/assets/images/**/*'),
+		path.join(config.paths.root, 'resources/blocks/**/assets/images/**/*')
+	], gulp.series('images', 'reload'))
 
-	gulp.watch([path.join(config.paths.root, 'resources/blocks/**/assets/*.js')], gulp.series('scripts'))
-	gulp.watch([path.join(config.paths.root, 'resources/blocks/**/assets/*.scss')], gulp.series('styles'))
+	gulp.watch([
+		path.join(config.paths.root, 'resources/assets/styles/**/*.scss'),
+		path.join(config.paths.root, 'resources/blocks/**/assets/*.scss')
+	], gulp.series('styles', 'styles-resync'))
 
+	gulp.watch([
+		path.join(config.paths.root, 'resources/assets/scripts/**/*.js'),
+		path.join(config.paths.root, 'resources/blocks/**/assets/*.js')
+	], gulp.series('scripts', 'reload'))
+
+})
+
+//------------------------------------------------------------------------------
+// Reload
+//------------------------------------------------------------------------------
+
+gulp.task('reload', function (done) {
+	browserSync.reload()
+	done()
 })

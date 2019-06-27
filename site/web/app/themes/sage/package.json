@@ -9,6 +9,7 @@
   "scripts": {
     "clean": "gulp clean --gulpfile resources/assets/build/gulpfile.js --cwd ./",
     "build": "gulp build --gulpfile resources/assets/build/gulpfile.js --cwd ./",
+    "build:images": "gulp images --gulpfile resources/assets/build/gulpfile.js --cwd ./",
     "build:styles": "gulp styles --gulpfile resources/assets/build/gulpfile.js --cwd ./",
     "build:scripts": "gulp scripts --gulpfile resources/assets/build/gulpfile.js --cwd ./",
     "build:prod": "gulp build --production --gulpfile resources/assets/build/gulpfile.js --cwd ./",
