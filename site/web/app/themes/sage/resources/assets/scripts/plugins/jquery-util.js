@@ -293,3 +293,21 @@ $.fn.overflows = function (axis) {
 
 	return false
 }
+
+/**
+ * Returns the amount of pages.
+ * @function pages
+ * @since 1.0.0
+ */
+$.fn.pages = function () {
+
+	let sw = this.scrollWidth()
+	let sh = this.scrollHeight()
+	let fw = this.bounds().width
+	let fh = this.bounds().height
+
+	return {
+		x: Math.ceil(sw / fw),
+		y: Math.ceil(sh / fh)
+	}
+}
