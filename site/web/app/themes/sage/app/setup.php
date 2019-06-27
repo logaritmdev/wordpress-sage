@@ -85,7 +85,7 @@ add_action('after_setup_theme', function () {
 		'show_ui'            => true,
 		'show_in_menu'       => true,
 		'query_var'          => true,
-		'rewrite'            => array('slug' => 'partner'),
+		'rewrite'            => array('slug' => 'example'),
 		'capability_type'    => 'post',
 		'has_archive'        => false,
 		'hierarchical'       => false,
@@ -95,31 +95,29 @@ add_action('after_setup_theme', function () {
 		'supports'           => array('title', 'thumbnail', 'editor')
 	));
 
-	$labels = array(
-		'name'             => _x('Categories','taxonomy general name', 'sage'),
-		'singular_name'    => _x('Category','taxonomy singular name', 'sage'),
-		'search_items'     => __('Search Categories', 'sage'),
-		'all_items'        => __('All Categories', 'sage'),
-		'parent_item'      => __('Parent Category', 'sage'),
-		'parent_item_colon'=> __('Parent Category:', 'sage'),
-		'edit_item'        => __('Edit Category', 'sage'),
-		'update_item'      => __('Update Category', 'sage'),
-		'add_new_item'     => __('Add New Category', 'sage'),
-		'new_item_name'    => __('New Category Name', 'sage'),
-		'menu_name'        => __('Category', 'sage'),
-	);
+	register_taxonomy('example-category', array('example'), array(
 
-	$args = array(
+		'labels'           => array(
+			'name'             => _x('Categories','taxonomy general name', 'sage'),
+			'singular_name'    => _x('Category','taxonomy singular name', 'sage'),
+			'search_items'     => __('Search Categories', 'sage'),
+			'all_items'        => __('All Categories', 'sage'),
+			'parent_item'      => __('Parent Category', 'sage'),
+			'parent_item_colon'=> __('Parent Category:', 'sage'),
+			'edit_item'        => __('Edit Category', 'sage'),
+			'update_item'      => __('Update Category', 'sage'),
+			'add_new_item'     => __('Add New Category', 'sage'),
+			'new_item_name'    => __('New Category Name', 'sage'),
+			'menu_name'        => __('Category', 'sage'),
+		),
+
 		'hierarchical'     => true,
-		'labels'           => $labels,
 		'show_ui'          => true,
 		'show_admin_column'=> true,
 		'show_in_rest'     => true,
 		'query_var'        => true,
 		'rewrite'          => array('slug' => 'example-category'),
-	);
-
-	register_taxonomy('example-category', array('example'), $args);
+	));
 	*/
 
 }, 20);
@@ -213,6 +211,28 @@ add_filter('upload_mimes', function($mimes) {
  * Twig functions
  */
 add_filter('get_twig', function($twig) {
+
+	/**
+	 * @filter date
+	 * @since 1.0.0
+	 */
+    $twig->addFilter('date', new \Twig_Filter_Function(function($date, $format = null) {
+
+		if ($format === null) {
+            $format = get_option('date_format');
+        }
+
+        if ($date instanceof DateTime) {
+            $timestamp = $date->getTimestamp();
+        } else if (is_numeric($date)) {
+            $timestamp = intval($date);
+        } else {
+            $timestamp = strtotime($date);
+        }
+
+		return date_i18n($format, $timestamp);
+
+    }));
 
 	/**
 	 * @filter image
