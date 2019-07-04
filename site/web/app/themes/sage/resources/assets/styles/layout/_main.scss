@@ -12,9 +12,14 @@
 		width: auto;
 	}
 
-	@include media-break-down(xxl, xl, lg, md, sm, xs) using ($bp) {
-		margin-left: scaled-margin-left($bp, 60px);
-		margin-right: scaled-margin-right($bp, 60px);
+	@include media-break-only(xxl, xl, lg) using ($bp) {
+		margin-left: block-spacing-h($bp);
+		margin-right: block-spacing-h($bp);
+	}
+
+	@include media-break-only(md, sm, xs) using ($bp) {
+		margin-left: block-spacing-h($bp, 1 / 2);
+		margin-right: block-spacing-h($bp, 1 / 2);
 	}
 }
 
@@ -28,11 +33,17 @@
 		width: auto;
 	}
 
-	@include media-break-down(xxl, xl, lg, md, sm, xs) using ($bp) {
-		margin-left: scaled-margin-left($bp, 90px);
-		margin-right: scaled-margin-right($bp, 90px);
+	@include media-break-only(xxl, xl, lg) using ($bp) {
+		margin-left: block-spacing-h($bp, 1.5);
+		margin-right: block-spacing-h($bp, 1.5);
+	}
+
+	@include media-break-only(md, sm, xs) using ($bp) {
+		margin-left: block-spacing-h($bp, 1.5 / 2);
+		margin-right: block-spacing-h($bp, 1.5 / 2);
 	}
 }
+
 
 //------------------------------------------------------------------------------
 // Main Layout
