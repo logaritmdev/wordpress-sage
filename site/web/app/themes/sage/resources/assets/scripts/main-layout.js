@@ -59,6 +59,12 @@ $.attach('.main-layout-loader', (i, element) => {
 
 		link.on('click', function (e) {
 
+			let target = link.attr('target')
+			if (target &&
+				target.toLowerCase() == '_blank') {
+				return
+			}
+
 			e.preventDefault()
 
 			element.addClass('main-layout-loader--unload')
