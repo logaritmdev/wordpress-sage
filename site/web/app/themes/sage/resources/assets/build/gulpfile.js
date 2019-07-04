@@ -178,7 +178,9 @@ gulp.task('styles', function () {
 	}
 
 	const minify = () => {
-		return gulpif(config.features.optimize, cssnano())
+		return gulpif(config.features.optimize, cssnano({
+			zindex: false
+		}))
 	}
 
 	const write = (dst) => {
