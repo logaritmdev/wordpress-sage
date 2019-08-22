@@ -1,11 +1,11 @@
-/* ==========================================================================
-  Error 404 View
-  ========================================================================== */
+//------------------------------------------------------------------------------
+// Error 404 Page
+//------------------------------------------------------------------------------
 
 .error-404 {
 
 	@include relative;
-	height: calc-sub(100vh, rem(60px));
+	height: calc-sub(100vh, rvw(60px));
 
 	.container {
 		@include flex-box;
@@ -16,17 +16,17 @@
 
 .error-404-content {
 
-	font-size: rem(30px);
+	font-size: rvw(30px, auto);
 	font-weight: bold;
 	text-align: center;
 
 	@include media-breakpoint-down(xs) {
-	   font-size: rem(18px);
+	   font-size: rvw(18px, auto);
    }
 
 	> * {
 		opacity: 0;
-		transform: translateY(rem(30px));
+		transform: translateY(rvw(30px));
 		transition-property: opacity, transform;
 		transition-duration: transition-duration(soft);
 		transition-timing-function: transition-equation(soft);
@@ -34,7 +34,7 @@
 
 	h1:first-child,
 	h2:first-child {
-		transform: translateY(rem(15px));
+		transform: translateY(rvw(15px));
 		transition-property: opacity, transform;
 		transition-duration: transition-duration(soft);
 		transition-timing-function: transition-equation(soft);

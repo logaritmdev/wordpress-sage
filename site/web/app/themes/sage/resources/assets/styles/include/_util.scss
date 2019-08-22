@@ -31,6 +31,19 @@
 }
 
 /**
+ * Convenience nth-child mixin with content parameter.
+ * @function nth-child
+ * @sinc 1.0.0
+ */
+@mixin nth-child-in($a, $b) {
+	@for $i from $a through $b {
+		@include nth-child($i) {
+			@content ($i);
+		}
+	}
+}
+
+/**
  * Convenience nth-child mixin to improve loop readability.
  * @function nth-of-type
  * @sinc 1.0.0
@@ -170,6 +183,15 @@
 }
 
 /**
+ * Convenience mixin to position a element absolutely.
+ * @mixin fill
+ * @since 1.0.0
+ */
+@mixin fill($by: 0) {
+	@include absolute(top $by left $by right $by bottom $by);
+}
+
+/**
  * Sets the text antialias;
  * @mixin text-antialias
  * @since 1.0.0
@@ -209,4 +231,15 @@
 	transform: rotate(180deg);
 	writing-mode: tb;
 	writing-mode: vertical-lr;
+}
+
+/**
+ * Disables br.
+ * @function no-br
+ * @sinc 1.0.0
+ */
+@mixin no-br {
+	br {
+		display: none;
+	}
 }

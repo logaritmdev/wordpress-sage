@@ -14,8 +14,8 @@ $.attach('.form-field', (i, element) => {
 
 	element = $(element)
 
-	var label = element.find('label')
-	var input = element.find('input, select, textarea')
+	let label = element.find('label')
+	let input = element.find('input, select, textarea')
 
 	if (label.length == 0 ||
 		input.attr('type') == 'radio' ||
@@ -25,8 +25,8 @@ $.attach('.form-field', (i, element) => {
 
 	input.attr('placeholder', '')
 
-	var hasFocus = false
-	var hasValue = false
+	let hasFocus = false
+	let hasValue = false
 
 	function update() {
 		element.toggleClass('form-field--focus', hasFocus)
@@ -35,7 +35,7 @@ $.attach('.form-field', (i, element) => {
 
 	function value() {
 
-		var val = input.val()
+		let val = input.val()
 		if (val) {
 			val = val.trim()
 		}
@@ -66,5 +66,35 @@ $.attach('.form-field', (i, element) => {
 	hasValue = value().length > 0
 
 	update()
+
+})
+
+/*
+ * Manages file form input.
+ */
+
+$.attach('.form-field--file', function (i, element) {
+
+	let input = element.find('input')
+	let value = element.find('.form-file-value-text')
+	let initial = value.text()
+
+	input.appendTo(element)
+
+	input.on('change', function () {
+		let files = input.get(0).files
+		if (files.length) {
+			value.text(files[0].name)
+		} else {
+			value.text(initial)
+		}
+	})
+
+	let wpcf7Elm = document.querySelector('.wpcf7')
+	if (wpcf7Elm) {
+		wpcf7Elm.addEventListener('wpcf7mailsent', function (event) {
+			value.text(initial)
+		}, false)
+	}
 
 })

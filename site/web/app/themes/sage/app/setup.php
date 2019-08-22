@@ -238,28 +238,25 @@ add_filter('get_twig', function($twig) {
 	 * @filter image
 	 * @since 1.0.0
 	 */
-	$twig->addFilter(new \Twig_SimpleFilter('image', function($image, $element = 'div', $html = '') {
-
-		$class = 'image';
-
-		if ($image == '' ||
-			$image == null) {
-			$class = $class . ' image--empty';
-		}
+	$twig->addFilter(new \Twig_SimpleFilter('image', function($image, $element = 'div') {
 
 		if ($element == 'img') {
-			return sprintf('<img class="%s" src="%s">', $class, $image);
+			return sprintf('
+				<div class="image image--mode-foreground">
+					<div class="frame">
+						<img class="layer" src="%s">
+					</div>
+				</div>
+			', $image);
 		}
 
 		return sprintf(
-			'<div class="%s %s--with-layer"><%s class="layer" style="background-image: url(%s)">%s</%s></div>',
-			$class,
-			$class,
-			$element,
-			$image,
-			$html,
-			$element
-		);
+			'<div class="image image--mode-background">
+				<div class="frame">
+					<div class="layer" style="background-image: url(%s)"></div>
+				</div>
+			</div>
+		', $image);
 
 	}));
 
@@ -269,8 +266,10 @@ add_filter('get_twig', function($twig) {
 	 */
 	$twig->addFilter(new \Twig_SimpleFilter('video', function($video, $play = true, $load = true, $mute = true, $loop = true) {
 
+		$video = is_array($video) ? $video['url'] : $video;
+
 		if ($play) {
-			$play = 'autoplay';
+			$play = 'autoplay playsinline';
 		}
 
 		if ($mute) {
@@ -288,12 +287,17 @@ add_filter('get_twig', function($twig) {
 		}
 
 		return sprintf(
-			'<div class="video"><video class="background" %s %s %s %s playsinline><source src="%s" type="video/mp4"></video></div>',
-			$play,
-			$mute,
-			$loop,
-			$load,
+
+			'<div class="video">
+				<video class="background" %s %s %s %s>
+					<source src="%s" type="video/mp4">
+				</video>
+			</div>',
+
+			$play, $mute,
+			$loop, $load,
 			$video
+
 		);
 
 	}));

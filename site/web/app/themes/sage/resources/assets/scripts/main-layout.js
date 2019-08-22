@@ -19,20 +19,19 @@ $.attach('.main-layout-loader', (i, element) => {
 		}
 	}
 
-	function onComplete() {
+	function onComplete(e) {
 		setTimeout(() => {
 			value.css('width', 0)
 		}, 1000)
 	}
 
-	function onProgress(progress) {
+	function onProgress(e, progress) {
 		value.css('width', progress + '%')
 	}
 
-	$(document.body).on('loadedenough', onLoadedEnough)
-
-	$.subscribe('loading/progress', onProgress)
-	$.subscribe('loading/complete', onComplete)
+	$(document.body).on('loader/loadedenough', onLoadedEnough)
+	$(document.body)('loader/progress', onProgress)
+	$(document.body)('loader/complete', onComplete)
 
 	if ($(document.body).hasClass('loaded-enough')) {
 		onLoadedEnough({ target: document.body })
@@ -77,13 +76,4 @@ $.attach('.main-layout-loader', (i, element) => {
 
 		})
 	})
-})
-
-/*
- * Makes the wpadminbar usable
- */
-
-$.attach('#wpadminbar', (i, element) => {
-	element.remove()
-	element.appendTo('body')
 })

@@ -26,7 +26,7 @@ function watch(i, element) {
 	 * @var scroller
 	 * @since 1.0.0
 	 */
-	let scroller = element.closest('.main-layout')
+	let scroller = element.closest('[data-scroller]')
 
 	/**
 	 * The scrollbar manager.
@@ -81,7 +81,14 @@ function watch(i, element) {
 	let klass = element.attr('data-watch-class') || 'visible-on-screen'
 
 	/**
-	 * Whether the element is considered visible.
+	 * Whether to include margins when computing the element offsets.
+	 * @var margins
+	 * @since 1.0.0
+	 */
+	let margins = element.attr('data-watch-margins') || false
+
+	/**
+	 * Whether the element has been visible.
 	 * @var visible
 	 * @since 1.0.0
 	 */
@@ -89,10 +96,38 @@ function watch(i, element) {
 
 	/**
 	 * Whether the element is on the screen.
-	 * @var visible
+	 * @var entered
 	 * @since 1.0.0
 	 */
-	let tracked = false
+	let entered = false
+
+	/**
+	 * Whether to delay the initial computation
+	 * @var delay
+	 * @since 1.0.0
+	 */
+	let delay = element.attr('data-watch-delay')
+
+	/**
+	 * The horizontal layout.
+	 * @var horizontalLayoutElement
+	 * @since 1.0.0
+	 */
+	let horizontalLayoutElement = element.closest('.horizontal-layout')
+
+	/**
+	 * The horizontal layout wrapper element.
+	 * @var hlw
+	 * @since 1.0.0
+	 */
+	let horizontalLayoutWrapper = element.closest('.horizontal-layout-wrapper')
+
+	/**
+	 * The horizontal layout content element.
+	 * @var horizontalLayoutContent
+	 * @since 1.0.0
+	 */
+	let horizontalLayoutContent = element.closest('.horizontal-layout-content')
 
 	//--------------------------------------------------------------------------
 	// Functions
@@ -104,7 +139,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getScrollTop() {
-		return scrollbar ? scrollbar.scrollTop : $(window).scrollTop()
+		return $(window).scrollTop()
 	}
 
 	/**
@@ -113,7 +148,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getScrollLeft() {
-		return scrollbar ? scrollbar.scrollLeft : $(window).scrollLeft()
+		return $(window).scrollLeft()
 	}
 
 	/**
@@ -122,7 +157,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getFrameWidth() {
-		return scrollbar ? scrollbar.containerEl.getBoundingClientRect().width : $(window).width()
+		return scrollbar ? scrollbar.containerEl.getBoundingClientRect().width : window.innerWidth
 	}
 
 	/**
@@ -135,86 +170,149 @@ function watch(i, element) {
 	}
 
 	/**
-	 * updateOffsetes the element offset.
-	 * @function updateOffset
+	 * Returns the scroll value to compute the progress with.
+	 * @function getScroll
 	 * @since 1.0.0
 	 */
-	function updateOffset() {
+	function getScroll() {
+		return getScrollTop() - offsetTop
+	}
 
-		let bounds = element.bounds(container)
+	/**
+	 * Returns the length use to compute the progress.
+	 * @function getLength
+	 * @since 1.0.0
+	 */
+	function getLength() {
+		return (offsetBot - offsetTop) * (1 - enter)
+	}
+
+	/**
+	 * Updates the element offset.
+	 * @function update
+	 * @since 1.0.0
+	 */
+	function update() {
+
+		if (horizontalLayoutElement.length &&
+			horizontalLayoutElement.hasClass('horizontal-layout--enabled')) {
+
+			let rhl = horizontalLayoutElement.bounds(scroller)
+			let rhw = horizontalLayoutWrapper.bounds(scroller)
+
+			let offset = element.bounds(horizontalLayoutContent).left + parseFloat(horizontalLayoutContent.css('margin-left')) || 0
+
+			if (offset > rhw.width) {
+				offsetTop = rhl.top + (offset - rhw.width)
+				offsetBot = rhl.top + (offset - rhw.width) + getFrameWidth()
+				return
+			}
+		}
+
+		let bounds = element.bounds('.main')
+
+		if (margins) {
+			bounds.top -= parseFloat(element.css('margin-top')) || 0
+			bounds.bottom -= parseFloat(element.css('margin-bottom')) || 0
+		}
+
 		offsetTop = bounds.top
-		offsetBot = bounds.top + bounds.height
+		offsetBot = bounds.top + getFrameHeight()
 
-		updateStatus()
+		offsetTop = offsetTop - $(window).height()
+		offsetBot = offsetBot - $(window).height()
 	}
 
 	/**
 	 * Updates the css classes used to indicate the visibility state.
-	 * @function updateStatus
+	 * @function render
 	 * @since 1.0.0
 	 */
-	function updateStatus() {
-
-		let frame = getFrameHeight()
-
-		let limit = frame * enter
-
-		let screenT = 0
-		let screenB = frame
-		let offsetT = offsetTop - getScrollTop()
-		let offsetB = offsetBot - getScrollTop()
-		let point = offsetT
+	function render() {
 
 		let progress = 0
 
-		if (offsetT > screenB ||
-			offsetB < screenT) {
+		let scroll = getScrollTop()
+
+		if (scroll >= offsetTop && scroll <= offsetBot) {
+
+			let length = getLength()
+			let scroll = getScroll()
+
+			progress = scroll / length
+
+		} else if (scroll < offsetTop) {
 
 			progress = 0
 
-		} else {
+		} else if (scroll > offsetBot) {
 
-			let pos = point - limit
-			let len = frame - limit
-
-			progress = 1 - (pos / len)
+			progress = 1
 
 		}
 
-		if (progress > 0 && getScrollTop() == 0) {
+		if (progress > 0 && scroll == 0) {
 			progress = 1
 		}
 
 		if (progress < 0) progress = 0
 		if (progress > 1) progress = 1
 
-		tracked = progress > 0 && progress <= 1
-
-		if (tracked) {
+		if (progress > 0 && progress <= 1) {
 
 			element.emit('watch/progress', progress)
 
-			if (progress < 1) {
-				return
+			if (entered == false && progress == 1) {
+				entered = true
+				element.emit('watch/visible').addClass(klass)
 			}
 
 			if (visible == false) {
+
+				requestAnimationFrame(() => {
+
+					let options = {
+						delay: 16,
+						enter: true
+					}
+
+					element.emit('watch/beforeenter', [element, options, scroll])
+
+					if (options.enter) {
+						setTimeout(function () {
+							element.emit('watch/enter').addClass('in-viewport')
+						}, options.delay)
+					}
+
+				})
+
 				visible = true
-				dispatch()
+			}
+
+		} else {
+
+			if (visible) {
+
+				requestAnimationFrame(() => {
+
+					let options = {
+						delay: 16,
+						enter: true
+					}
+
+					element.emit('watch/beforeleave', [element, options, scroll])
+
+					if (options.enter) {
+						setTimeout(function () {
+							element.emit('watch/leave')
+						}, options.delay)
+					}
+
+				})
+
+				visible = false
 			}
 		}
-	}
-
-	/**
-	 * Dispatches the visibility change event.
-	 * @function dispatch
-	 * @since 1.0.0
-	 */
-	function dispatch() {
-		requestAnimationFrame(function () {
-			element.addClass(klass)
-			element.emit('watch/visible')
-		})
 	}
 
 	/**
@@ -223,7 +321,8 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function onWindowLoad() {
-		updateOffset()
+		update()
+		render()
 	}
 
 	/**
@@ -232,7 +331,8 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function onWindowResize() {
-		updateOffset()
+		update()
+		render()
 	}
 
 	/**
@@ -241,7 +341,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function onWindowScroll() {
-		updateStatus()
+		render()
 	}
 
 	/**
@@ -259,8 +359,8 @@ function watch(i, element) {
 			scrollbar.addListener(onWindowScroll)
 		}
 
-		updateOffset()
-		updateStatus()
+		update()
+		render()
 	}
 
 	/**
@@ -275,29 +375,48 @@ function watch(i, element) {
 			scrollbar = null
 		}
 
-		updateOffset()
-		updateStatus()
+		update()
+		render()
 	}
+
+	function onRequestUpdate() {
+		update()
+	}
+
+	function onRequestRender() {
+		render()
+	}
+
+	element.on('update', onRequestUpdate)
+	element.on('render', onRequestRender)
 
 	//--------------------------------------------------------------------------
 	// Initialization
 	//--------------------------------------------------------------------------
 
-	$(window).on('load', onWindowLoad)
-	$(window).on('resize', onWindowResize)
-	$(window).on('scroll', onWindowScroll)
+	function start() {
 
-	onAttachScrollbar()
+		$(window).on('load', onWindowLoad)
+		$(window).on('resize', onWindowResize)
+		$(window).on('scroll', onWindowScroll)
 
-	if (check) {
-		setInterval(onWindowResize, check)
+		onAttachScrollbar()
+
+		if (check) {
+			setInterval(onWindowResize, check)
+		}
+
+		$(scroller).on('attachscrollbar', onAttachScrollbar)
+		$(scroller).on('detachscrollbar', onDetachScrollbar)
 	}
 
-	$(scroller).on('attachscrollbar', onAttachScrollbar)
-	$(scroller).on('detachscrollbar', onDetachScrollbar)
+	if (delay) {
+		delay = parseFloat(delay)
+		setTimeout(start, delay)
+		return
+	}
 
-	updateOffset()
-	updateStatus()
+	start()
 }
 
 /**

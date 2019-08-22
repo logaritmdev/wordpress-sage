@@ -19,6 +19,7 @@ import './plugins/jquery-break-words'
 import './image'
 import './video'
 import './form'
+import './wysiwyg'
 import './main-layout'
 
 $.defineMedia('xxxl', '(min-width: 1920px)')
@@ -33,13 +34,19 @@ $.defineMedia('xs', '(min-width: 0px)')
  * Adds the ready body class when the document is loaded enough.
  */
 
-$(document.body).on('loadedenough', (e) => {
-    if (e.target == document.body) {
-        setTimeout(() => {
-            $(document.body).addClass('ready')
-            $(document.body).trigger('ready')
-        }, 1000)
-    }
+$(document.body).on('loader/loadedenough', (e) => {
+    setTimeout(() => {
+        $(document.body).addClass('ready')
+        $(document.body).trigger('ready')
+    }, 1500)
+})
+
+/*
+ * Redirects on the new page on pop state
+ */
+
+window.addEventListener('popstate', (e) => {
+    location.href = document.location
 })
 
 /*
@@ -133,3 +140,12 @@ if (window.navigator.userAgent.indexOf('Trident/7.0') > 0 ||
         }
     })
 }
+
+/*
+ * Makes the wpadminbar usable
+ */
+
+$.attach('#wpadminbar', (i, element) => {
+    element.remove()
+    element.appendTo('body')
+})

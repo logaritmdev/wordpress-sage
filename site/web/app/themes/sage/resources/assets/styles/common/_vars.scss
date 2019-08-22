@@ -18,29 +18,6 @@
 );
 
 /**
- * The largers breakpoints.
- * @var $large-breakpoints
- * @since 1.0.0
- */
-$large-breakpoints: (
-	xxxl,
-	xxl,
-	xl,
-	lg
-);
-
-/**
- * The smaller breakpoints.
- * @var $small-breakpoints
- * @since 1.0.0
- */
-$small-breakpoints: (
-	md,
-	sm,
-	xs
-);
-
-/**
  * The grid breakpoints.
  * @var grid
  * @since 1.0.0
@@ -52,68 +29,22 @@ $grid: (
 	lg:   992px,
 	xl:   1200px,
 	xxl:  1600px,
-	xxxl: 1920px,
+	xxxl: 1920px
 );
 
 /**
- * The vertical spacing between each block for each breakpoints.
+ * The vertical spacing between each blocks.
  * @var block-spacings-v
  * @since 1.0.0
  */
-$block-spacings-v: (
-	xs:   60px,
-	sm:   60px,
-	md:   90px,
-	lg:   90px,
-	xl:   120px,
-	xxl:  120px,
-	xxxl: 120px,
-);
+$block-spacings-v: 120px;
 
 /**
- * The horizontal spacing between each block for each breakpoints.
+ * The horizontal spacing between each blocks.
  * @var block-spacings-h
  * @since 1.0.0
  */
-$block-spacings-h: (
-	xs:   60px,
-	sm:   60px,
-	md:   90px,
-	lg:   90px,
-	xl:   120px,
-	xxl:  120px,
-	xxxl: 120px,
-);
-
-/**
- * The vertical scaling applied based on the beakpoint.
- * @var spacing-scales-v
- * @since 1.0.0
- */
-$spacing-scales-v: (
-	xs:   0.50,
-	sm:   0.50,
-	md:   0.75,
-	lg:   0.75,
-	xl:   1.00,
-	xxl:  1.00,
-	xxxl: 1.00,
-);
-
-/**
- * The horizontal scaling applied based on the beakpoint.
- * @var global-v-spacing-scales
- * @since 1.0.0
- */
-$spacing-scales-h: (
-	xs:   0.50,
-	sm:   0.50,
-	md:   0.75,
-	lg:   0.75,
-	xl:   1.00,
-	xxl:  1.00,
-	xxxl: 1.00,
-);
+$block-spacings-h: 120px;
 
 /**
  * Transition speed and curves.
@@ -123,22 +54,20 @@ $spacing-scales-h: (
 $transitions: (
 
 	soft: (
-		duration: 750ms,
-		equation: cubic-bezier(0.190, 1.000, 0.220, 1.000)
-	),
-
-	slow: (
-		duration: 500ms,
-		equation: cubic-bezier(0.215, 0.610, 0.355, 1.000)
+		duration: 1000ms,
+		equation: cubic-bezier(0.230, 1.000, 0.320, 1.000)
 	),
 
 	fast: (
-		duration: 350ms,
-		equation: cubic-bezier(0.215, 0.610, 0.355, 1.000)
+		duration: 750ms,
+		equation: cubic-bezier(0.230, 1.000, 0.320, 1.000)
 	),
 
 	hover: (
-		duration: 250ms,
-		equation: cubic-bezier(0.215, 0.610, 0.355, 1.000)
+		duration: 500ms,
+		equation: cubic-bezier(0.230, 1.000, 0.320, 1.000)
 	)
 );
+
+$background-color: var(--background-color);
+$foreground-color: var(--foreground-color);

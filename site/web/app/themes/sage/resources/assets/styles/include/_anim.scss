@@ -3,8 +3,8 @@
  * @function transition-duration
  * @since 1.0.0
  */
-@function transition-duration($name, $map: $transitions) {
-	@return map-get(map-get($map, $name), duration);
+@function transition-duration($name, $mul: 1, $map: $transitions) {
+	@return map-get(map-get($map, $name), duration) * $mul;
 }
 
 /**

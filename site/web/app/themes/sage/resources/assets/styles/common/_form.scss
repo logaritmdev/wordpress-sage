@@ -4,9 +4,7 @@
 	@include flex-col(flex-start, stretch);
 
 	&:not(:last-child) {
-		@include media-break-down using ($bp) {
-			margin-bottom: scaled-margin-bottom($bp, 60px);
-		}
+		margin-bottom: rvw(60px, 30px);
 	}
 }
 
@@ -14,12 +12,9 @@
 
 	@include flex-box;
 	@include flex-row(flex-start, flex-start);
-
-	@include media-break-down using ($bp) {
-		margin-left: scaled-margin-left($bp, -30px);
-		margin-right: scaled-margin-right($bp, -30px);
-		width: calc-add(100%, scaled-width($bp, 60px));
-	}
+	margin-left: rvw(-30px, -15px);
+	margin-right: rvw(-30px, -15px);
+	width: calc-add(100%, rvw(60px, 30px));
 
 	&.form-row--center {
 		@include flex-row(flex-start, center);
@@ -30,9 +25,7 @@
 	}
 
 	&:not(:last-child) {
-		@include media-break-down using ($bp) {
-			margin-bottom: scaled-margin-bottom($bp, 45px);
-		}
+		margin-bottom: rvw(45px);
 	}
 }
 
@@ -41,13 +34,11 @@
 	@include relative;
 	@include flex(1, 1, 0);
 	border: none;
-	border-bottom: 1px solid #a6a6a6;
-
-	@include media-break-down using ($bp) {
-		margin-left: scaled-margin-left($bp, 30px);
-		margin-right: scaled-margin-right($bp, 30px);
-		width: calc-sub(100%, scaled-width($bp, 60px));
-	}
+	border-bottom: rem(1px) solid #141414;
+	min-height: rvw(45px, 45px);
+	margin-left: rvw(30px, 15px);
+	margin-right: rvw(30px, 15px);
+	width: calc-sub(100%, rvw(60px, 30px));
 
 	&.form-field--empty {
 		@include media-breakpoint-down(sm) {
@@ -56,9 +47,7 @@
 	}
 
 	&:not(:last-child) {
-		@include media-break-down using ($bp) {
-			margin-bottom: scaled-margin-bottom($bp, 45px);
-		}
+		margin-bottom: rvw(45px, 15px);
 	}
 
 	&.form-field--error {
@@ -80,8 +69,6 @@
 
 	&.form-field--active {
 		label {
-			color: #a6a6a6;
-			opacity: 1;
 			transform: translateY(-50%) scale(0.75);
 		}
 	}
@@ -91,27 +78,27 @@
 		@include absolute(top 0 left 0);
 		@include flex-box;
 		@include flex-row(center, flex-start);
-		color: #000;
-		font-size: rem(22px);
-		font-weight: normal;
-		min-height: rem(45px);
+		color: $foreground-color;
+		font-size: rvw(17px, auto);
+		font-weight: 400;
+		letter-spacing: 0.10em;
+		min-height: rvw(45px, 45px);
+		margin-left: rvw(15px, 15px);
+		margin-right: rvw(15px, 15px);
 		padding: 0;
 		pointer-events: none;
 		transform-origin: top left;
+		text-transform: uppercase;
 		transition-property: color, opacity, transform;
-		transition-duration: transition-duration(fast);
-		transition-timing-function: transition-equation(fast);
-
-		@include media-break-down using ($bp) {
-			margin-left: scaled-margin-left($bp, 15px);
-			margin-right: scaled-margin-right($bp, 15px);
-		}
+		transition-duration: transition-duration(soft);
+		transition-timing-function: transition-equation(soft);
 
 		& + br {
 			display: none;
 		}
 	}
 
+	input[type=file],
 	input[type=text],
 	input[type=phone],
 	input[type=email],
@@ -124,17 +111,15 @@
 		background: transparent;
 		border: none;
 		border-radius: 0;
-		color: #000;
-		font-size: rem(18px);
-		font-weight: normal;
+		color: $foreground-color;
 		display: block;
-		min-height: rem(45px);
+		font-size: rvw(19px, auto);
+		font-weight: normal;
+		letter-spacing: 0.10em;
+		min-height: rvw(45px, 45px);
+		padding-left: rvw(15px, 15px);
+		padding-right: rvw(15px, 15px);
 		width: 100%;
-
-		@include media-break-down using ($bp) {
-			padding-left: scaled-padding-left($bp, 15px);
-			padding-right: scaled-padding-right($bp, 15px);
-		}
 
 		&[disabled],
 		&[readonly] {
@@ -150,25 +135,19 @@
 	}
 
 	select {
-		/*
 		background: url(../images/form-select-arrow.png) no-repeat center right;
-		*/
+		background-size: contain;
 	}
 }
 
 .form-field--textarea {
 
-	border: none;
-	height: rem(160px);
+	height: rvw(80px, 45px);
 
 	textarea {
-
 		appearance: none;
-		height: rem(160px);
-
-		@include media-break-down using ($bp) {
-			padding-top: scaled-padding-top($bp, 20px);
-		}
+		height: rvw(80px, 45px);
+		padding-top: rvw(20px, 15px);
 	}
 }
 
@@ -176,37 +155,31 @@
 
 	@include flex-box;
 	@include flex-row(center, flex-start);
-	min-height: rem(50px);
+	min-height: rvw(50px);
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rem(16px);
+		font-size: rvw(16px, auto);
 	}
 
 	input[type=checkbox] {
 
 		appearance: none;
-		/*
 		background: url(../images/form-check.svg) no-repeat center center;
 		background-size: contain;
-		*/
 		border: none;
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
-		height: rem(19px);
+		height: rvw(19px);
+		margin: 0px;
+		margin-right: rvw(15px);
 		position: relative;
-		width: rem(22px);
-
-		@include media-break-down using ($bp) {
-			margin-right: scaled-margin-right($bp, 15px);
-		}
+		width: rvw(22px);
 
 		&:checked {
-			/*
 			background: url(../images/form-check-checked.svg) no-repeat center center;
 			background-size: contain;
-			*/
 		}
 
 		&:focus {
@@ -217,18 +190,18 @@
 
 .form-field--radio {
 
-	@include flex(0, 1, auto);
+	@include flex(0, 1);
 	@include flex-box;
 	@include flex-col(flex-start, flex-start);
 	width: auto;
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rem(16px);
+		font-size: rvw(16px, auto);
 		font-weight: normal;
 		height: auto;
 		margin: 0px;
-		margin-bottom: rem(15px);
+		margin-bottom: rvw(15px);
 		min-height: 0;
 		min-width: 0;
 	}
@@ -236,25 +209,21 @@
 	input[type=radio] {
 
 		appearance: none;
-		/*
 		background: url(../images/form-check.svg) no-repeat center center;
 		background-size: contain;
-		*/
 		border: none;
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
 		margin: 0;
-		margin-right: rem(10px);
-		height: rem(19px);
+		margin-right: rvw(10px);
+		height: rvw(19px);
 		position: relative;
-		width: rem(22px);
+		width: rvw(22px);
 
 		&:checked {
-			/*
 			background: url(../images/form-check-checked.svg) no-repeat center center;
 			background-size: contain;
-			*/
 		}
 
 		&:focus {
@@ -266,16 +235,40 @@
 
 		@include flex-box;
 		@include flex-row(center, flex-start);
-		margin-left: rem(20px);
-		margin-right: rem(20px);
+		margin-left: rvw(20px);
+		margin-right: rvw(20px);
 
 		label {
 			@include relative;
 			height: auto;
 			min-height: 0;
 			margin: 0;
-			margin-right: rem(10px);
+			margin-right: rvw(10px);
 		}
+	}
+}
+
+.form-field--file {
+
+	input {
+		@include absolute(top 0 left 0);
+		display: block;
+		cursor: pointer;
+		opacity: 0.001;
+		height: 100%;
+		width: 100%;
+	}
+
+	.form-file-value {
+		font-size: rvw(19px, auto);
+		font-weight: normal;
+		letter-spacing: 0.10em;
+		line-height: rvw(45px);
+		min-height: rvw(45px);
+		overflow: hidden;
+		padding-left: rvw(15px);
+		padding-right: rvw(15px);
+		white-space: nowrap;
 	}
 }
 
@@ -284,38 +277,22 @@
 	@include flex-box;
 	@include flex-row(flex-start, flex-start);
 
-	button[type=submit] {
-
+	[type=submit] {
 		@include relative;
-		font-size: rem(18px);
-		font-weight: normal;
-		border: none;
-		border-radius: 0;
 		background: transparent;
-		height: rem(45px);
-		color: #000;
-		padding: 0;
-
-		@include media-break-down using ($bp) {
-			padding-right: scaled-padding-right($bp, 90px);
-		}
-
-		&:after {
-
-			@include absolute(top 50% right 0);
-			/*
-			background: url(../images/arrow-hollow-right-light.svg) no-repeat center center;
-			background-size: contain;
-			*/
-			content: "";
-			display: inline-block;
-
-			@include media-break-down using ($bp) {
-				height: scaled-max($bp, 40px);
-				margin-top: scaled-max($bp, -20px);
-				width: scaled-max($bp, 50px);
-			}
-		}
+		border: none;
+		border-radius: 0px;
+		color: inherit;
+		cursor: pointer;
+		font-size: rvw(16px, auto);
+		font-weight: 400;
+		display: block;
+		letter-spacing: 0.15em;
+		margin: 0px;
+		padding: 0px;
+		text-align: left;
+		text-transform: uppercase;
+		white-space: nowrap;
 	}
 }
 
@@ -333,30 +310,30 @@
 		@include absolute;
 		display: block;
 		color: #d71921;
-		font-size: rem(14px);
+		font-size: rvw(14px, auto);
 		font-weight: normal;
-		margin-top: rem(5px);
-		padding-left: rem(15px);
-		padding-right: rem(15px);
+		margin-top: rvw(5px);
+		padding-left: rvw(15px);
+		padding-right: rvw(15px);
 	}
 
 	.wpcf7-validation-errors {
 		border: 2px solid #d71921;
-		border-radius: rem(4px);
+		border-radius: rvw(4px);
 		background: transparent;
-		font-size: rem(18px);
+		font-size: rvw(18px, auto);
 		font-weight: normal;
-		padding: rem(15px);
+		padding: rvw(15px);
 		text-align: center;
 	}
 
 	.wpcf7-mail-sent-ok {
 		border: 2px solid #000;
-		border-radius: rem(4px);
+		border-radius: rvw(4px);
 		background: #ffffff;
-		font-size: rem(18px);
+		font-size: rvw(18px, auto);
 		font-weight: normal;
-		padding: rem(15px);
+		padding: rvw(15px);
 		text-align: center;
 		color: 000;
 	}

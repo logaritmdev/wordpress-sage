@@ -63,8 +63,8 @@ $.attach.refresh = function () {
 
 				element = $(element)
 
-				if (element.data('attach-id-' + selector) == null) {
-					element.data('attach-id-' + selector, ids++)
+				if ($.data(element.get(0), 'attach-id-' + selector) == null || element.get(0) == document.body) {
+					$.data(element.get(0), 'attach-id-' + selector, ids++)
 					$.each(callback, function (k, callback) {
 						callback(i, element)
 					})

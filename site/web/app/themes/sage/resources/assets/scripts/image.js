@@ -2,7 +2,7 @@
  * Add classes on img tag to help define their ratio and transform their
  * width and height in rem
  */
-$.attach('img', (i, element) => {
+$.attach('.wysiwyg img', (i, element) => {
 
 	let src = element.attr('src')
 	if (src == '' ||

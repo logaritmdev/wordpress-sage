@@ -1,7 +1,7 @@
 $.attach('.sticky', (i, element) => {
 
 	let parent = element.parent()
-	let layout = element.closest('.main-layout')
+	let layout = element.closest('.main')
 	let sticky = element
 
 	let min = 0
@@ -17,7 +17,6 @@ $.attach('.sticky', (i, element) => {
 
 			min = 0
 			max = 0
-			pos = 0
 
 			element.css('transform', null)
 
@@ -61,6 +60,11 @@ $.attach('.sticky', (i, element) => {
 
 	function shouldEnable() {
 
+		if (isNative() ||
+			isSticky() == false) {
+			return false
+		}
+
 		let node = parent.parent()
 
 		while (node.length) {
@@ -85,6 +89,14 @@ $.attach('.sticky', (i, element) => {
 		return false
 	}
 
+	function isNative() {
+		return $('html').hasClass('native-scrolling')
+	}
+
+	function isSticky() {
+		return element.css('position') == 'sticky'
+	}
+
 	function onLoad() {
 		update()
 		render()
@@ -104,5 +116,6 @@ $.attach('.sticky', (i, element) => {
 	$(window).on('resize', onResize)
 
 	update()
+	render()
 
 })

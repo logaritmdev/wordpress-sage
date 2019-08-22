@@ -99,6 +99,6 @@ $.attach('.video', (i, element) => {
 	element.on('play', onPlay)
 	element.on('pause', onPause)
 
-	element.append('<div class="video-spinner"></div>')
+	element.append('<div class="spinner"></div>')
 
 })

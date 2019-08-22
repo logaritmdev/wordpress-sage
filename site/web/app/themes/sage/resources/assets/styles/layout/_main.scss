@@ -4,58 +4,35 @@
 
 .container {
 
-	margin-left: auto;
-	margin-right: auto;
-	width: 1920px - 60px - get-block-spacing-h(xxxl) * 2;
-
-	@include media-breakpoint-down(xxl) {
-		width: auto;
-	}
-
-	@include media-break-only(xxl, xl, lg) using ($bp) {
-		margin-left: block-spacing-h($bp);
-		margin-right: block-spacing-h($bp);
-	}
-
-	@include media-break-only(md, sm, xs) using ($bp) {
-		margin-left: block-spacing-h($bp, 1 / 2);
-		margin-right: block-spacing-h($bp, 1 / 2);
-	}
-}
-
-.container-inset {
+	$min: strip-unit(map-get($grid, xxl));
+	$max: strip-unit(map-get($grid, xxxl));
 
 	margin-left: auto;
 	margin-right: auto;
-	width: 1920px - 60px - get-block-spacing-h(xxxl) * 4;
+	width: ($min / $max) * 100vw;
 
 	@include media-breakpoint-down(xxl) {
-		width: auto;
-	}
-
-	@include media-break-only(xxl, xl, lg) using ($bp) {
-		margin-left: block-spacing-h($bp, 1.5);
-		margin-right: block-spacing-h($bp, 1.5);
-	}
-
-	@include media-break-only(md, sm, xs) using ($bp) {
-		margin-left: block-spacing-h($bp, 1.5 / 2);
-		margin-right: block-spacing-h($bp, 1.5 / 2);
+		margin-left: base-block-spacing-h(1);
+		margin-right: base-block-spacing-h(1);
+		width: calc-sub(100%, base-block-spacing-h(2));
 	}
 }
-
 
 //------------------------------------------------------------------------------
 // Main Layout
 //------------------------------------------------------------------------------
 
 .main-layout {
+
+	@include relative;
+
 	.smooth-scrolling & {
 		overflow: hidden;
 		height: 100%;
 		width: 100%;
 	}
 }
+
 
 //------------------------------------------------------------------------------
 // Main Layout Scroller
@@ -108,8 +85,9 @@
 		content: "";
 		display: block;
 		transition-property: background-color;
-		transition-duration: transition-duration(fast);
-		transition-timing-function: transition-equation(fast);
+		transition-timing-function: transition-equation(hover);
+		transition-duration: transition-duration(soft);
+		transition-timing-function: transition-equation(hover);
 	}
 
 	.scrollbar-thumb:hover::after {
@@ -226,7 +204,6 @@
 			}
 		}
 
-
 		&.current-menu-item,
 		&.current-menu-item-ancestor {
 			&:after {
@@ -252,6 +229,7 @@
 	}
 }
 
+
 //------------------------------------------------------------------------------
 // Main Layout Content
 //------------------------------------------------------------------------------
@@ -261,11 +239,16 @@
 	overflow: hidden;
 	width: 100%;
 
-	.smooth-scrolling & {
-		width: 100%;
+	.native-scrolling & {
+
+		/*
+		 * This is required to make position sticky work
+		 * properly in native scrolling cases.
+		 */
+
+		overflow: visible;
 	}
 }
-
 
 //------------------------------------------------------------------------------
 // Main Layout Footer

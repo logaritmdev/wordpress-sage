@@ -4,7 +4,9 @@ let container = null
 let scrollbar = null
 let disabled = false
 
-$.attach('html', (i, html) => {
+$.attach('body', (i, body) => {
+
+	let html = $('html')
 
     /**
      * Add a smooth scrollbar on desktop browser. The smooth scrollbar is
@@ -13,7 +15,6 @@ $.attach('html', (i, html) => {
 
 	scrollbar = null
 	container = document.querySelector('[data-scroller]')
-
 	if (container == null) {
 		return
 	}
@@ -155,4 +156,35 @@ $.fn.scrollLeft = function (value) {
 	}
 
 	return oldScrollLeft.apply(this, arguments)
+}
+
+$.fn.contentWidth = function () {
+
+	if (this.get(0) == window) {
+
+
+		let scrollbar = Scrollbar.get(container)
+		if (scrollbar) {
+			return scrollbar.getSize().content.width
+		}
+
+		return $(document).width()
+	}
+
+	return this.scrollWidth()
+}
+
+$.fn.contentHeight = function () {
+
+	if (this.get(0) == window) {
+
+		let scrollbar = Scrollbar.get(container)
+		if (scrollbar) {
+			return scrollbar.getSize().content.height
+		}
+
+		return $(document).height()
+	}
+
+	return this.scrollHeight()
 }

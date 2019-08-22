@@ -12,19 +12,29 @@ $.fn.scrollAnimation = function () {
     // Properties
     //------------------------------------------------------------------------------
 
-    /**
-     * The element that scrolls.
-     * @let scroller
-     * @since 1.0.0
-     */
+	/**
+	 * The element that scrolls.
+	 * @var scroller
+	 * @since 1.0.0
+	 */
     let scroller = element.closest('[data-scroller]')
 
-    /**
-     * The scrollbar manager.
-     * @let scrollbar
-     * @since 1.0.0
-     */
+	/**
+	 * The scrollbar manager.
+	 * @var scrollbar
+	 * @since 1.0.0
+	 */
     let scrollbar = null
+
+	/**
+	 * The scrollable container.
+	 * @var container
+	 * @since 1.0.0
+	 */
+    let container = scroller.find('.scroll-content')
+    if (container.length == 0) {
+        container = scroller
+    }
 
     /**
      * The child element to receive the styles.
@@ -32,33 +42,20 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     let target = element.attr('data-scroll-animation-target')
-    if (target == null) {
-        target = element
-    } else {
-
-        target = target.split(',').map(function (t) {
-            return element.find(t.trim())
-        })
-
-        if (target.length === 1) {
-            target = target[0]
-        }
-
-    }
 
     /**
      * The animated property.
      * @property propertyName
      * @since 1.0.0
      */
-    let propertyName = ['background-position']
+    let propertyName = ['transform']
 
     /**
      * The animated property format.
      * @property propertyFormat
      * @since 1.0.0
      */
-    let propertyFormat = ['0px %v%']
+    let propertyFormat = ['%v%']
 
     /**
      * The animated property minimal value.
@@ -75,6 +72,13 @@ $.fn.scrollAnimation = function () {
     let propertyMaxValue = [100]
 
     /**
+     * The animated property unit.
+     * @property propertyUnit
+     * @since 1.0.0
+     */
+    let propertyUnit = ['px']
+
+    /**
      * The element enter offset.
      * @property offsetTop
      * @since 1.0.1
@@ -87,6 +91,27 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.1
      */
     let offsetBot = 0
+
+	/**
+	 * The horizontal layout.
+	 * @var horizontalLayoutElement
+	 * @since 1.0.0
+	 */
+    let horizontalLayoutElement = element.closest('.horizontal-layout')
+
+	/**
+	 * The horizontal layout wrapper element.
+	 * @var hlw
+	 * @since 1.0.0
+	 */
+    let horizontalLayoutWrapper = element.closest('.horizontal-layout-wrapper')
+
+	/**
+	 * The horizontal layout content element.
+	 * @var horizontalLayoutContent
+	 * @since 1.0.0
+	 */
+    let horizontalLayoutContent = element.closest('.horizontal-layout-content')
 
     /**
      * Returns the scroll value on the y axis.
@@ -131,25 +156,63 @@ $.fn.scrollAnimation = function () {
      */
     function getProgress() {
 
-        let offsetT = offsetTop
-        let offsetB = offsetBot
-        let scrollX = getScrollLeft()
-        let scrollY = getScrollTop()
-        let windowSizeX = getFrameWidth()
-        let windowSizeY = getFrameHeight()
+        let scroll = getScrollTop()
 
-        let minScroll = Math.max(offsetT - windowSizeY, 0)
-        let maxScroll = offsetB
+        let progress = 0
 
-        if (scrollY < minScroll) {
-            return 0
+        if (scroll >= offsetTop && scroll <= offsetBot) {
+            progress = (scroll - offsetTop) / (offsetBot - offsetTop)
+        } else if (scroll < offsetTop) {
+            progress = 0
+        } else if (scroll > offsetBot) {
+            progress = 1
         }
 
-        if (scrollY > maxScroll) {
-            return 1
+        if (progress > 0 && scroll == 0) {
+            progress = 1
         }
 
-        return (scrollY - minScroll) / (maxScroll - minScroll)
+        if (progress < 0) progress = 0
+        if (progress > 1) progress = 1
+
+        return progress
+    }
+
+    /**
+     * Update animation element measures.
+     * @function update
+     * @since 1.0.0
+     */
+    function update() {
+
+        if (horizontalLayoutElement.length) {
+
+            let rhl = horizontalLayoutElement.bounds(scroller)
+            let rhw = horizontalLayoutWrapper.bounds(scroller)
+
+            let offset = element.bounds(horizontalLayoutContent).left + parseFloat(horizontalLayoutContent.css('margin-left')) || 0
+
+            if (offset > rhw.width) {
+
+                offsetTop = rhl.top + (offset - rhw.width)
+                offsetBot = rhl.top + (offset - rhw.width) + element.bounds().width + rhw.width
+
+            } else {
+
+                offsetTop = rhl.top
+                offsetBot = rhl.top + element.bounds().width + rhw.width
+
+            }
+
+            return
+        }
+
+        let bounds = element.bounds(container)
+        offsetTop = bounds.top
+        offsetBot = bounds.top + bounds.height + $(window).height()
+
+        offsetTop = offsetTop - $(window).height()
+        offsetBot = offsetBot - $(window).height()
     }
 
     /**
@@ -157,7 +220,7 @@ $.fn.scrollAnimation = function () {
      * @function updateProgress
      * @since 1.0.0
      */
-    function updateProgress() {
+    function render() {
 
         let progress = getProgress()
 
@@ -170,28 +233,28 @@ $.fn.scrollAnimation = function () {
             let fmrt = propertyFormat[i]
             let min = propertyMinValue[i]
             let max = propertyMaxValue[i]
+            let unit = propertyUnit[i]
 
             let el = (Array.isArray(target) ? (target[i] || target[0]) : target)
 
-            el.css(name, fmrt.replace('%v', interpolate(progress, min, max)))
+            let value = interpolate(progress, min, max)
+
+            switch (unit) {
+
+                case 'px': value = (value / 16) + 'rem'; break
+                case 'rvw': value = (value / 1440 * 100) + 'vw'; break
+                case 'rvh': value = (value / 1440 * 100) + 'vh'; break
+
+                case 'none':
+                    break
+
+                default:
+                    value = value + propertyUnit
+                    break
+            }
+
+            el.css(name, fmrt.replace('%v', value))
         })
-    }
-
-    /**
-     * Update animation element measures.
-     * @function updateOffsets
-     * @since 1.0.0
-     */
-    function updateOffsets() {
-
-        let offset = element.offset()
-        offsetTop = offset.top
-        offsetBot = offset.top + element.outerHeight()
-
-        if (scrollbar) {
-            offsetTop += scrollbar.scrollTop
-            offsetBot += scrollbar.scrollTop
-        }
     }
 
     //--------------------------------------------------------------------------
@@ -208,8 +271,8 @@ $.fn.scrollAnimation = function () {
     function onWindowResize() {
         delay = cancelAnimationFrame(delay)
         delay = requestAnimationFrame(function () {
-            updateOffsets()
-            updateProgress()
+            update()
+            render()
         })
     }
 
@@ -219,7 +282,7 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function onWindowScroll() {
-        updateProgress()
+        render()
     }
 
     /**
@@ -228,8 +291,8 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function onWindowLoad() {
-        updateOffsets()
-        updateProgress()
+        update()
+        render()
     }
 
     /**
@@ -247,8 +310,8 @@ $.fn.scrollAnimation = function () {
             scrollbar.addListener(onWindowScroll)
         }
 
-        updateOffsets()
-        updateProgress()
+        update()
+        render()
     }
 
     /**
@@ -263,8 +326,8 @@ $.fn.scrollAnimation = function () {
             scrollbar = null
         }
 
-        updateOffsets()
-        updateProgress()
+        update()
+        render()
     }
 
     /**
@@ -284,10 +347,23 @@ $.fn.scrollAnimation = function () {
         return string.trim()
     }
 
-    propertyName = element.attr('data-scroll-animation').split(',').map(trim) || ['background-position']
-    propertyFormat = element.attr('data-scroll-animation-format').split(',').map(trim) || ['0px %v%']
-    propertyMinValue = element.attr('data-scroll-animation-min').split(',').map(trim).map(parseFloat) || [0]
-    propertyMaxValue = element.attr('data-scroll-animation-max').split(',').map(trim).map(parseFloat) || [0]
+    if (target == null) {
+        target = element
+    } else {
+
+        target = target.split(',').map(t => element.find(t.trim()))
+
+        if (target.length === 1) {
+            target = target[0]
+        }
+
+    }
+
+    propertyName = (element.attr('data-scroll-animation') || 'transform').split(',').map(trim)
+    propertyUnit = (element.attr('data-scroll-animation-unit') || 'px').split(',').map(trim)
+    propertyFormat = (element.attr('data-scroll-animation-format') || '%v').split(',').map(trim)
+    propertyMinValue = (element.attr('data-scroll-animation-min') || '').split(',').map(trim).map(parseFloat)
+    propertyMaxValue = (element.attr('data-scroll-animation-max') || '').split(',').map(trim).map(parseFloat)
 
     $(window).on('resize', onWindowResize)
     $(window).on('scroll', onWindowScroll)
@@ -298,8 +374,8 @@ $.fn.scrollAnimation = function () {
     $(scroller).on('attachscrollbar', onAttachScrollbar)
     $(scroller).on('detachscrollbar', onDetachScrollbar)
 
-    updateOffsets()
-    updateProgress()
+    update()
+    render()
 }
 
 /**

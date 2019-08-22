@@ -17,11 +17,11 @@
 
 			@include('partials.header')
 
-			<div class="main-layout-content">
+			<section class="main-layout-content">
 				<main class="main">
 					@yield('content')
 				</main>
-			</div>
+			</section>
 
 			@include('partials.footer')
 

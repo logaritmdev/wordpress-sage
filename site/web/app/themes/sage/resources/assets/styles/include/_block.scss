@@ -6,39 +6,21 @@
 @import "include/util";
 
 /**
- * Retrieve the block vertical space value for the specified breakpoint.
+ * Returns the horizontal block spacing.
  * @function block-spacing-v
  * @sinc 1.0.0
  */
-@function block-spacing-v($bp, $mul: 1, $add: 0) {
-	@return rem(map-get($block-spacings-v, $bp) * $mul + $add);
+@function block-spacing-h($mul: 1) {
+	@return rvw($block-spacing-h * $mul, 0);
 }
 
 /**
- * Retrieve the block horizonta. space value for the specified breakpoint.
- * @function block-spacing-h
+ * Returns the vertical block spacing.
+ * @function block-spacing-v
  * @sinc 1.0.0
  */
-@function block-spacing-h($bp, $mul: 1, $add: 0) {
-	@return rem(map-get($block-spacings-h, $bp) * $mul + $add);
-}
-
-/**
- * @function get-block-spacing-v
- * @sinc 1.0.0
- * @hidden
- */
- @function get-block-spacing-v($bp) {
-	@return map-get($block-spacings-v, $bp);
-}
-
-/**
- * @function get-block-spacing-h
- * @sinc 1.0.0
- * @hidden
- */
- @function get-block-spacing-h($bp, $mul: 1, $add: 0) {
-	@return map-get($block-spacings-h, $bp);
+@function block-spacing-v($mul: 1) {
+	@return rvw($block-spacing-v * $mul, 0);
 }
 
 /**
@@ -51,16 +33,12 @@
 	@include relative;
 
 	@if ($spacing == spaced) {
-		@include media-break-down using ($bp) {
-			margin-top: block-spacing-v($bp, $mul);
-			margin-bottom: block-spacing-v($bp, $mul);
-		}
+		margin-top: block-spacing-h($mul);
+		margin-bottom: block-spacing-h($mul);
 	}
 
 	@if ($spacing == padded) {
-		@include media-break-down using ($bp) {
-			padding-top: block-spacing-v($bp, $mul);
-			padding-bottom: block-spacing-v($bp, $mul);
-		}
+		padding-top: block-spacing-h($mul);
+		padding-bottom: block-spacing-h($mul);
 	}
 }

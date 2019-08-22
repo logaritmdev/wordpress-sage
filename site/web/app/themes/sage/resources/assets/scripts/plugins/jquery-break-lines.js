@@ -111,6 +111,18 @@ function breakLines(i, element, options) {
 
 		element.toggleClass('multiline', true)
 
+		element.find('.line').each((i, line) => {
+
+			line = $(line)
+
+			line.attr('data-text', line.text())
+
+			let others = line.find(':not(.word)')
+			line.toggleClass('plain', others.length == 0)
+			line.toggleClass('mixed', others.length != 0)
+
+		})
+
 		if (options &&
 			options.onComplete) {
 			options.onComplete(element)
@@ -211,6 +223,8 @@ function breakLines(i, element, options) {
 			}
 
 			update()
+
+			element.emit('breakwords')
 		}
 
 	})

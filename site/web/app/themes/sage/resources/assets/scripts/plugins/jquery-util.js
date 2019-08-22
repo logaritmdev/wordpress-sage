@@ -11,6 +11,7 @@ const toggleClass = $.fn.toggleClass
  */
 $.fn.emit = function (type, args) {
 	this.triggerHandler(type, args)
+	return this
 }
 
 /**
@@ -71,8 +72,8 @@ $.fn.toggleClass = function (className, toggle, delay) {
 }
 
 /**
- * Override the scrollLeft to return the main scroller's position.
- * @function scrollLeft
+ * Returns the element bounding rect.
+ * @function bounds
  * @since 1.0.0
  */
 $.fn.bounds = function (relative) {
@@ -175,7 +176,7 @@ $.scrollToElement = function (target, duration, callback) {
  * @function throttle
  * @since 1.0.0
  */
-$.throttle = function (callback) {
+$.throttle = function (callback, ms) {
 
 	var request = null
 
@@ -191,7 +192,7 @@ $.throttle = function (callback) {
 		}
 
 		if (request == null) {
-			request = requestAnimationFrame(exec)
+			request = setTimeout(exec, ms)
 		}
 	}
 }
@@ -216,7 +217,7 @@ $.fn.iattr = function (name) {
 
 /**
  * Returns the max value from an array of elements.
- * @function scaled-max
+ * @function max
  * @since 1.0.0
  */
 $.fn.max = function (callback) {
@@ -239,7 +240,7 @@ $.fn.max = function (callback) {
 
 /**
  * Returns the min value from an array of element.
- * @function scaled-min
+ * @function min
  * @since 1.0.0
  */
 $.fn.min = function (callback) {
@@ -309,5 +310,16 @@ $.fn.pages = function () {
 	return {
 		x: Math.ceil(sw / fw),
 		y: Math.ceil(sh / fh)
+	}
+}
+
+/**
+ * Duplicate an element a given amount of time.
+ * @function stuff
+ * @since 1.0.0
+ */
+$.fn.stuff = function (element, count) {
+	for (let i = 0; i < count; i++) {
+		this.append(element.clone(true))
 	}
 }

@@ -73,7 +73,7 @@ function breakWords(i, element, options) {
 		for (let i = 0; i < nodes.length; i++) {
 
 			let orig = nodes[i]
-			let node = nodes[i].cloneNode()
+			let node = nodes[i].cloneNode(true)
 
 			let name = node.tagName
 			let type = node.nodeType
