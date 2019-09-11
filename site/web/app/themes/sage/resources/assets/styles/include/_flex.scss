@@ -238,7 +238,7 @@
  * @mixin flex-row
  * @since 1.0.0
  */
-@mixin flex-row($valign, $halign, $mode: normal) {
+@mixin flex-row($valign, $halign, $wrap: nowrap, $mode: normal) {
 
 	@if $mode == reverse {
 		@include flex-direction(row-reverse);
@@ -246,6 +246,7 @@
 		@include flex-direction(row);
 	}
 
+	@include flex-wrap($wrap);
 	@include align-items($valign);
 	@include justify-content($halign);
 }

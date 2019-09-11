@@ -34,17 +34,17 @@ $grid: (
 
 /**
  * The vertical spacing between each blocks.
- * @var block-spacings-v
+ * @var block-spacing-v
  * @since 1.0.0
  */
-$block-spacings-v: 120px;
+$block-spacing-v: 120px;
 
 /**
  * The horizontal spacing between each blocks.
- * @var block-spacings-h
+ * @var block-spacing-h
  * @since 1.0.0
  */
-$block-spacings-h: 120px;
+$block-spacing-h: 120px;
 
 /**
  * Transition speed and curves.
@@ -68,6 +68,3 @@ $transitions: (
 		equation: cubic-bezier(0.230, 1.000, 0.320, 1.000)
 	)
 );
-
-$background-color: var(--background-color);
-$foreground-color: var(--foreground-color);

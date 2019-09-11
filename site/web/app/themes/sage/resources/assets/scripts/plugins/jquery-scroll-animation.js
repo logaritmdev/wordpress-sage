@@ -1,5 +1,3 @@
-import Scrollbar from '../vendors/smooth-scrollbar.min'
-
 /**
  * @function scrollAnimation
  * @since 1.0.0
@@ -13,13 +11,6 @@ $.fn.scrollAnimation = function () {
     //------------------------------------------------------------------------------
 
 	/**
-	 * The element that scrolls.
-	 * @var scroller
-	 * @since 1.0.0
-	 */
-    let scroller = element.closest('[data-scroller]')
-
-	/**
 	 * The scrollbar manager.
 	 * @var scrollbar
 	 * @since 1.0.0
@@ -31,10 +22,7 @@ $.fn.scrollAnimation = function () {
 	 * @var container
 	 * @since 1.0.0
 	 */
-    let container = scroller.find('.scroll-content')
-    if (container.length == 0) {
-        container = scroller
-    }
+    let container = $('.main')
 
     /**
      * The child element to receive the styles.
@@ -92,34 +80,13 @@ $.fn.scrollAnimation = function () {
      */
     let offsetBot = 0
 
-	/**
-	 * The horizontal layout.
-	 * @var horizontalLayoutElement
-	 * @since 1.0.0
-	 */
-    let horizontalLayoutElement = element.closest('.horizontal-layout')
-
-	/**
-	 * The horizontal layout wrapper element.
-	 * @var hlw
-	 * @since 1.0.0
-	 */
-    let horizontalLayoutWrapper = element.closest('.horizontal-layout-wrapper')
-
-	/**
-	 * The horizontal layout content element.
-	 * @var horizontalLayoutContent
-	 * @since 1.0.0
-	 */
-    let horizontalLayoutContent = element.closest('.horizontal-layout-content')
-
     /**
      * Returns the scroll value on the y axis.
      * @function getScrollTop
      * @since 1.0.0
      */
     function getScrollTop() {
-        return scrollbar ? scrollbar.scrollTop : $(window).scrollTop()
+        return $(window).scrollTop()
     }
 
     /**
@@ -128,7 +95,7 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function getScrollLeft() {
-        return scrollbar ? scrollbar.scrollLeft : $(window).scrollLeft()
+        return $(window).scrollLeft()
     }
 
     /**
@@ -137,7 +104,7 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function getFrameWidth() {
-        return scrollbar ? scrollbar.containerEl.getBoundingClientRect().width : $(window).width()
+        return window.innerWidth
     }
 
     /**
@@ -146,7 +113,7 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function getFrameHeight() {
-        return scrollbar ? scrollbar.containerEl.getBoundingClientRect().height : window.innerHeight
+        return window.innerHeight
     }
 
     /**
@@ -184,28 +151,6 @@ $.fn.scrollAnimation = function () {
      * @since 1.0.0
      */
     function update() {
-
-        if (horizontalLayoutElement.length) {
-
-            let rhl = horizontalLayoutElement.bounds(scroller)
-            let rhw = horizontalLayoutWrapper.bounds(scroller)
-
-            let offset = element.bounds(horizontalLayoutContent).left + parseFloat(horizontalLayoutContent.css('margin-left')) || 0
-
-            if (offset > rhw.width) {
-
-                offsetTop = rhl.top + (offset - rhw.width)
-                offsetBot = rhl.top + (offset - rhw.width) + element.bounds().width + rhw.width
-
-            } else {
-
-                offsetTop = rhl.top
-                offsetBot = rhl.top + element.bounds().width + rhw.width
-
-            }
-
-            return
-        }
 
         let bounds = element.bounds(container)
         offsetTop = bounds.top
@@ -296,41 +241,6 @@ $.fn.scrollAnimation = function () {
     }
 
     /**
-     * Called when a scroller is attached.
-     * @function onAttachScrollbar
-     * @since 1.0.0
-     */
-    function onAttachScrollbar() {
-
-        if (scrollbar == null) {
-            scrollbar = Scrollbar.get(scroller.get(0))
-        }
-
-        if (scrollbar) {
-            scrollbar.addListener(onWindowScroll)
-        }
-
-        update()
-        render()
-    }
-
-    /**
-     * Called when a scroller is detached.
-     * @function onAttachScrollbar
-     * @since 1.0.0
-     */
-    function onDetachScrollbar() {
-
-        if (scrollbar) {
-            scrollbar.removeListener(onWindowResize)
-            scrollbar = null
-        }
-
-        update()
-        render()
-    }
-
-    /**
      * Interpolate the value based on a progress value.
      * @function interpolate
      * @since 1.0.0
@@ -368,11 +278,6 @@ $.fn.scrollAnimation = function () {
     $(window).on('resize', onWindowResize)
     $(window).on('scroll', onWindowScroll)
     $(window).on('load', onWindowLoad)
-
-    onAttachScrollbar()
-
-    $(scroller).on('attachscrollbar', onAttachScrollbar)
-    $(scroller).on('detachscrollbar', onDetachScrollbar)
 
     update()
     render()

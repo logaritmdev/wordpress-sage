@@ -1,82 +1,26 @@
 /**
- * Convenience function to negate a number.
- * @function neg
- * @sinc 1.0.0
- */
- @function neg($value) {
-    $val: $value * -1;
-    @return $val;
-}
-
-/**
- * Converts a unit to rem.
- * @function rem
- * @sinc 1.0.0
- */
- @function rem($val, $min: 0, $mul: 1) {
-
-    @if $min == auto {
-
-        @if $val > 10px {
-
-            $min: 10px + ($val / 4);
-
-        } @else {
-
-            $min: $val;
-
-        }
-    }
-
-    $val: strip-unit($val);
-    $min: strip-unit($min);
-
-    @if $min == 0 {
-        @return #{($val * $mul) / 16}rem;
-    }
-
-    $val: (($val * $mul) - $min) / 16;
-
-    @return calc(#{$min}px + #{$val}rem);
-}
-
-/**
  * Converts a unit to vw;
  * @function rvw
  * @sinc 1.0.0
  */
  @function rvw($val, $min: 0, $mul: 1) {
 
+    $upr: 1440;
+    $lwr: 320;
+
+    @if $val == 1px or
+        $val == 2px {
+        $min: $val
+    }
+
     @if $min == auto {
-
-        @if $val > 10px {
-
-            $min: 10px + ($val / 4);
-
-        } @else {
-
-            $min: $val;
-
-        }
+        $min: 0.3121416 * $val + 7.510896;
     }
 
     $val: strip-unit($val);
     $min: strip-unit($min);
 
-    @if $min == 0 {
-        @return #{($val / 1440) * 100}vw;
-    }
-
-    @return calc(#{$min}px + (#{$val} - #{$min}) * ((100vw - 320px) / (1440 - 320)));
-}
-
-/**
- * Converts a photoshop tracking value to letter-spacing value.
- * @function tracking
- * @sinc 1.0.0
- */
-@function tracking($value) {
-	@return #{($value / 1000)}em;
+    @return calc-rvw($val, $lwr, $upr, $mul, $min);
 }
 
 /**
@@ -85,7 +29,9 @@
  * @sinc 1.0.0
  */
 @function calc-add($a, $b) {
-    @return #{"calc(" + $a + " + " + $b + ")"};
+    $a: replace($a, "calc", "");
+    $b: replace($b, "calc", "");
+    @return #{"calc(#{$a} + #{$b})"};
 }
 
 /**
@@ -93,8 +39,66 @@
  * @function calc-add
  * @sinc 1.0.0
  */
-@function calc-sub($a, $b) {
-    @return #{"calc(" + $a + " - " + $b + ")"};
+@function calc-sub($a, $b, $m: 1) {
+    $a: replace($a, "calc", "");
+    $b: replace($b, "calc", "");
+    @return #{"calc(#{$a} - #{$b})"};
+}
+
+/**
+ * Convenience method to output a calc css property that multiplies 2 numbers.
+ * @function calc-add
+ * @sinc 1.0.0
+ */
+@function calc-mul($a, $b) {
+    $a: replace($a, "calc", "");
+    $b: replace($b, "calc", "");
+    @return #{"calc(#{$a} * #{$b})"};
+}
+
+/**
+ * Convenience method to output a calc a relative vw value.
+ * @function calc-rvw
+ * @sinc 1.0.0
+ */
+@function calc-rvw($val, $lwr, $upr, $mul, $min: 0) {
+
+    $val: strip-unit($val);
+    $min: strip-unit($min);
+
+    @if $min == 0 {
+
+        $val: ($val / $upr) * 100;
+
+        @if $mul == 1 {
+            @return $val * 1vw;
+        }
+
+        @return calc-mul($val, $mul);
+
+    } @else {
+
+        $val: $val - $min;
+        $len: $upr - $lwr;
+
+        $val: #{"calc(#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len}))"};
+
+        @if $mul == 1 {
+            @return $val;
+        }
+
+        @return calc-mul($val, $mul);
+    }
+}
+
+/**
+ * Converts a photoshop tracking value to letter-spacing value.
+ * @function tracking
+ * @sinc 1.0.0
+ */
+ @function tracking($value) {
+	$val: $value / 1000;
+	@return #{$val}em;
 }
 
 /**
@@ -107,10 +111,44 @@
 }
 
 /**
- * Removes the unit from a value.
+ * Removes unit from value.
  * @function strip-unit
  * @since 1.0.0
  */
-@function strip-unit($value) {
+ @function strip-unit($value) {
     @return $value / ($value * 0 + 1);
+}
+
+/**
+ * Replaces a string.
+ * @function replace
+ * @since 1.0.0
+ */
+@function replace($string, $search, $replace: '') {
+
+    $string: inspect($string);
+    $search: inspect($search);
+    $index: str-index($string, $search);
+
+    @if $index {
+        @return str-slice($string, 1, $index - 1) + $replace + replace(str-slice($string, $index + str-length($search)), $search, $replace);
+    }
+
+    @return $string;
+}
+
+/**
+ * Parses rvw units.
+ * @function replace
+ * @since 1.0.0
+ */
+@function parse-rvw($value) {
+
+    @if type-of($value) == number {
+        @if unit($value) == 'rvw' {
+            $value: rvw(strip-unit($value), auto);
+        }
+    }
+
+    @return $value;
 }

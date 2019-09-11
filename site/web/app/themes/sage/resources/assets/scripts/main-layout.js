@@ -29,9 +29,9 @@ $.attach('.main-layout-loader', (i, element) => {
 		value.css('width', progress + '%')
 	}
 
-	$(document.body).on('loader/loadedenough', onLoadedEnough)
-	$(document.body)('loader/progress', onProgress)
-	$(document.body)('loader/complete', onComplete)
+	$(document.body).on('loading/loadedenough', onLoadedEnough)
+	$(document.body).on('loading/progress', onProgress)
+	$(document.body).on('loading/complete', onComplete)
 
 	if ($(document.body).hasClass('loaded-enough')) {
 		onLoadedEnough({ target: document.body })

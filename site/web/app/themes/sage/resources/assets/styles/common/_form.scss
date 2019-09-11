@@ -78,7 +78,7 @@
 		@include absolute(top 0 left 0);
 		@include flex-box;
 		@include flex-row(center, flex-start);
-		color: $foreground-color;
+		color: #000000;
 		font-size: rvw(17px, auto);
 		font-weight: 400;
 		letter-spacing: 0.10em;
@@ -111,7 +111,7 @@
 		background: transparent;
 		border: none;
 		border-radius: 0;
-		color: $foreground-color;
+		color: #000000;
 		display: block;
 		font-size: rvw(19px, auto);
 		font-weight: normal;

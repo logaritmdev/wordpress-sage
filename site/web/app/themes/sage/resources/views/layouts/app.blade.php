@@ -9,27 +9,23 @@
 
 	@include('partials.loader')
 
-	<div class="main-layout-scroller" data-scroller>
+	@php do_action('get_header') @endphp
 
-		@php do_action('get_header') @endphp
+	<div class="main-layout">
 
-		<div class="main-layout">
+		@include('partials.header')
 
-			@include('partials.header')
+		<section class="main-layout-content">
+			<main class="main">
+				@yield('content')
+			</main>
+		</section>
 
-			<section class="main-layout-content">
-				<main class="main">
-					@yield('content')
-				</main>
-			</section>
-
-			@include('partials.footer')
-
-		</div>
-
-		@php do_action('get_footer') @endphp
+		@include('partials.footer')
 
 	</div>
+
+	@php do_action('get_footer') @endphp
 
 	@include('partials.menu')
 

@@ -3,19 +3,9 @@
 //------------------------------------------------------------------------------
 
 .container {
-
-	$min: strip-unit(map-get($grid, xxl));
-	$max: strip-unit(map-get($grid, xxxl));
-
-	margin-left: auto;
-	margin-right: auto;
-	width: ($min / $max) * 100vw;
-
-	@include media-breakpoint-down(xxl) {
-		margin-left: base-block-spacing-h(1);
-		margin-right: base-block-spacing-h(1);
-		width: calc-sub(100%, base-block-spacing-h(2));
-	}
+	margin-left: block-spacing-h(1);
+	margin-right: block-spacing-h(1);
+	width: calc-sub(100%, block-spacing-h(2));
 }
 
 //------------------------------------------------------------------------------
@@ -23,76 +13,7 @@
 //------------------------------------------------------------------------------
 
 .main-layout {
-
 	@include relative;
-
-	.smooth-scrolling & {
-		overflow: hidden;
-		height: 100%;
-		width: 100%;
-	}
-}
-
-
-//------------------------------------------------------------------------------
-// Main Layout Scroller
-//------------------------------------------------------------------------------
-
-.main-layout-scroller {
-
-	.smooth-scrolling & {
-		height: 100%;
-		width: 100%;
-	}
-
-	.scroll-content {
-
-		padding: 0;
-		padding-right: 15px;
-
-		/**
-		 * This pevents some visual glitches on chome while
-		 * scrolling.
-		 */
-
-		will-change: transform;
-	}
-
-	 .scrollbar-track {
-		border: none;
-		border-left: 1px solid rgba(200, 200, 200, 0.25);
-		background: #fafafa;
-		opacity: 1;
-		user-select: none;
-		width: 15px;
-		z-index: 10000;
-	}
-
-	 .scrollbar-track:hover {
-		opacity: 1;
-	}
-
-	 .scrollbar-thumb {
-		background: transparent;
-		width: 14px;
-	}
-
-	.scrollbar-thumb::after {
-		@include absolute(top 3px left 3px right 3px bottom 3px);
-		background: #c1c1c1;
-		border: none;
-		border-radius: 4px;
-		content: "";
-		display: block;
-		transition-property: background-color;
-		transition-timing-function: transition-equation(hover);
-		transition-duration: transition-duration(soft);
-		transition-timing-function: transition-equation(hover);
-	}
-
-	.scrollbar-thumb:hover::after {
-		background: #7d7d7d;
-	}
 }
 
 //------------------------------------------------------------------------------
@@ -235,19 +156,8 @@
 //------------------------------------------------------------------------------
 
 .main-layout-content {
-
 	overflow: hidden;
 	width: 100%;
-
-	.native-scrolling & {
-
-		/*
-		 * This is required to make position sticky work
-		 * properly in native scrolling cases.
-		 */
-
-		overflow: visible;
-	}
 }
 
 //------------------------------------------------------------------------------

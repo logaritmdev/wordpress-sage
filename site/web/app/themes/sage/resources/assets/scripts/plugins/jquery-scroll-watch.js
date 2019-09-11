@@ -1,5 +1,3 @@
-import Scrollbar from '../vendors/smooth-scrollbar.min'
-
 /**
  * @function watch
  * @since 1.0.0
@@ -22,13 +20,6 @@ function watch(i, element) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The element that scrolls.
-	 * @var scroller
-	 * @since 1.0.0
-	 */
-	let scroller = element.closest('[data-scroller]')
-
-	/**
 	 * The scrollbar manager.
 	 * @var scrollbar
 	 * @since 1.0.0
@@ -40,10 +31,21 @@ function watch(i, element) {
 	 * @var container
 	 * @since 1.0.0
 	 */
-	let container = scroller.find('.scroll-content')
-	if (container.length == 0) {
-		container = scroller
-	}
+	let container = $('.main')
+
+	/**
+	 * The element tracked scroll top.
+	 * @var scrollTop
+	 * @since 1.0.0
+	 */
+	let scrollTop = 0
+
+	/**
+	 * The element tracked scroll bottom.
+	 * @var scrollBot
+	 * @since 1.0.0
+	 */
+	let scrollBot = 0
 
 	/**
 	 * The element current top offset.
@@ -54,7 +56,7 @@ function watch(i, element) {
 
 	/**
 	 * The element current bottom offset.
-	 * @var offsetBot
+	 * @var offsetTop
 	 * @since 1.0.0
 	 */
 	let offsetBot = 0
@@ -71,7 +73,7 @@ function watch(i, element) {
 	 * @var enter
 	 * @since 1.0.0
 	 */
-	let enter = element.fattr('data-watch-enter') || 0.6
+	let enter = element.fattr('data-watch-enter') || 0.7
 
 	/**
 	 * The class to add when an item is visible on screen.
@@ -108,27 +110,6 @@ function watch(i, element) {
 	 */
 	let delay = element.attr('data-watch-delay')
 
-	/**
-	 * The horizontal layout.
-	 * @var horizontalLayoutElement
-	 * @since 1.0.0
-	 */
-	let horizontalLayoutElement = element.closest('.horizontal-layout')
-
-	/**
-	 * The horizontal layout wrapper element.
-	 * @var hlw
-	 * @since 1.0.0
-	 */
-	let horizontalLayoutWrapper = element.closest('.horizontal-layout-wrapper')
-
-	/**
-	 * The horizontal layout content element.
-	 * @var horizontalLayoutContent
-	 * @since 1.0.0
-	 */
-	let horizontalLayoutContent = element.closest('.horizontal-layout-content')
-
 	//--------------------------------------------------------------------------
 	// Functions
 	//--------------------------------------------------------------------------
@@ -157,7 +138,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getFrameWidth() {
-		return scrollbar ? scrollbar.containerEl.getBoundingClientRect().width : window.innerWidth
+		return window.innerWidth
 	}
 
 	/**
@@ -166,7 +147,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getFrameHeight() {
-		return scrollbar ? scrollbar.containerEl.getBoundingClientRect().height : window.innerHeight
+		return window.innerHeight
 	}
 
 	/**
@@ -175,7 +156,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getScroll() {
-		return getScrollTop() - offsetTop
+		return getScrollTop() - scrollTop
 	}
 
 	/**
@@ -184,7 +165,7 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function getLength() {
-		return (offsetBot - offsetTop) * (1 - enter)
+		return (scrollBot - scrollTop) * (1 - enter)
 	}
 
 	/**
@@ -194,21 +175,6 @@ function watch(i, element) {
 	 */
 	function update() {
 
-		if (horizontalLayoutElement.length &&
-			horizontalLayoutElement.hasClass('horizontal-layout--enabled')) {
-
-			let rhl = horizontalLayoutElement.bounds(scroller)
-			let rhw = horizontalLayoutWrapper.bounds(scroller)
-
-			let offset = element.bounds(horizontalLayoutContent).left + parseFloat(horizontalLayoutContent.css('margin-left')) || 0
-
-			if (offset > rhw.width) {
-				offsetTop = rhl.top + (offset - rhw.width)
-				offsetBot = rhl.top + (offset - rhw.width) + getFrameWidth()
-				return
-			}
-		}
-
 		let bounds = element.bounds('.main')
 
 		if (margins) {
@@ -216,11 +182,19 @@ function watch(i, element) {
 			bounds.bottom -= parseFloat(element.css('margin-bottom')) || 0
 		}
 
-		offsetTop = bounds.top
-		offsetBot = bounds.top + getFrameHeight()
+		let height = getFrameHeight()
 
-		offsetTop = offsetTop - $(window).height()
-		offsetBot = offsetBot - $(window).height()
+		let top = Math.max(bounds.top - height, 0)
+
+		offsetTop = top
+		offsetBot = top + height + bounds.height
+
+		scrollTop = top
+		scrollBot = top + height
+
+		if (scrollBot > container.bounds().height) {
+			scrollBot = container.bounds().height
+		}
 	}
 
 	/**
@@ -234,18 +208,26 @@ function watch(i, element) {
 
 		let scroll = getScrollTop()
 
-		if (scroll >= offsetTop && scroll <= offsetBot) {
+		if (scroll >= scrollTop && scroll <= scrollBot) {
 
-			let length = getLength()
-			let scroll = getScroll()
+			if (scrollTop == 0) {
 
-			progress = scroll / length
+				progress = 1
 
-		} else if (scroll < offsetTop) {
+			} else {
+
+				let length = getLength()
+				let scroll = getScroll()
+
+				progress = scroll / length
+
+			}
+
+		} else if (scroll < scrollTop) {
 
 			progress = 0
 
-		} else if (scroll > offsetBot) {
+		} else if (scroll > scrollBot) {
 
 			progress = 1
 
@@ -258,7 +240,14 @@ function watch(i, element) {
 		if (progress < 0) progress = 0
 		if (progress > 1) progress = 1
 
-		if (progress > 0 && progress <= 1) {
+		let inside = false
+
+		if (scroll >= offsetTop &&
+			scroll <= offsetBot) {
+			inside = true
+		}
+
+		if (inside) {
 
 			element.emit('watch/progress', progress)
 
@@ -280,7 +269,9 @@ function watch(i, element) {
 
 					if (options.enter) {
 						setTimeout(function () {
-							element.emit('watch/enter').addClass('in-viewport')
+							element.emit('watch/enter')
+								.addClass('is-in-viewport')
+								.addClass('was-in-viewport')
 						}, options.delay)
 					}
 
@@ -304,7 +295,7 @@ function watch(i, element) {
 
 					if (options.enter) {
 						setTimeout(function () {
-							element.emit('watch/leave')
+							element.emit('watch/leave').removeClass('is-in-viewport')
 						}, options.delay)
 					}
 
@@ -344,40 +335,6 @@ function watch(i, element) {
 		render()
 	}
 
-	/**
-	 * Called when a scroller is attached.
-	 * @function onAttachScrollbar
-	 * @since 1.0.0
-	 */
-	function onAttachScrollbar() {
-
-		if (scrollbar == null) {
-			scrollbar = Scrollbar.get(scroller.get(0))
-		}
-
-		if (scrollbar) {
-			scrollbar.addListener(onWindowScroll)
-		}
-
-		update()
-		render()
-	}
-
-	/**
-	 * Called when a scroller is detached.
-	 * @function onAttachScrollbar
-	 * @since 1.0.0
-	 */
-	function onDetachScrollbar() {
-
-		if (scrollbar) {
-			scrollbar.removeListener(onWindowResize)
-			scrollbar = null
-		}
-
-		update()
-		render()
-	}
 
 	function onRequestUpdate() {
 		update()
@@ -405,9 +362,6 @@ function watch(i, element) {
 		if (check) {
 			setInterval(onWindowResize, check)
 		}
-
-		$(scroller).on('attachscrollbar', onAttachScrollbar)
-		$(scroller).on('detachscrollbar', onDetachScrollbar)
 	}
 
 	if (delay) {

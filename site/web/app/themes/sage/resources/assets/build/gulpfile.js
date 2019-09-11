@@ -179,7 +179,8 @@ gulp.task('styles', function () {
 
 	const minify = () => {
 		return gulpif(config.features.optimize, cssnano({
-			zindex: false
+			zindex: false,
+			reduceIdents: false
 		}))
 	}
 

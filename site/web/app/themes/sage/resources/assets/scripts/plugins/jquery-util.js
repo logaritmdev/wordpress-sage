@@ -1,5 +1,3 @@
-import Scrollbar from '../vendors/smooth-scrollbar.min'
-
 const addClass = $.fn.addClass
 const removeClass = $.fn.removeClass
 const toggleClass = $.fn.toggleClass
@@ -127,52 +125,6 @@ $.fn.scrollHeight = function () {
 }
 
 /**
- * @function scrollToElement
- * @since 1.0.0
- */
-$.scrollToElement = function (target, duration, callback) {
-
-	var offset = 0
-
-	if (typeof target == 'number') {
-
-		offset = target
-
-	} else {
-
-		target = $(target)
-
-		if (target.length == 0) {
-			return
-		}
-
-		offset = $(window).scrollTop() + target.bounds().top - parseInt(target.css('margin-top')) || 0
-	}
-
-	offset = Math.max(offset, 0)
-
-	setTimeout(function () {
-		callback && callback()
-	}, duration)
-
-	var container = document.querySelector('[data-scroller]')
-	if (container) {
-
-		var scrollbar = Scrollbar.get(container)
-		if (scrollbar) {
-
-			requestAnimationFrame(function () {
-				scrollbar.scrollTo(0, offset, duration)
-			})
-
-			return
-		}
-	}
-
-	$.scrollTo(offset, duration, { axis: 'y', })
-}
-
-/**
  * @function throttle
  * @since 1.0.0
  */
@@ -182,10 +134,12 @@ $.throttle = function (callback, ms) {
 
 	return function () {
 
+		let args = arguments
+
 		function exec() {
 
 			if (callback) {
-				callback()
+				callback.apply(null, args)
 			}
 
 			request = null

@@ -7,49 +7,6 @@
 	box-sizing: border-box;
 }
 
-html {
-
-	/*
-	 * This is necessary for smooth scrolling.
-	 */
-
-	@include media-breakpoint-up(xl) {
-		height: 100%;
-		width: 100%;
-	}
-
-	/*
-	 * There seems to be some kind of rounding issues in firefox. By adding
-	 * 0.5 to some of the font sizes it fixes the issue.
-	 */
-
-	font-size: 20.5px;
-
-	@include media-breakpoint-down(xxl) {
-		font-size: 17.5px;
-	}
-
-	@include media-breakpoint-down(xl) {
-		font-size: 16.0px;
-	}
-
-	@include media-breakpoint-down(lg) {
-		font-size: 15.5px;
-	}
-
-	@include media-breakpoint-down(md) {
-		font-size: 14.5px;
-	}
-
-	@include media-breakpoint-down(sm) {
-		font-size: 13.5px;
-	}
-
-	@include media-breakpoint-down(xs) {
-		font-size: 13.5px;
-	}
-}
-
 body {
 
 	@include text-antialias();
@@ -62,12 +19,6 @@ body {
 	overflow-y: auto;
 	overflow-x: hidden;
 	padding: 0;
-
-	.smooth-scrolling & {
-		height: 100%;
-		overflow: hidden;
-		width: 100%;
-	}
 
 	&.preview {
 		height: auto;

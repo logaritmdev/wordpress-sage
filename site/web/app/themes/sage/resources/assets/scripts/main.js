@@ -8,12 +8,11 @@ import './plugins/jquery-media-events'
 import './plugins/jquery-attach'
 import './plugins/jquery-publish'
 import './plugins/jquery-loading'
-import './plugins/jquery-scroller'
+import './plugins/jquery-scroll-smoother'
 import './plugins/jquery-scroll-anchor'
 import './plugins/jquery-scroll-animation'
 import './plugins/jquery-scroll-watch'
 import './plugins/jquery-slider'
-import './plugins/jquery-sticky'
 import './plugins/jquery-break-lines'
 import './plugins/jquery-break-words'
 import './image'
@@ -31,10 +30,16 @@ $.defineMedia('sm', '(min-width: 576px)')
 $.defineMedia('xs', '(min-width: 0px)')
 
 /*
+ * Enable smooth scrolling.
+ */
+
+$(document).smooth()
+
+/*
  * Adds the ready body class when the document is loaded enough.
  */
 
-$(document.body).on('loader/loadedenough', (e) => {
+$(document.body).on('loading/loadedenough', (e) => {
     setTimeout(() => {
         $(document.body).addClass('ready')
         $(document.body).trigger('ready')

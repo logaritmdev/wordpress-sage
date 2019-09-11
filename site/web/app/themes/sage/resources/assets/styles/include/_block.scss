@@ -11,7 +11,7 @@
  * @sinc 1.0.0
  */
 @function block-spacing-h($mul: 1) {
-	@return rvw($block-spacing-h * $mul, 0);
+	@return rvw($block-spacing-h * $mul, auto);
 }
 
 /**
@@ -20,7 +20,7 @@
  * @sinc 1.0.0
  */
 @function block-spacing-v($mul: 1) {
-	@return rvw($block-spacing-v * $mul, 0);
+	@return rvw($block-spacing-v * $mul, auto);
 }
 
 /**

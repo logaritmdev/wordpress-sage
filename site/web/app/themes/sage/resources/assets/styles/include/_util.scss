@@ -112,6 +112,72 @@
 }
 
 /**
+ * Convenience margin mixin.
+ * @mixin margin
+ * @since 1.0.0
+ */
+ @mixin margin($args: ()) {
+
+	$offsets: top right bottom left;
+
+	@each $offset in $offsets {
+
+		$index: index($args, $offset);
+
+		@if $index {
+
+			@if $index == length($args) {
+				padding-#{$offset}: 0;
+			} @else {
+
+				$next: nth($args, $index + 1);
+
+				@if is-valid-length($next) {
+					margin-#{$offset}: parse-rvw($next);
+				} @else if index($offsets, $next) {
+					margin-#{$offset}: 0;
+				} @else {
+					@warn "Invalid value `#{$next}` for offset `#{$offset}`.";
+				}
+			}
+		}
+	}
+}
+
+/**
+ * Convenience padding mixin.
+ * @mixin padding
+ * @since 1.0.0
+ */
+@mixin padding($args: ()) {
+
+	$offsets: top right bottom left;
+
+	@each $offset in $offsets {
+
+		$index: index($args, $offset);
+
+		@if $index {
+
+			@if $index == length($args) {
+				padding-#{$offset}: 0;
+			} @else {
+
+				$next: nth($args, $index + 1);
+
+				@if is-valid-length($next) {
+					padding-#{$offset}: parse-rvw($next);
+				} @else if index($offsets, $next) {
+					padding-#{$offset}: 0;
+				} @else {
+					@warn "Invalid value `#{$next}` for offset `#{$offset}`.";
+				}
+			}
+		}
+	}
+}
+
+/**
  * Positions an element.
  * @mixin position
  * @since 1.0.0
@@ -135,7 +201,7 @@
 				$next: nth($args, $index + 1);
 
 				@if is-valid-length($next) {
-					#{$offset}: $next;
+					#{$offset}: parse-rvw($next);
 				} @else if index($offsets, $next) {
 					#{$offset}: 0;
 				} @else {

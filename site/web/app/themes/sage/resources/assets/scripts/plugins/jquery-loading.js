@@ -218,7 +218,7 @@ function preload(i, element) {
 
 							if (observer.hasClass('loaded-enough') == false) {
 								observer.addClass('loaded-enough')
-								observer.emit('loader/loadedenough')
+								observer.emit('loading/loadedenough')
 							}
 
 						}, Math.max(0, hold - elapsed))
@@ -235,8 +235,8 @@ function preload(i, element) {
 							if (observer.hasClass('loaded') == false) {
 								observer.addClass('loaded')
 								observer.addClass('loaded-enough')
-								observer.emit('loader/loaded')
-								observer.emit('loader/loadedenough')
+								observer.emit('loading/loaded')
+								observer.emit('loading/loadedenough')
 							}
 
 						}, Math.max(0, hold - elapsed))
@@ -264,11 +264,11 @@ function preload(i, element) {
 				return
 			}
 
-			$(element).emit('loader/complete')
+			$(element).emit('loading/complete')
 		}
 
 		function step(value) {
-			$(element).emit('loader/progress', value)
+			$(element).emit('loading/progress', value)
 		}
 
 		$(object).stop().animate({ value: value }, {
@@ -371,7 +371,6 @@ function preload(i, element) {
 			}
 		}
 
-		element.autoplay = false
 		element.pause()
 		element.addEventListener('canplaythrough', onCanPlayThrough)
 		element.load()
@@ -419,7 +418,6 @@ function preload(i, element) {
 			}
 		}
 
-		element.autoplay = false
 		element.pause()
 		element.addEventListener('canplaythrough', onCanPlayThrough)
 		element.load()
@@ -489,30 +487,27 @@ function preload(i, element) {
 		}
 	})
 
-	$(element).find("[data-preload]").each(function (i, element) {
+	let preloadCount = $.data(element, 'preload_count') || 0
+	let visibleCount = $.data(element, 'visible_count') || 0
 
-		element = $(element)
+	if (preloadCount == 0) {
+		requestAnimationFrame(function () {
+			element = $(element)
+			element.addClass('loaded')
+			element.addClass('loaded-enough')
+			element.emit('loading/loaded')
+			element.emit('loading/loadedenough')
+			progress(1, 1)
+		})
+	}
 
-		let key = element.get(0)
-		let preloadCount = $.data(key, 'preload_count') || 0
-		let visibleCount = $.data(key, 'visible_count') || 0
-
-		if (preloadCount == 0) {
-			requestAnimationFrame(function () {
-				element.addClass('loaded')
-				element.addClass('loaded-enough')
-				element.emit('loader/loaded')
-				element.emit('loader/loadedenough')
-			})
-		}
-
-		if (visibleCount == 0) {
-			requestAnimationFrame(function () {
-				element.addClass('loaded-enough')
-				element.emit('loader/loadedenough')
-			})
-		}
-	})
+	if (visibleCount == 0) {
+		requestAnimationFrame(function () {
+			element = $(element)
+			element.addClass('loaded-enough')
+			element.emit('loading/loadedenough')
+		})
+	}
 
 	$(window).on('load', () => progress(1, 1))
 }
