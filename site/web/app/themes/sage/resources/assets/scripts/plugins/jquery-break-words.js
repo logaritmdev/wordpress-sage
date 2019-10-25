@@ -123,7 +123,10 @@ function breakWords(i, element, options) {
 				emptyNode(node)
 
 				node.appendChild(fragment)
+
+				appendChar(' ', into)
 				into.appendChild(node)
+				appendChar(' ', into)
 
 				continue
 			}

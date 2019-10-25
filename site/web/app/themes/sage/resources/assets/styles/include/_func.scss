@@ -1,26 +1,32 @@
 /**
- * Converts a unit to vw;
+ * Converts a value to vw;
  * @function rvw
  * @sinc 1.0.0
  */
- @function rvw($val, $min: 0, $mul: 1) {
+ @function rvw($val, $min: 0, $mul: 1, $upr: null, $lwr: null) {
 
-    $upr: 1440;
-    $lwr: 320;
+	@if $upr == null {
+		$upr: 1920;
+	}
 
-    @if $val == 1px or
-        $val == 2px {
-        $min: $val
-    }
+	@if $lwr == null {
+		$lwr: 375;
+	}
 
-    @if $min == auto {
-        $min: 0.3121416 * $val + 7.510896;
-    }
+	@if $min == typo {
+		$min: 0;
+		@debug "Found min: typo";
+	}
 
-    $val: strip-unit($val);
-    $min: strip-unit($min);
+	@if $min == util {
+		$min: 0;
+		@debug "Found min: util";
+	}
 
-    @return calc-rvw($val, $lwr, $upr, $mul, $min);
+	$val: strip-unit($val);
+	$min: strip-unit($min);
+
+	@return calc-rvw($val, $lwr, $upr, $min, $mul);
 }
 
 /**
@@ -29,9 +35,9 @@
  * @sinc 1.0.0
  */
 @function calc-add($a, $b) {
-    $a: replace($a, "calc", "");
-    $b: replace($b, "calc", "");
-    @return #{"calc(#{$a} + #{$b})"};
+	$a: replace($a, "calc", "");
+	$b: replace($b, "calc", "");
+	@return #{"calc(#{$a} + #{$b})"};
 }
 
 /**
@@ -40,9 +46,9 @@
  * @sinc 1.0.0
  */
 @function calc-sub($a, $b, $m: 1) {
-    $a: replace($a, "calc", "");
-    $b: replace($b, "calc", "");
-    @return #{"calc(#{$a} - #{$b})"};
+	$a: replace($a, "calc", "");
+	$b: replace($b, "calc", "");
+	@return #{"calc(#{$a} - #{$b})"};
 }
 
 /**
@@ -51,9 +57,9 @@
  * @sinc 1.0.0
  */
 @function calc-mul($a, $b) {
-    $a: replace($a, "calc", "");
-    $b: replace($b, "calc", "");
-    @return #{"calc(#{$a} * #{$b})"};
+	$a: replace($a, "calc", "");
+	$b: replace($b, "calc", "");
+	@return #{"calc(#{$a} * #{$b})"};
 }
 
 /**
@@ -61,34 +67,28 @@
  * @function calc-rvw
  * @sinc 1.0.0
  */
-@function calc-rvw($val, $lwr, $upr, $mul, $min: 0) {
+@function calc-rvw($val, $lwr, $upr, $min, $mul) {
 
-    $val: strip-unit($val);
-    $min: strip-unit($min);
+	$val: strip-unit($val);
+	$min: strip-unit($min);
 
-    @if $min == 0 {
+	$val: $val - $min;
+	$len: $upr - $lwr;
 
-        $val: ($val / $upr) * 100;
+	@if $min == 0 {
 
-        @if $mul == 1 {
-            @return $val * 1vw;
-        }
+		@return ($val / $upr) * 100vw;
 
-        @return calc-mul($val, $mul);
+	} @else {
 
-    } @else {
+		$val: #{"calc(#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len}))"};
 
-        $val: $val - $min;
-        $len: $upr - $lwr;
+		@if $mul == 1 {
+			@return $val;
+		}
 
-        $val: #{"calc(#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len}))"};
-
-        @if $mul == 1 {
-            @return $val;
-        }
-
-        @return calc-mul($val, $mul);
-    }
+		@return calc-mul($val, $mul);
+	}
 }
 
 /**
@@ -116,7 +116,7 @@
  * @since 1.0.0
  */
  @function strip-unit($value) {
-    @return $value / ($value * 0 + 1);
+	@return $value / ($value * 0 + 1);
 }
 
 /**
@@ -126,15 +126,19 @@
  */
 @function replace($string, $search, $replace: '') {
 
-    $string: inspect($string);
-    $search: inspect($search);
-    $index: str-index($string, $search);
+	@if type-of($string) != string {
+		@return $string;
+	}
 
-    @if $index {
-        @return str-slice($string, 1, $index - 1) + $replace + replace(str-slice($string, $index + str-length($search)), $search, $replace);
-    }
+	$string: inspect($string);
+	$search: inspect($search);
+	$index: str-index($string, $search);
 
-    @return $string;
+	@if $index {
+		@return str-slice($string, 1, $index - 1) + $replace + replace(str-slice($string, $index + str-length($search)), $search, $replace);
+	}
+
+	@return $string;
 }
 
 /**
@@ -144,11 +148,11 @@
  */
 @function parse-rvw($value) {
 
-    @if type-of($value) == number {
-        @if unit($value) == 'rvw' {
-            $value: rvw(strip-unit($value), auto);
-        }
-    }
+	@if type-of($value) == number {
+		@if unit($value) == 'rvw' {
+			$value: rvw(strip-unit($value));
+		}
+	}
 
-    @return $value;
+	@return $value;
 }

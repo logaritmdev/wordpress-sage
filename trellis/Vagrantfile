@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-ANSIBLE_PATH = __dir__ # absolute path to Ansible directory on host machine
+ANSIBLE_PATH = '/System/Volumes/Data/' + __dir__ # absolute path to Ansible directory on host machine
 ANSIBLE_PATH_ON_VM = '/home/vagrant/trellis'.freeze # absolute path to Ansible directory on virtual machine
 
 require File.join(ANSIBLE_PATH, 'lib', 'trellis', 'vagrant')

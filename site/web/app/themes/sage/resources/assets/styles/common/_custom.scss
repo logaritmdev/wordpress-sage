@@ -16,13 +16,9 @@
 
 .error-404-content {
 
-	font-size: rvw(30px, auto);
+	font-size: rvw(30px, 20px);
 	font-weight: bold;
 	text-align: center;
-
-	@include media-breakpoint-down(xs) {
-	   font-size: rvw(18px, auto);
-   }
 
 	> * {
 		opacity: 0;

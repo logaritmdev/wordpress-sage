@@ -1,6 +1,8 @@
 
 $.fn.preload = function () {
-	this.each(preload)
+	requestAnimationFrame(() => {
+		this.each(preload)
+	})
 }
 
 /**
@@ -10,19 +12,25 @@ $.fn.preload = function () {
  */
 function preload(i, element) {
 
-	$(element).attr('data-loaded', 0)
+	element = $(element)
 
-	let object = { value: 0 }
-	// if (document.readyState !== 'complete') {
-	// 	length = 1
-	// }
+	let preloadElements = { loaded: 0, length: 0, complete: false }
+	let visibleElements = { loaded: 0, length: 0, complete: false }
+	let preloadComplete = null
+	let visibleComplete = null
+	let startedAt = Date.now()
 
-	let timeout = $(element).attr('data-load-timeout') || 10
+	let updateProgressFrame = null;
+
+	let timeout = element.attr('data-load-timeout') || 10
 	if (timeout) {
 		timeout = parseFloat(timeout)
 	}
 
-	let autoplays = []
+	let hold = element.attr('data-preload-hold') || 0
+	if (hold) {
+		hold = parseInt(hold)
+	}
 
 	/**
 	 * Informs that an element has began preloading.
@@ -39,29 +47,9 @@ function preload(i, element) {
 	 * @since 1.0.0
 	 */
 	function finish(element, visible, source) {
-
-		requestAnimationFrame(function () {
+		requestAnimationFrame(() => {
 			onFinishLoading(element, visible, source)
 		})
-
-		let observer = $(element).closest("[data-preload]")
-		if (observer.length) {
-
-			let key = observer.get(0)
-
-			let preloadLoadedCount = $.data(key, 'preload_loaded_count') || 0
-			let visibleLoadedCount = $.data(key, 'visible_loaded_count') || 0
-			let preloadCount = $.data(key, 'preload_count') || 0
-			let visibleCount = $.data(key, 'visible_count') || 0
-
-			let value = visibleLoadedCount / visibleCount
-			let total = preloadLoadedCount / preloadCount
-
-			progress(
-				isNaN(value) ? 1 : value,
-				isNaN(total) ? 1 : total
-			)
-		}
 	}
 
 	/**
@@ -71,7 +59,10 @@ function preload(i, element) {
 	 */
 	function isVisible(element) {
 
-		let rect = $(element).get(0).getBoundingClientRect()
+		let rect = element.bounds()
+
+		rect.x = rect.left
+		rect.y = rect.top
 
 		let r1x1 = 0
 		let r1y1 = 0
@@ -92,45 +83,18 @@ function preload(i, element) {
 
 			let node = element
 
-			while (node) {
+			while (node && node.get(0) != document) {
 
-				let style = getComputedStyle(node)
-
-				if (style.display == 'none' ||
-					style.visibility == 'hidden') {
+				if (node.css('display') == 'none' ||
+					node.css('visibility') == 'hidden') {
 					return false
 				}
 
-				node = node.parentElement
+				node = node.parent()
 			}
 		}
 
 		return overlaps
-	}
-
-	/**
-	 * Indicates whether the element is inside the document.
-	 * @function isInsideDocument
-	 * @since 1.0.0
-	 */
-	function isInsideDocument(element) {
-		return $(element).closest(document.documentElement).length > 0
-	}
-
-	/**
-	 * @function setClosestObserver
-	 * @since 1.0.0
-	 */
-	function setClosestObserver(element, observer) {
-		element['_closest_observer_'] = observer
-	}
-
-	/**
-	 * @function getClosestObserver
-	 * @since 1.0.0
-	 */
-	function getClosestObserver(element) {
-		return element['_closest_observer_']
 	}
 
 	/**
@@ -140,33 +104,13 @@ function preload(i, element) {
 	 */
 	function onBeginLoading(element, visible, source) {
 
-		let observer = $(element).closest("[data-preload]")
-		if (observer.length) {
-
-			if (getClosestObserver(element) == null) {
-				setClosestObserver(element, observer)
-			}
-
-			let key = observer.get(0)
-
-			if ($.data(key, 'load_start_time') == null) {
-				$.data(key, 'load_start_time', Date.now())
-			}
-
-			let preloadCount = $.data(key, 'preload_count') || 0
-			let visibleCount = $.data(key, 'visible_count') || 0
-
-			preloadCount++
-
-			if (visible) {
-				visibleCount++
-			}
-
-			$.data(key, 'preload_count', preloadCount)
-			$.data(key, 'visible_count', visibleCount)
-
-			onBeginLoading(observer.parent(), visible, source)
+		if (visible) {
+			visibleElements.length++
 		}
+
+		preloadElements.length++
+
+		progress()
 	}
 
 	/**
@@ -176,76 +120,13 @@ function preload(i, element) {
 	 */
 	function onFinishLoading(element, visible, source) {
 
-		let observer = isInsideDocument(element) == false ? getClosestObserver(element) : $(element).closest('[data-preload]')
-		if (observer == null) {
-			observer = $(document.body)
+		if (visible) {
+			visibleElements.loaded++
 		}
 
-		if (observer.length) {
+		preloadElements.loaded++
 
-			let key = observer.get(0)
-
-			let preloadLoadedCount = $.data(key, 'preload_loaded_count') || 0
-			let visibleLoadedCount = $.data(key, 'visible_loaded_count') || 0
-			let preloadCount = $.data(key, 'preload_count') || 0
-			let visibleCount = $.data(key, 'visible_count') || 0
-
-			preloadLoadedCount++
-
-			if (visible) {
-				visibleLoadedCount++
-			}
-
-			$.data(key, 'preload_loaded_count', preloadLoadedCount)
-			$.data(key, 'visible_loaded_count', visibleLoadedCount)
-
-			if (preloadCount == preloadLoadedCount ||
-				visibleCount == visibleLoadedCount) {
-
-				let hold = observer.attr('data-preload-hold') || 0
-				if (hold) {
-					hold = parseInt(hold)
-				}
-
-				let elapsed = Date.now() - $.data(key, 'load_start_time')
-
-				if (visibleCount == visibleLoadedCount) {
-
-					if ($.data(key, 'visible_count_reached') == null) {
-						$.data(key, 'visible_count_reached', true)
-
-						setTimeout(function () {
-
-							if (observer.hasClass('loaded-enough') == false) {
-								observer.addClass('loaded-enough')
-								observer.emit('loading/loadedenough')
-							}
-
-						}, Math.max(0, hold - elapsed))
-					}
-				}
-
-				if (preloadCount == preloadLoadedCount) {
-
-					if ($.data(key, 'preload_count_reached') == null) {
-						$.data(key, 'preload_count_reached', true)
-
-						setTimeout(function () {
-
-							if (observer.hasClass('loaded') == false) {
-								observer.addClass('loaded')
-								observer.addClass('loaded-enough')
-								observer.emit('loading/loaded')
-								observer.emit('loading/loadedenough')
-							}
-
-						}, Math.max(0, hold - elapsed))
-					}
-				}
-			}
-
-			onFinishLoading(observer.parent(), visible, source)
-		}
+		progress()
 	}
 
 	/**
@@ -253,37 +134,131 @@ function preload(i, element) {
 	 * @function progress
 	 * @since 1.0.0
 	 */
-	function progress(value, total) {
+	function progress() {
 
-		value = value * 100
-		total = total * 100
+		function updateProgress() {
+			updatePreloadProgress()
+			updateVisibleProgress()
+		}
 
-		function complete() {
+		if (updateProgressFrame == null) {
+			updateProgressFrame = requestAnimationFrame(() => {
+				updateProgressFrame = null
+				updateProgress()
+			})
+		}
+	}
 
-			if (value < 100) {
+	/**
+	 * Updates the progress value for all preloaded items.
+	 * @function updatePreloadProgress
+	 * @since 1.0.0
+	 */
+	function updatePreloadProgress() {
+
+		let progress = 0
+
+		if (preloadElements.length > 0) {
+			progress = preloadElements.loaded / preloadElements.length
+		} else {
+			progress = 1
+		}
+
+		if (progress == 1) {
+
+			if (preloadElements.complete) {
 				return
 			}
 
-			$(element).emit('loading/complete')
+			preloadElements.complete = true
+
+			let elapsed = Date.now() - startedAt
+
+			setTimeout(function () {
+
+				if (element.hasClass('loaded') == false) {
+					element.addClass('loaded')
+					element.emit('loading/loaded')
+				}
+
+			}, Math.max(0, hold - elapsed))
+		}
+
+		function complete() {
+
+			if (progress < 1) {
+				return
+			}
+
+			element.emit('loading/complete')
 		}
 
 		function step(value) {
-			$(element).emit('loading/progress', value)
+			element.emit('loading/progress', value * 100)
 		}
 
-		$(object).stop().animate({ value: value }, {
-			duration: 500,
-			complete: complete,
-			step: step
-		})
+		preloadComplete = clearTimeout(preloadComplete)
+		preloadComplete = setTimeout(() => {
+			complete()
+		}, 500)
 
-		if (total == 100) {
-			for (let i = 0; i < autoplays.length; i++) {
-				autoplays[i].play()
+		step(progress);
+	}
+
+	/**
+	 * Updates the progress value for all visible items.
+	 * @function updatePreloadProgress
+	 * @since 1.0.0
+	 */
+	function updateVisibleProgress() {
+
+		let progress = 0
+
+		if (visibleElements.length > 0) {
+			progress = visibleElements.loaded / visibleElements.length
+		} else {
+			progress = 1
+		}
+
+		if (progress == 1) {
+
+			if (visibleElements.complete) {
+				return
 			}
+
+			visibleElements.complete = true
+
+			let elapsed = Date.now() - startedAt
+
+			setTimeout(function () {
+
+				if (element.hasClass('loaded-enough') == false) {
+					element.addClass('loaded-enough')
+					element.emit('loading/loadedenough')
+				}
+
+			}, Math.max(0, hold - elapsed))
 		}
 
-		$(element).attr('data-loaded', value)
+		function complete() {
+
+			if (progress < 1) {
+				return
+			}
+
+			element.emit('loading/complete/visible')
+		}
+
+		function step(value) {
+			element.emit('loading/progress/visible', value * 100)
+		}
+
+		visibleComplete = clearTimeout(visibleComplete)
+		visibleComplete = setTimeout(() => {
+			complete()
+		}, 500)
+
+		step(progress);
 	}
 
 	/**
@@ -296,6 +271,25 @@ function preload(i, element) {
 		if (url == '' ||
 			url == null) {
 			return
+		}
+
+		let extension = url.split('.').pop()
+		if (extension) {
+
+			extension = extension.toLowerCase()
+
+			switch (extension) {
+
+				case 'gif':
+				case 'png':
+				case 'jpg':
+				case 'svg':
+				case 'jpeg':
+					break;
+
+				default:
+					return
+			}
 		}
 
 		let visible = isVisible(element)
@@ -339,44 +333,37 @@ function preload(i, element) {
 	 */
 	function preloadVideo(element) {
 
-		if (hasSource(element) == false || $(element).attr('data-preload') == 'false') {
+		let video = element.get(0)
+
+		if (hasSource(element) == false || element.attr('preload') == 'none') {
 			return
 		}
 
 		let visible = isVisible(element)
 
-		if (element.readyState === 4) {
+		if (video.readyState === 4) {
 			begin(element, visible)
 			finish(element, visible)
 			return
 		}
 
-		begin(element, visible, $(element).attr('src'))
+		begin(element, visible, element.attr('src'))
 
-		length++
-
-		let autoplay = element.autoplay
 		let failsafe = null
 
 		function onCanPlayThrough() {
 
 			clearTimeout(failsafe)
 
-			element.removeEventListener('canplaythrough', onCanPlayThrough)
+			video.removeEventListener('canplaythrough', onCanPlayThrough)
 
-			finish(element, visible, $(element).attr('src'))
-
-			if (autoplay) {
-				autoplays.push(element)
-			}
+			finish(element, visible, element.attr('src'))
 		}
 
-		element.pause()
-		element.addEventListener('canplaythrough', onCanPlayThrough)
-		element.load()
+		video.addEventListener('canplaythrough', onCanPlayThrough)
 
 		failsafe = setTimeout(function () {
-			console.warn('Timeout reached for video', element.currentSrc)
+			console.warn('Timeout reached for video', video.currentSrc)
 			onCanPlayThrough()
 		}, timeout * 1000)
 	}
@@ -388,42 +375,37 @@ function preload(i, element) {
 	 */
 	function preloadAudio(element) {
 
-		if (hasSource(element) == false || $(element).attr('data-preload') == 'false') {
+		let audio = element.get(0)
+
+		if (hasSource(element) == false || element.attr('preload') == 'none') {
 			return
 		}
 
-		if (element.readyState === 4) {
+		let visible = isVisible(element)
+
+		if (audio.readyState === 4) {
 			begin(element, visible)
 			finish(element, visible)
 			return
 		}
 
-		length++
+		begin(element, visible, element.attr('src'))
 
-		begin(element, true, $(element).attr('src'))
-
-		let autoplay = element.autoplay
 		let failsafe = null
 
 		function onCanPlayThrough() {
 
 			clearTimeout(failsafe)
 
-			element.removeEventListener('canplaythrough', onCanPlayThrough)
+			audio.removeEventListener('canplaythrough', onCanPlayThrough)
 
-			finish(element, true, $(element).attr('src'))
-
-			if (autoplay) {
-				autoplays.push(element)
-			}
+			finish(element, visible, element.attr('src'))
 		}
 
-		element.pause()
-		element.addEventListener('canplaythrough', onCanPlayThrough)
-		element.load()
+		audio.addEventListener('canplaythrough', onCanPlayThrough)
 
 		failsafe = setTimeout(function () {
-			console.warn('Timeout reached for audio', element.currentSrc)
+			console.warn('Timeout reached for video', video.currentSrc)
 			onCanPlayThrough()
 		}, timeout * 1000)
 	}
@@ -434,30 +416,19 @@ function preload(i, element) {
 	 * @since 1.0.0
 	 */
 	function hasSource(element) {
-
-		let has = false
-
-		for (let i = 0; i < element.children.length; i++) {
-			let source = element.children[i]
-			if (source.src) {
-				has = true
-			}
-		}
-
-		if (has == false) {
-			has = element.src.length > 0
-		}
-
-		return has
+		return element.find('source').length > 0
 	}
 
 	/**
 	 * Process every element in order to find whether they are attach to
 	 * a resource that needs to be preloaded.
 	 */
+
 	$(element).find('*').each(function (i, element) {
 
-		let backgroundImage = $(element).css('background-image').match(/url\((.*?)\)/g)
+		element = $(element)
+
+		let backgroundImage = element.css('background-image').match(/url\((.*?)\)/g)
 		if (backgroundImage) {
 			backgroundImage = backgroundImage[0];
 			backgroundImage = backgroundImage.replace(/^url\(/, '')
@@ -466,56 +437,35 @@ function preload(i, element) {
 			preloadImage(element, backgroundImage, 'background')
 		}
 
-		if (element.tagName === 'IMG') {
-			preloadImage(element, $(element).attr('src'), 'img')
+		if (element.prop('tagName') === 'IMG') {
+			preloadImage(element, element.attr('src'), 'img')
 			return
 		}
 
-		if (element.tagName === 'IMAGE') {
-			preloadImage(element, $(element).attr('xlink:href'), 'svg')
+		if (element.prop('tagName') === 'IMAGE') {
+			preloadImage(element, element.attr('xlink:href'), 'svg')
 			return
 		}
 
-		if (element.tagName === 'VIDEO' && $(element).attr('preload')) {
+		if (element.prop('tagName') === 'VIDEO' && element.attr('preload')) {
 			preloadVideo(element)
 			return
 		}
 
-		if (element.tagName === 'AUDIO' && $(element).attr('preload')) {
+		if (element.prop('tagName') === 'AUDIO' && element.attr('preload')) {
 			preloadAudio(element)
 			return
 		}
 	})
 
-	let preloadCount = $.data(element, 'preload_count') || 0
-	let visibleCount = $.data(element, 'visible_count') || 0
-
-	if (preloadCount == 0) {
+	if (preloadElements.length == 0 ||
+		visibleElements.length == 0) {
 		requestAnimationFrame(function () {
-			element = $(element)
-			element.addClass('loaded')
-			element.addClass('loaded-enough')
-			element.emit('loading/loaded')
-			element.emit('loading/loadedenough')
-			progress(1, 1)
+			progress()
 		})
 	}
-
-	if (visibleCount == 0) {
-		requestAnimationFrame(function () {
-			element = $(element)
-			element.addClass('loaded-enough')
-			element.emit('loading/loadedenough')
-		})
-	}
-
-	$(window).on('load', () => progress(1, 1))
 }
 
-/**
- * @attach data-watch
- * @since 1.0.0
- */
-$.attach('body', function (i, element) {
+$.attach('[data-preload]', (i, element) => {
 	element.preload()
 })

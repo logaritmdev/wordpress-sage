@@ -1,9 +1,27 @@
 //------------------------------------------------------------------------------
-// Sticky
+// Spinner
 //------------------------------------------------------------------------------
 
-.sticky {
-	@include sticky(top 0);
+.spinner {
+	@include absolute(top 50% left 50%);
+	animation: spinner-rotate 3s linear infinite;
+	border: 2px solid #FFFFFF;
+	border-radius: rvw(60px, 30px);
+	border-left-color: transparent;
+	height: rvw(60px, 30px);
+	margin-top: rvw(-30px, -15px);
+	margin-left: rvw(-30px, -15px);
+	opacity: 0;
+	transition-property: opacity, transform;
+	transition-duration: transition-duration(soft);
+	transition-timing-function: transition-equation(soft);
+	width: rvw(60px, 30px);
+}
+
+@keyframes spinner-rotate {
+	to {
+		transform: rotate(360deg);
+	}
 }
 
 //------------------------------------------------------------------------------
@@ -80,31 +98,5 @@
 		.spinner {
 			opacity: 0;
 		}
-	}
-}
-
-//------------------------------------------------------------------------------
-// Spinner
-//------------------------------------------------------------------------------
-
-.spinner {
-	@include absolute(top 50% left 50%);
-	animation: spinner-rotate 3s linear infinite;
-	border: rem(2px) solid #FFFFFF;
-	border-radius: rvw(60px);
-	border-left-color: transparent;
-	height: rvw(60px);
-	margin-top: rvw(-30px);
-	margin-left: rvw(-30px);
-	opacity: 0;
-	transition-property: opacity, transform;
-	transition-duration: transition-duration(soft);
-	transition-timing-function: transition-equation(soft);
-	width: rvw(60px);
-}
-
-@keyframes spinner-rotate {
-	to {
-		transform: rotate(360deg);
 	}
 }

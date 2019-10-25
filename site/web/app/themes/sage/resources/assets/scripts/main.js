@@ -43,7 +43,7 @@ $(document.body).on('loading/loadedenough', (e) => {
     setTimeout(() => {
         $(document.body).addClass('ready')
         $(document.body).trigger('ready')
-    }, 1500)
+    }, 1000)
 })
 
 /*
@@ -145,12 +145,3 @@ if (window.navigator.userAgent.indexOf('Trident/7.0') > 0 ||
         }
     })
 }
-
-/*
- * Makes the wpadminbar usable
- */
-
-$.attach('#wpadminbar', (i, element) => {
-    element.remove()
-    element.appendTo('body')
-})

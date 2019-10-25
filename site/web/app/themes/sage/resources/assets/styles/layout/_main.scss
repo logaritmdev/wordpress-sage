@@ -3,9 +3,9 @@
 //------------------------------------------------------------------------------
 
 .container {
-	margin-left: block-spacing-h(1);
-	margin-right: block-spacing-h(1);
-	width: calc-sub(100%, block-spacing-h(2));
+	margin-left: rvw(120px, 30px);
+	margin-right: rvw(120px, 30px);
+	width: calc-sub(100%, rvw(240px, 60px));
 }
 
 //------------------------------------------------------------------------------
@@ -22,8 +22,8 @@
 
 .main-layout-header {
 
-	@include absolute(top 0 left 0 right 0);
-	z-index: 100;
+	background: #fff;
+	height: rvw(120px, 100px);
 
 	.container {
 		@include relative;
@@ -73,57 +73,11 @@
 	.menu-item {
 
 		@include relative;
-		font-size: rem(15px);
+		font-size: rem(15px, util);
 		font-weight: normal;
 		list-style: none;
 		list-style-position: outside;
-		text-transform: uppercase;
 		white-space: nowrap;
-
-		@include media-break-down using ($bp) {
-			padding-left: scaled-padding-left($bp, 30px);
-			padding-right: scaled-padding-right($bp, 30px);
-		}
-
-		.no-touchevents &:hover {
-			.children {
-				opacity: 1;
-				visibility: visible;
-			}
-		}
-
-		.children {
-
-			@include absolute(top 100% left 50%);
-			@include flex-box;
-			@include flex-col(center, center);
-			background: #000fff;
-			padding: rem(30px);
-			opacity: 0;
-			transition-property: opacity, visibility;
-			transition-duration: transition-duration(hover);
-			transition-timing-function: transition-equation(hover);
-			visibility: hidden;
-			width: rem(320px);
-
-			.menu-item {
-
-				font-size: rem(15px);
-				font-weight: normal;
-				margin-top: rem(15px);
-				margin-bottom: rem(15px);
-				padding: 0;
-				text-align: center;
-				text-transform: none;
-
-				&:after {
-					@include media-break-down using ($bp) {
-						left: scaled-left($bp, 0px);
-						right: scaled-right($bp, 0px);
-					}
-				}
-			}
-		}
 
 		&.current-menu-item,
 		&.current-menu-item-ancestor {

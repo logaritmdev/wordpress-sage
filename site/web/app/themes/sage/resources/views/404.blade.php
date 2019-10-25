@@ -2,7 +2,7 @@
 
 @section('content')
 
-<section class="error-404" data-watch data-preload>
+<section class="error-404" data-watch>
 	<div class="container">
 		<div class="error-404-content">
 			<h1><?php echo __('Not found', 'sage') ?></h1>

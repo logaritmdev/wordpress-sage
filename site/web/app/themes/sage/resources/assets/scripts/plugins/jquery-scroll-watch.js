@@ -20,18 +20,11 @@ function watch(i, element) {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * The scrollbar manager.
-	 * @var scrollbar
-	 * @since 1.0.0
-	 */
-	let scrollbar = null
-
-	/**
 	 * The scrollable container.
 	 * @var container
 	 * @since 1.0.0
 	 */
-	let container = $('.main')
+	let container = $(document.body)
 
 	/**
 	 * The element tracked scroll top.
@@ -66,7 +59,7 @@ function watch(i, element) {
 	 * @var enter
 	 * @since 1.0.0
 	 */
-	let check = element.fattr('data-watch-check') || 0
+	let check = element.fattr('data-watch-check') || 1000
 
 	/**
 	 * The value where the element enters hte screen;
@@ -109,6 +102,20 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	let delay = element.attr('data-watch-delay')
+
+	/**
+	 * The current content width.
+	 * @var contentW
+	 * @since 1.0.0
+	 */
+	let contentW = 0
+
+	/**
+	 * The current content height.
+	 * @var contentH
+	 * @since 1.0.0
+	 */
+	let contentH = 0
 
 	//--------------------------------------------------------------------------
 	// Functions
@@ -175,7 +182,7 @@ function watch(i, element) {
 	 */
 	function update() {
 
-		let bounds = element.bounds('.main')
+		let bounds = element.bounds(container)
 
 		if (margins) {
 			bounds.top -= parseFloat(element.css('margin-top')) || 0
@@ -322,8 +329,19 @@ function watch(i, element) {
 	 * @since 1.0.0
 	 */
 	function onWindowResize() {
+
+		let bounds = container.bounds()
+
+		if (contentW == bounds.width &&
+			contentH == bounds.height) {
+			return
+		}
+
 		update()
 		render()
+
+		contentW = bounds.width
+		contentH = bounds.height
 	}
 
 	/**
@@ -334,7 +352,6 @@ function watch(i, element) {
 	function onWindowScroll() {
 		render()
 	}
-
 
 	function onRequestUpdate() {
 		update()
@@ -356,8 +373,6 @@ function watch(i, element) {
 		$(window).on('load', onWindowLoad)
 		$(window).on('resize', onWindowResize)
 		$(window).on('scroll', onWindowScroll)
-
-		onAttachScrollbar()
 
 		if (check) {
 			setInterval(onWindowResize, check)

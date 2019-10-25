@@ -162,7 +162,6 @@ add_action('after_setup_theme', function () {
     });
 });
 
-
 /**
  * Add theme specific styles.
  */
@@ -175,11 +174,32 @@ add_action('wp_head', function() {
 });
 
 /**
+ * Fixed metabox overlap.
+ */
+add_action('admin_head', function() {
+	echo '
+		<style>
+			.block-editor-writing-flow {
+				height: auto;
+			}
+		</style>
+	';
+});
+
+/**
+ * Removes the margin top applied by the wp admin bar.
+ * @since 1.0.0
+ */
+add_action('get_header', function() {
+    remove_action('wp_head', '_admin_bar_bump_cb');
+});
+
+/**
  * Customizes the login page
  * @since 1.0.0
  */
 add_action('login_enqueue_scripts', function() {
-	wp_enqueue_style('sage/css', asset_path('styles/main.css'), false, null);
+	// wp_enqueue_style('sage/css', asset_path('styles/main.css'), false, null);
 });
 
 /**
@@ -231,8 +251,41 @@ add_filter('get_twig', function($twig) {
         }
 
 		return date_i18n($format, $timestamp);
+	}));
 
-    }));
+	/**
+	 * @filter embed
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('embed', function($image) {
+
+		if (empty($image)) {
+            return;
+		}
+
+		$src = '';
+
+		if (is_string($image)) {
+
+			$src = __DIR__ . '/../dist/' . $image;
+
+		} else {
+
+			if (isset($image['src']) == false) {
+				$image['src'] = get_attached_file($image['id']);
+			}
+
+			$src = $image['src'];
+		}
+
+        if (is_readable($src)) {
+            $contents = file_get_contents($src);
+            $contents = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $contents);
+            return $contents;
+        }
+
+        return null;
+	}));
 
 	/**
 	 * @filter image
@@ -257,7 +310,6 @@ add_filter('get_twig', function($twig) {
 				</div>
 			</div>
 		', $image);
-
 	}));
 
 	/**
@@ -283,7 +335,7 @@ add_filter('get_twig', function($twig) {
 		if ($load) {
 			$load = 'preload="auto"';
 		} else {
-			$load = 'preload="none" data-preload="false"';
+			$load = 'preload="none"';
 		}
 
 		return sprintf(
@@ -299,7 +351,74 @@ add_filter('get_twig', function($twig) {
 			$video
 
 		);
+	}));
 
+	/**
+	 * @filter autodetect
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('autodetect', function($value) {
+
+		$value = strip_tags($value, '<br>');
+
+		$searches = [];
+		$replaces = [];
+
+		if (preg_match_all('#\b[0-9]{3}\s*[-]?\s*[0-9]{3}\s*[-]?\s*[0-9]{4}\b#i', $value, $matches)) {
+
+			foreach ($matches[0] as $match) {
+
+				$text = $match;
+				$link = $match;
+				$link = preg_replace('/\s+/', '', $link);
+
+				if (in_array($match, $searches) == false) {
+					$searches[] = $text;
+					$replaces[] = sprintf('<a class="phone" href="tel:%s">%s</a>', $link, $text);
+				}
+			}
+		}
+
+		if (preg_match_all('#[a-z0-9_\-\+\.]+@[a-z0-9\-]+\.([a-z]{2,4})(?:\.[a-z]{2})?#i', $value, $matches)) {
+
+			foreach ($matches[0] as $match) {
+
+				$text = $match;
+				$link = $match;
+				$link = preg_replace('/\s+/', '', $link);
+
+				if (in_array($match, $searches) == false) {
+					$searches[] = $match;
+					$replaces[] = sprintf('<a class="email" href="mailto:%s">%s</a>', $link, $text);
+				}
+			}
+		}
+
+		if (preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#i', $value, $matches)) {
+
+			foreach ($matches[0] as $match) {
+
+				$text = $match;
+				$link = $match;
+
+				$text = preg_replace('/^http:\/\//', '', $text);
+				$text = preg_replace('/^https:\/\//', '', $text);
+				$text = preg_replace('/^www\./', '', $text);
+
+				if (in_array($match, $searches) == false) {
+					$searches[] = $match;
+					$replaces[] = sprintf('<a class="website" target="_blank" href="%s">%s</a>', $link, $text);
+				}
+			}
+		}
+
+		$value = str_replace(
+			$searches,
+			$replaces,
+			$value
+		);
+
+		return $value;
 	}));
 
 	/**

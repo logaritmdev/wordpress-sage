@@ -8,51 +8,35 @@
 //------------------------------------------------------------------------------
 
 h1 {
-
-	font-size: rvw(40px, auto);
+	font-size: rvw(40px, 20px);
 	line-height: 1.2;
 	margin: 0px;
-	margin-bottom: rvw(45px);
-
-	@include media-breakpoint-down(xs) {
-		word-break: break-word;
-	}
+	margin-top: rvw(60px, 30px);
+	margin-bottom: rvw(45px, 20px);
 }
 
 h2 {
-
-	font-size: rvw(32px, auto);
+	font-size: rvw(32px, 16px);
 	line-height: 1.2;
 	margin: 0px;
-	margin-bottom: rvw(45px);
-
-	@include media-breakpoint-down(xs) {
-		word-break: break-word;
-	}
+	margin-top: rvw(60px, 30px);
+	margin-bottom: rvw(45px, 20px);
 }
 
 h3 {
-
-	font-size: rvw(24px, auto);
+	font-size: rvw(24px, 12px);
 	line-height: 1.2;
 	margin: 0px;
-	margin-bottom: rvw(45px);
-
-	@include media-breakpoint-down(xs) {
-		word-break: break-word;
-	}
+	margin-top: rvw(60px, 30px);
+	margin-bottom: rvw(45px, 20px);
 }
 
 h4 {
-
-	font-size: rvw(20px, auto);
+	font-size: rvw(20px, 10px);
 	line-height: 1.2;
 	margin: 0px;
-	margin-bottom: rvw(45px);
-
-	@include media-breakpoint-down(xs) {
-		word-break: break-word;
-	}
+	margin-top: rvw(60px, 30px);
+	margin-bottom: rvw(45px, 20px);
 }
 
 h1, h2, h3, h4, h5, p {
@@ -63,6 +47,10 @@ h1, h2, h3, h4, h5, p {
 
 	&:last-child {
 		margin-bottom: 0;
+	}
+
+	@include media-breakpoint-down(xs) {
+		word-break: break-word;
 	}
 }
 
@@ -107,7 +95,7 @@ h1, h2, h3, h4, h5, p {
 		text-decoration: underline;
 		transition-property: color;
 		transition-duration: transition-duration(hover);
-		transition-timing-function: transition-timing-function(hover);
+		transition-timing-function: transition-equation(hover);
 
 		.no-touchevents &:hover {
 			color: red;
@@ -116,33 +104,33 @@ h1, h2, h3, h4, h5, p {
 
 	p {
 		&:not(:last-child) {
-			margin-bottom: rvw(45px);
+			margin-bottom: rvw(45px, 20px);
 		}
 	}
 
 	ul {
 
 		padding: 0px;
-		padding-left: rvw(45px);
+		padding-left: rvw(45px, 20px);
 
 		&:not(:last-child) {
-			margin-bottom: rvw(45px);
+			margin-bottom: rvw(45px, 20px);
 		}
 	}
 
 	ol {
 
 		padding: 0px;
-		padding-left: rvw(45px);
+		padding-left: rvw(45px, 20px);
 
 		&:not(:last-child) {
-			margin-bottom: rvw(45px);
+			margin-bottom: rvw(45px, 20px);
 		}
 	}
 
 	li {
 		&:not(:last-child) {
-			margin-bottom: rvw(15px);
+			margin-bottom: rvw(15px, 5px);
 		}
 	}
 
@@ -153,31 +141,30 @@ h1, h2, h3, h4, h5, p {
 		padding: 0;
 
 		&:not(:last-child) {
-			margin-bottom: rvw(15px);
+			margin-bottom: rvw(15px, 5px);
 		}
 	}
 
 	.text-emphasize {
 
-		font-size: rvw(48px, auto);
+		font-size: rvw(48px, 24px);
 		font-weight: 300;
 		letter-spacing: 0.05em;
 		line-height: 1.35;
 
 		&:not(:first-child) {
-			margin-top: rvw(60px);
+			margin-top: rvw(60px, 30px);
 		}
 
 		&:not(:last-child) {
-			margin-bottom: rvw(60px);
+			margin-bottom: rvw(60px, 30px);
 		}
 	}
 
 	.text-understate {
-		font-size: rvw(14px, auto);
+		font-size: rvw(14px, 7px);
 		font-weight: 300;
 		letter-spacing: 0.15em;
-		text-transform: uppercase;
 	}
 }
 
@@ -197,11 +184,11 @@ h1, h2, h3, h4, h5, p {
 		margin: 0;
 
 		&:not(:last-child) {
-			margin-bottom: rvw(45px);
+			margin-bottom: rvw(45px, 20px);
 		}
 
 		p:not(:last-child) & {
-			margin-bottom: rvw(45px);
+			margin-bottom: rvw(45px, 20px);
 		}
 	}
 
@@ -209,19 +196,19 @@ h1, h2, h3, h4, h5, p {
 		display: block;
 		margin-left: auto;
 		margin-right: auto;
-		margin-bottom: rvw(45px);
+		margin-bottom: rvw(45px, 20px);
 	}
 
 	.alignright {
 		float: right;
 		margin: 0;
-		margin-left: rvw(30px);
+		margin-left: rvw(30px, typo);
 	}
 
 	.alignleft {
 		float: left;
 		margin: 0;
-		margin-right: rvw(30px);
+		margin-right: rvw(30px, typo);
 	}
 
 	.wp-caption {
@@ -231,16 +218,16 @@ h1, h2, h3, h4, h5, p {
 			width: 100% !important;
 
 			&:not(:last-child) {
-				margin-bottom: rvw(30px);
+				margin-bottom: rvw(30px, typo);
 			}
 		}
 
 		&.alignleft {
-			margin-right: rvw(30px);
+			margin-right: rvw(30px, typo);
 		}
 
 		&.alignright {
-			margin-left: rvw(30px);
+			margin-left: rvw(30px, typo);
 		}
 
 		img {
@@ -250,9 +237,9 @@ h1, h2, h3, h4, h5, p {
 		}
 
 		.wp-caption-text {
-			font-size: rvw(12px, auto);
+			font-size: rvw(12px, typo);
 			margin: 0;
-			margin-top: rvw(10px);
+			margin-top: rvw(10px, typo);
 		}
 	}
 
@@ -260,14 +247,14 @@ h1, h2, h3, h4, h5, p {
 		@include flex-box;
 		@include flex-row(flex-start, flex-start);
 		@include flex-wrap(wrap);
-		margin-left: rvw(-15px);
-		margin-right: rvw(-15px);
+		margin-left: rvw(-15px, 5px);
+		margin-right: rvw(-15px, 5px);
 	}
 
 	.gallery-item {
-		margin-left: rvw(15px);
-		margin-right: rvw(15px);
-		margin-bottom: rvw(30px);
+		margin-left: rvw(15px, 5px);
+		margin-right: rvw(15px, 5px);
+		margin-bottom: rvw(30px, typo);
 	}
 
 	.screen-reader-text {

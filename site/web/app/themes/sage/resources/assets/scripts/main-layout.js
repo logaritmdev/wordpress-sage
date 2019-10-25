@@ -76,4 +76,6 @@ $.attach('.main-layout-loader', (i, element) => {
 
 		})
 	})
+
+	$('body').preload()
 })

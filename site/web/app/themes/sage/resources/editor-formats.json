@@ -3,13 +3,13 @@
         "title": "Emphase",
         "selector": "*",
         "inline": "span",
-        "classes": "emphasize",
+        "classes": "text-emphasize",
         "type": "item"
     },
     {
-        "title": "Bouton - Primaire",
+        "title": "Bouton",
         "selector": "a",
-        "classes": "button button--primary",
+        "classes": "button",
         "type": "item"
     }
 ]

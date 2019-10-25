@@ -1,4 +1,4 @@
-.emphasize {
+.text-emphasize {
 	font-size: 100%;
 	font-style: italic;
 	color: #999;
@@ -8,7 +8,7 @@ img {
 	background: #d6d6d6;
 }
 
-.button.button--primary {
+.button {
 	background: rgb(0, 133, 186);
 	border-radius: 18px;
 	border-top-color: rgb(0, 106, 149);
@@ -20,23 +20,6 @@ img {
 	padding: 12px;
 	padding-top: 8px;
 	padding-bottom: 8px;
-	text-shadow: 0px 0px 1px rgb(0, 93, 130);
-    color: #fff;
-    text-decoration: none;
-}
-
-.button.button--secondary {
-	background: rgb(0, 133, 186);
-	border-radius: 12px;
-	border-top-color: rgb(0, 106, 149);
-	border-left-color: rgb(0, 100, 140);
-	border-right-color: rgb(0, 100, 140);
-	display: inline-block;
-	font-size: 80%;
-	font-weight: bold;
-	padding: 8px;
-	padding-top: 6px;
-	padding-bottom: 6px;
 	text-shadow: 0px 0px 1px rgb(0, 93, 130);
     color: #fff;
     text-decoration: none;

@@ -1,7 +1,7 @@
 <!doctype html>
 <html {!! get_language_attributes() !!}>
 @include('partials.head')
-<body {!! $body_classes !!} data-preload>
+<body {!! $body_classes !!}>
 
 	{{--
 	<button style="position: fixed; top: 25px; left: 25px; z-index: 100" onClick="jQuery(document.body).toggleClass('ready')">Toggle</button>

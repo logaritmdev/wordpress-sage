@@ -12,8 +12,8 @@
 
 	@include flex-box;
 	@include flex-row(flex-start, flex-start);
-	margin-left: rvw(-30px, -15px);
-	margin-right: rvw(-30px, -15px);
+	margin-left: rvw(-30px, 15px);
+	margin-right: rvw(-30px, 15px);
 	width: calc-add(100%, rvw(60px, 30px));
 
 	&.form-row--center {
@@ -25,7 +25,7 @@
 	}
 
 	&:not(:last-child) {
-		margin-bottom: rvw(45px);
+		margin-bottom: rvw(45px, 20px);
 	}
 }
 
@@ -34,8 +34,8 @@
 	@include relative;
 	@include flex(1, 1, 0);
 	border: none;
-	border-bottom: rem(1px) solid #141414;
-	min-height: rvw(45px, 45px);
+	border-bottom: 1px solid #141414;
+	min-height: rvw(45px, 20px);
 	margin-left: rvw(30px, 15px);
 	margin-right: rvw(30px, 15px);
 	width: calc-sub(100%, rvw(60px, 30px));
@@ -47,7 +47,7 @@
 	}
 
 	&:not(:last-child) {
-		margin-bottom: rvw(45px, 15px);
+		margin-bottom: rvw(45px, 20px);
 	}
 
 	&.form-field--error {
@@ -79,16 +79,15 @@
 		@include flex-box;
 		@include flex-row(center, flex-start);
 		color: #000000;
-		font-size: rvw(17px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: 400;
 		letter-spacing: 0.10em;
-		min-height: rvw(45px, 45px);
-		margin-left: rvw(15px, 15px);
-		margin-right: rvw(15px, 15px);
+		min-height: rvw(45px, 20px);
+		margin-left: rvw(15px, 5px);
+		margin-right: rvw(15px, 5px);
 		padding: 0;
 		pointer-events: none;
 		transform-origin: top left;
-		text-transform: uppercase;
 		transition-property: color, opacity, transform;
 		transition-duration: transition-duration(soft);
 		transition-timing-function: transition-equation(soft);
@@ -113,12 +112,12 @@
 		border-radius: 0;
 		color: #000000;
 		display: block;
-		font-size: rvw(19px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
 		letter-spacing: 0.10em;
-		min-height: rvw(45px, 45px);
-		padding-left: rvw(15px, 15px);
-		padding-right: rvw(15px, 15px);
+		min-height: rvw(45px, 20px);
+		padding-left: rvw(15px, 5px);
+		padding-right: rvw(15px, 5px);
 		width: 100%;
 
 		&[disabled],
@@ -146,8 +145,8 @@
 
 	textarea {
 		appearance: none;
-		height: rvw(80px, 45px);
-		padding-top: rvw(20px, 15px);
+		height: rvw(80px, 60px);
+		padding-top: rvw(20px, 10px);
 	}
 }
 
@@ -159,7 +158,7 @@
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rvw(16px, auto);
+		font-size: rvw(17px, 17px);
 	}
 
 	input[type=checkbox] {
@@ -171,11 +170,10 @@
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
-		height: rvw(19px);
+		height: rvw(22px, util);
 		margin: 0px;
-		margin-right: rvw(15px);
-		position: relative;
-		width: rvw(22px);
+		margin-right: rvw(15px, 5px);
+		width: rvw(22px, util);
 
 		&:checked {
 			background: url(../images/form-check-checked.svg) no-repeat center center;
@@ -197,11 +195,11 @@
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rvw(16px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
 		height: auto;
 		margin: 0px;
-		margin-bottom: rvw(15px);
+		margin-bottom: rvw(15px, 5px);
 		min-height: 0;
 		min-width: 0;
 	}
@@ -216,10 +214,9 @@
 		cursor: pointer;
 		display: block;
 		margin: 0;
-		margin-right: rvw(10px);
-		height: rvw(19px);
-		position: relative;
-		width: rvw(22px);
+		margin-right: rvw(10px, util);
+		height: rvw(22px, util);
+		width: rvw(22px, util);
 
 		&:checked {
 			background: url(../images/form-check-checked.svg) no-repeat center center;
@@ -260,7 +257,7 @@
 	}
 
 	.form-file-value {
-		font-size: rvw(19px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
 		letter-spacing: 0.10em;
 		line-height: rvw(45px);
@@ -284,14 +281,13 @@
 		border-radius: 0px;
 		color: inherit;
 		cursor: pointer;
-		font-size: rvw(16px, auto);
+		font-size: rvw(16px, 16px);
 		font-weight: 400;
 		display: block;
 		letter-spacing: 0.15em;
 		margin: 0px;
 		padding: 0px;
 		text-align: left;
-		text-transform: uppercase;
 		white-space: nowrap;
 	}
 }
@@ -310,20 +306,20 @@
 		@include absolute;
 		display: block;
 		color: #d71921;
-		font-size: rvw(14px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
-		margin-top: rvw(5px);
-		padding-left: rvw(15px);
-		padding-right: rvw(15px);
+		margin-top: rvw(5px, 5px);
+		padding-left: rvw(15px, 5px);
+		padding-right: rvw(15px, 5px);
 	}
 
 	.wpcf7-validation-errors {
 		border: 2px solid #d71921;
-		border-radius: rvw(4px);
+		border-radius: rvw(4px, 4px);
 		background: transparent;
-		font-size: rvw(18px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
-		padding: rvw(15px);
+		padding: rvw(15px, 15px);
 		text-align: center;
 	}
 
@@ -331,7 +327,7 @@
 		border: 2px solid #000;
 		border-radius: rvw(4px);
 		background: #ffffff;
-		font-size: rvw(18px, auto);
+		font-size: rvw(17px, 17px);
 		font-weight: normal;
 		padding: rvw(15px);
 		text-align: center;

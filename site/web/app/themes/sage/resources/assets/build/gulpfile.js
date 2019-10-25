@@ -122,7 +122,14 @@ gulp.task('images', function (done) {
 	let merged = merge()
 
 	const build = () => {
-		return gulpif(config.features.optimize, imagemin())
+		return gulpif(config.features.optimize, imagemin([
+			imagemin.svgo({
+				plugins: [
+					{ removeViewBox: false },
+					{ cleanupIDs: false }
+				]
+			})
+		]))
 	}
 
 	const write = () => {

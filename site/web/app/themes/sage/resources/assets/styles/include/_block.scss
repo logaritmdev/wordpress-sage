@@ -6,24 +6,6 @@
 @import "include/util";
 
 /**
- * Returns the horizontal block spacing.
- * @function block-spacing-v
- * @sinc 1.0.0
- */
-@function block-spacing-h($mul: 1) {
-	@return rvw($block-spacing-h * $mul, auto);
-}
-
-/**
- * Returns the vertical block spacing.
- * @function block-spacing-v
- * @sinc 1.0.0
- */
-@function block-spacing-v($mul: 1) {
-	@return rvw($block-spacing-v * $mul, auto);
-}
-
-/**
  * Initialize the common styles of a block.
  * @function block
  * @since 1.0.1
@@ -33,12 +15,12 @@
 	@include relative;
 
 	@if ($spacing == spaced) {
-		margin-top: block-spacing-h($mul);
-		margin-bottom: block-spacing-h($mul);
+		margin-top: rvw(120px, 30px);
+		margin-bottom: rvw(120px, 30px);
 	}
 
 	@if ($spacing == padded) {
-		padding-top: block-spacing-h($mul);
-		padding-bottom: block-spacing-h($mul);
+		padding-top: rvw(120px, 30px);
+		padding-bottom: rvw(120px, 30px);
 	}
 }

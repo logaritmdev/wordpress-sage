@@ -1,11 +1,19 @@
 $.fn.smooth = function (speed = 30, smooth = 10) {
 
+	if (useNativeScrolling()) {
+		return
+	}
+
 	let element = this.get(0)
 	let content = getContent(element)
 	let wrapper = getWrapper(element)
 
 	let offset = getOffset()
 	let moving = false
+
+	function useNativeScrolling() {
+		return navigator.userAgent.indexOf('Edge') > -1
+	}
 
 	function getContent(element) {
 		return element == document ? document.documentElement : element
@@ -35,7 +43,7 @@ $.fn.smooth = function (speed = 30, smooth = 10) {
 				return e.wheelDelta / e.detail / 40 * (e.detail > 0 ? 1 : -1) // Opera
 			}
 
-			return -e.detail / 3 // Firefox
+			return -e.detail // Firefox
 		}
 
 		return e.wheelDelta / 120 // IE, Safari, Chrome
@@ -49,14 +57,20 @@ $.fn.smooth = function (speed = 30, smooth = 10) {
 
 		content.scrollTop += delta
 
-		if (Math.abs(delta) > 0.5) {
+		if (Math.abs(delta) > 0.9 || (delta < 0 && content.scrollTop < 10)) {
 			requestAnimationFrame(update)
 		} else {
 			moving = false
 		}
 	}
 
-	function onScroll(e) {
+	function onScroll() {
+		if (moving == false) {
+			offset = getOffset()
+		}
+	}
+
+	function onWheel(e) {
 
 		e.preventDefault()
 
@@ -75,6 +89,8 @@ $.fn.smooth = function (speed = 30, smooth = 10) {
 		}
 	}
 
-	content.addEventListener('mousewheel', onScroll, { passive: false })
-	content.addEventListener('DOMMouseScroll', onScroll, { passive: false })
+	window.addEventListener('scroll', onScroll)
+
+	content.addEventListener('mousewheel', onWheel, { passive: false })
+	content.addEventListener('DOMMouseScroll', onWheel, { passive: false })
 }
