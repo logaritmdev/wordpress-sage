@@ -158,6 +158,10 @@ $.fn.scrollAnimation = function () {
 
         offsetTop = offsetTop - $(window).height()
         offsetBot = offsetBot - $(window).height()
+
+        if (offsetTop < 0) {
+            offsetTop = 0
+        }
     }
 
     /**

@@ -13,7 +13,7 @@ body {
 	color: #000000;
 	font-family: sans-serif;
 	font-weight: 400;
-	font-size: rvw(17px, 15px);
+	font-size: rvw(17px, 0.8);
 	line-height: 1.5;
 	margin: 0;
 	padding: 0;
@@ -54,7 +54,7 @@ input, button, textarea {
 
 	font-family: inherit;
 	font-weight: normal;
-	font-size: rvw(15px, 15px);
+	font-size: rvw(15px, 0.8);
 
 	&:focus {
 		outline: none;

@@ -1,7 +1,7 @@
 import 'jquery'
+import scrollTo from './vendors/jquery-scroll-to.min'
 import './vendors/jquery-global'
 import './vendors/modernizr.min'
-import './vendors/jquery-scroll-to.min'
 import './plugins/jquery-util'
 import './plugins/jquery-css-events'
 import './plugins/jquery-media-events'
@@ -30,10 +30,16 @@ $.defineMedia('sm', '(min-width: 576px)')
 $.defineMedia('xs', '(min-width: 0px)')
 
 /*
+ * Exposes scrollTo
+ */
+
+window.scrollTo = scrollTo
+
+/*
  * Enable smooth scrolling.
  */
 
-$(document).smooth()
+$(document).smoothScroll()
 
 /*
  * Adds the ready body class when the document is loaded enough.
@@ -95,53 +101,3 @@ $(window).on('pageshow', function (event) {
         window.location.reload()
     }
 })
-
-/*
- * IE 11 Min Height Flex Fix
- */
-
-if (window.navigator.userAgent.indexOf('Trident/7.0') > 0 ||
-    window.navigator.userAgent.indexOf('Trident/6.0') > 0) {
-
-    $('*:not(.no-ie-flex-fix').each((i, element) => {
-
-        element = $(element)
-
-        var timeout = null
-        var display = element.css('display')
-        var minimum = parseInt(element.css('min-height'))
-
-        if ((display === 'flex' || display === '-ms-flexbox') && minimum > 0) {
-
-            var measure = () => {
-
-                var minimum = parseInt(element.css('min-height'))
-
-                if (minimum > 0) {
-
-                    element.css('height', '')
-
-                    var height = element.get(0).scrollHeight
-                    if (height < minimum) {
-                        height = minimum
-                    }
-
-                    element.css('height', height)
-
-                } else {
-                    element.css('height', '')
-                }
-
-                timeout = null
-            }
-
-            $(window).on('resize', () => {
-                if (timeout == null) {
-                    timeout = setTimeout(measure, 16)
-                }
-            })
-
-            measure()
-        }
-    })
-}

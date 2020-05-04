@@ -3,9 +3,9 @@
 //------------------------------------------------------------------------------
 
 .container {
-	margin-left: rvw(120px, 30px);
-	margin-right: rvw(120px, 30px);
-	width: calc-sub(100%, rvw(240px, 60px));
+	margin-left: rvw(120px, 0.8);
+	margin-right: rvw(120px, 0.8);
+	width: calc-sub(100%, rvw(240px, 0.8));
 }
 
 //------------------------------------------------------------------------------
@@ -23,13 +23,13 @@
 .main-layout-header {
 
 	background: #fff;
-	height: rvw(120px, 100px);
+	height: rvw(120px, 0.8);
 
 	.container {
 		@include relative;
 		@include flex-box;
 		@include flex-row(center, flex-start);
-		height: rem(120px);
+		height: rem(120px, 0.8);
 		transition-property: height;
 		transition-duration: transition-duration(fast);
 		transition-timing-function: transition-equation(fast);
@@ -73,7 +73,7 @@
 	.menu-item {
 
 		@include relative;
-		font-size: rem(15px, util);
+		font-size: rem(15px, 0.8);
 		font-weight: normal;
 		list-style: none;
 		list-style-position: outside;
@@ -177,4 +177,10 @@
 	&.main-layout-loader--gone {
 		display: none;
 	}
+}
+
+.main-layout-loader-bar-value {
+	transition-property: width;
+	transition-duration: transition-duration(fast);
+	transition-timing-function: transition-equation(fast);
 }

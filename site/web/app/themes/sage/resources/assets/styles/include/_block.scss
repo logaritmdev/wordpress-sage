@@ -15,12 +15,12 @@
 	@include relative;
 
 	@if ($spacing == spaced) {
-		margin-top: rvw(120px, 30px);
-		margin-bottom: rvw(120px, 30px);
+		margin-top: rvw(120px, 0.8);
+		margin-bottom: rvw(120px, 0.8);
 	}
 
 	@if ($spacing == padded) {
-		padding-top: rvw(120px, 30px);
-		padding-bottom: rvw(120px, 30px);
+		padding-top: rvw(120px, 0.8);
+		padding-bottom: rvw(120px, 0.8);
 	}
 }

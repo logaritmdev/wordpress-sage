@@ -117,6 +117,20 @@ function watch(i, element) {
 	 */
 	let contentH = 0
 
+	/**
+	 * The current window width.
+	 * @var windowH
+	 * @since 1.0.0
+	 */
+	let windowW = 0
+
+	/**
+	 * The current window width.
+	 * @var windowH
+	 * @since 1.0.0
+	 */
+	let windowH = 0
+
 	//--------------------------------------------------------------------------
 	// Functions
 	//--------------------------------------------------------------------------
@@ -186,7 +200,7 @@ function watch(i, element) {
 
 		if (margins) {
 			bounds.top -= parseFloat(element.css('margin-top')) || 0
-			bounds.bottom -= parseFloat(element.css('margin-bottom')) || 0
+			bounds.bottom += parseFloat(element.css('margin-bottom')) || 0
 		}
 
 		let height = getFrameHeight()
@@ -333,7 +347,9 @@ function watch(i, element) {
 		let bounds = container.bounds()
 
 		if (contentW == bounds.width &&
-			contentH == bounds.height) {
+			contentH == bounds.height &&
+			windowW == window.innerWidth &&
+			windowH == window.innerHeight) {
 			return
 		}
 
@@ -342,6 +358,9 @@ function watch(i, element) {
 
 		contentW = bounds.width
 		contentH = bounds.height
+
+		windowW = window.innerWidth
+		windowH = window.innerHeight
 	}
 
 	/**

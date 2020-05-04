@@ -59,6 +59,41 @@ add_action('after_setup_theme', function () {
 	add_editor_style(get_stylesheet_directory_uri() . '/editor-style-shared.css');
 	add_editor_style(get_stylesheet_directory_uri() . '/editor-style.css');
 
+	register_post_type('acf-clone', array(
+
+		'labels' => array(
+			'name'               => _x('ACF Clones', 'post type general name', 'sage'),
+			'singular_name'      => _x('ACF Clone', 'post type ACF Clone name', 'sage'),
+			'menu_name'          => _x('ACF Clones', 'admin menu', 'sage'),
+			'name_admin_bar'     => _x('ACF Clone', 'add new on admin bar', 'sage'),
+			'add_new'            => _x('Add New', 'ACF Clone', 'sage'),
+			'add_new_item'       => __('Add New ACF Clone', 'sage'),
+			'new_item'           => __('New ACF Clone', 'sage'),
+			'edit_item'          => __('Edit ACF Clone', 'sage'),
+			'view_item'          => __('View ACF Clone', 'sage'),
+			'all_items'          => __('All ACF Clones', 'sage'),
+			'search_items'       => __('Search ACF Clones', 'sage'),
+			'parent_item_colon'  => __('Parent ACF Clones:', 'sage'),
+			'not_found'          => __('No ACF Clones found.', 'sage'),
+			'not_found_in_trash' => __('No ACF Clones found in Trash.', 'sage')
+		),
+
+		'description'        => __('ACF Clones.', 'sage'),
+		'public'             => false,
+		'publicly_queryable' => false,
+		'show_ui'            => true,
+		'show_in_menu'       => false,
+		'query_var'          => true,
+		'rewrite'            => array('slug' => 'acf-clone'),
+		'capability_type'    => 'post',
+		'has_archive'        => false,
+		'hierarchical'       => false,
+		'menu_position'      => null,
+		'menu_icon'          => '',
+		'show_in_rest'       => false,
+		'supports'           => array('title', 'thumbnail', 'editor')
+	));
+
 	/*
 	register_post_type('example', array(
 
@@ -518,6 +553,7 @@ add_action('admin_head', function() {
 	}
 
 }, 99);
+
 
 /**
  * Sets the block's compiled CSS file path.
