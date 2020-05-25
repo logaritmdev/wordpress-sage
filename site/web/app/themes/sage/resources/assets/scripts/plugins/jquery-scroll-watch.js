@@ -205,6 +205,15 @@ function watch(i, element) {
 
 		let height = getFrameHeight()
 
+		/*
+		 * Small hack here to fix animation when the first element
+		 * takes the entire screen and this element follows it.
+		 */
+
+		if (bounds.top == height) {
+			bounds.top++
+		}
+
 		let top = Math.max(bounds.top - height, 0)
 
 		offsetTop = top

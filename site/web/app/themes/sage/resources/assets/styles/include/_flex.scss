@@ -39,10 +39,10 @@
 }
 
 /**
- * @mixin order
+ * @mixin flex-order
  * @since 1.0.0
  */
-@mixin order($int: 0) {
+@mixin flex-order($int: 0) {
 	order: $int;
 }
 

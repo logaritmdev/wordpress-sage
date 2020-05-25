@@ -21,19 +21,19 @@ import './form'
 import './wysiwyg'
 import './main-layout'
 
-$.defineMedia('xxxl', '(min-width: 1920px)')
-$.defineMedia('xxl', '(min-width: 1600px)')
-$.defineMedia('xl', '(min-width: 1200px)')
-$.defineMedia('lg', '(min-width: 992px)')
-$.defineMedia('md', '(min-width: 768px)')
-$.defineMedia('sm', '(min-width: 576px)')
-$.defineMedia('xs', '(min-width: 0px)')
+$.defineMedia('xs', '(max-width: 375px)')
+$.defineMedia('sm', '(max-width: 575px)')
+$.defineMedia('md', '(max-width: 768px)')
+$.defineMedia('lg', '(max-width: 1024px)')
+$.defineMedia('xl', '(max-width: 1200px)')
+$.defineMedia('xxl', '(max-width: 1600px)')
+$.defineMedia('xxxl', '(max-width: 1920px)')
 
 /*
  * Exposes scrollTo
  */
 
-window.scrollTo = scrollTo
+$.scrollTo = $.fn.scrollTo = scrollTo
 
 /*
  * Enable smooth scrolling.
@@ -50,14 +50,6 @@ $(document.body).on('loading/loadedenough', (e) => {
         $(document.body).addClass('ready')
         $(document.body).trigger('ready')
     }, 1000)
-})
-
-/*
- * Redirects on the new page on pop state
- */
-
-window.addEventListener('popstate', (e) => {
-    location.href = document.location
 })
 
 /*

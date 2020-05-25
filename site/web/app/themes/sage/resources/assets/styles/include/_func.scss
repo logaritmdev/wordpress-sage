@@ -1,30 +1,41 @@
+
 /**
  * Converts a value to vw;
  * @function rvw
  * @sinc 1.0.0
  */
- @function rvw($val, $min: 0, $mul: 1, $upr: null, $lwr: null) {
+ @function rvw($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
+
+	@if $val == 1px {
+		@return $val;
+	}
+
+	@if $min == null {
+		$min: 0.85;
+	}
 
 	@if $upr == null {
-		$upr: 1920;
+		$upr: 1440;
 	}
 
 	@if $lwr == null {
-		$lwr: 375;
+		$lwr: md;
 	}
 
-	@if $min == typo {
-		$min: 0;
-		@debug "Found min: typo";
+	@if type-of($upr) == string {
+		$upr: strip-unit(breakpoint-get($upr));
 	}
 
-	@if $min == util {
-		$min: 0;
-		@debug "Found min: util";
+	@if type-of($lwr) == string {
+		$lwr: strip-unit(breakpoint-get($lwr)) + 1;
 	}
 
 	$val: strip-unit($val);
 	$min: strip-unit($min);
+
+	@if $min > 0 and $min < 1 and unitless($min) {
+		$min: $val * $min;
+	}
 
 	@return calc-rvw($val, $lwr, $upr, $min, $mul);
 }

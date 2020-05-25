@@ -34,10 +34,16 @@
  * @function nth-child
  * @sinc 1.0.0
  */
-@mixin nth-child-in($a, $b) {
+@mixin nth-child-in($a, $b, $parent: null) {
 	@for $i from $a through $b {
-		@include nth-child($i) {
-			@content ($i);
+		@if $parent {
+			#{$parent}:nth-child(#{$i}) & {
+				@content ($i);
+			}
+		} @else {
+			@include nth-child($i) {
+				@content ($i);
+			}
 		}
 	}
 }
@@ -84,29 +90,6 @@
 	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}),
 	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}) ~ & {
    		@content;
-	}
-}
-
-/**
- * Targets the last row of a sepcified amount of columns.
- * @mixin last-row-media
- * @since 1.0.0
- */
-@mixin last-row-in($of, $args...) {
-
-	@if length($args) == 0 {
-		$args: $breakpoints;
-	} @else if (type-of(nth($args, 1)) == list) {
-		$args: nth($args, 1);
-	}
-
-	@each $bp in $args {
-		@include media-breakpoint-only($bp) {
-			&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}),
-			&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}) ~ & {
-				@content;
-			}
-		}
 	}
 }
 
@@ -250,28 +233,4 @@
  */
 @mixin elevated($name) {
 	z-index: $name;
-}
-
-/**
- * Shadow with photoshop like parameters.
- * @function shadow
- * @sinc 1.0.0
- */
-@mixin shadow($angle: 120deg, $distance: 0, $spread: 0, $size: 0, $color: #000) {
-
-	@if unitless($angle) {
-		$angle: $angle * 1deg;
-	}
-
-	$angle: (180 - ($angle/1deg)) * pi() / 180;
-
-	$spread: $spread * 100;
-
-	$x: round(cos($angle) * $distance);
-	$y: round(sin($angle) * $distance);
-
-	$s: $size * ($spread / 100);
-	$b: $size - $s;
-
-	box-shadow: $x $y $b $s $color;
 }

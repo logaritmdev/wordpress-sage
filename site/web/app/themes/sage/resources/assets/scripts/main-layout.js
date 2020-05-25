@@ -6,25 +6,35 @@ $.attach('.main-layout-loader', (i, element) => {
 
 	let value = element.find('.main-layout-loader-bar-value')
 
+	/**
+	 * @function onLoadedEnough
+	 * @since 1.0.0
+	 * @hdiden
+	 */
 	function onLoadedEnough(e) {
-
 		if (e.target == document.body) {
-
 			element.addClass('main-layout-loader--leave')
 			element.addClass('main-layout-loader--leave-active', 750)
-
 			element.addClass('main-layout-loader--gone', 1500)
 			element.removeClass('main-layout-loader--leave', 1500)
 			element.removeClass('main-layout-loader--leave-active', 1500)
 		}
 	}
 
+	/**
+	 * @function onComplete
+	 * @since 1.0.0
+	 * @hdiden
+	 */
 	function onComplete(e) {
-		setTimeout(() => {
-			value.css('width', 0)
-		}, 1000)
+		setTimeout(() => value.css('width', 0), 1000)
 	}
 
+	/**
+	 * @function onProgress
+	 * @since 1.0.0
+	 * @hdiden
+	 */
 	function onProgress(e, progress) {
 		value.css('width', progress + '%')
 	}

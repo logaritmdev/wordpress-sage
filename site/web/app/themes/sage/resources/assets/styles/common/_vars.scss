@@ -23,10 +23,10 @@
  * @since 1.0.0
  */
 $grid: (
-	xs:   0,
-	sm:   576px,
+	xs:   375px,
+	sm:   575px,
 	md:   768px,
-	lg:   992px,
+	lg:   1024px,
 	xl:   1200px,
 	xxl:  1600px,
 	xxxl: 1920px
@@ -45,7 +45,7 @@ $transitions: (
 	),
 
 	fast: (
-		duration: 750ms,
+		duration: 500ms,
 		equation: cubic-bezier(0.230, 1.000, 0.320, 1.000)
 	),
 
