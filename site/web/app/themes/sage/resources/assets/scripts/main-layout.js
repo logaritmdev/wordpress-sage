@@ -12,12 +12,19 @@ $.attach('.main-layout-loader', (i, element) => {
 	 * @hdiden
 	 */
 	function onLoadedEnough(e) {
+
 		if (e.target == document.body) {
+
 			element.addClass('main-layout-loader--leave')
 			element.addClass('main-layout-loader--leave-active', 750)
 			element.addClass('main-layout-loader--gone', 1500)
 			element.removeClass('main-layout-loader--leave', 1500)
 			element.removeClass('main-layout-loader--leave-active', 1500)
+
+			setTimeout(() => {
+				$(document.body).addClass('ready')
+				$(document.body).trigger('ready')
+			}, 750)
 		}
 	}
 

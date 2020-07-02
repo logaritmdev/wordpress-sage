@@ -4,7 +4,7 @@
 	@include flex-col(flex-start, stretch);
 
 	&:not(:last-child) {
-		margin-bottom: rvw(60px, 0.8);
+		margin-bottom: rvw(60px);
 	}
 }
 
@@ -12,9 +12,9 @@
 
 	@include flex-box;
 	@include flex-row(flex-start, flex-start);
-	margin-left: rvw(-30px, 0.8);
-	margin-right: rvw(-30px, 0.8);
-	width: calc-add(100%, rvw(60px, 0.8));
+	margin-left: rvw(-30px);
+	margin-right: rvw(-30px);
+	width: calc-add(100%, rvw(60px));
 
 	&.form-row--center {
 		@include flex-row(flex-start, center);
@@ -25,7 +25,7 @@
 	}
 
 	&:not(:last-child) {
-		margin-bottom: rvw(45px, 0.8);
+		margin-bottom: rvw(45px);
 	}
 }
 
@@ -35,10 +35,10 @@
 	@include flex(1, 1, 0);
 	border: none;
 	border-bottom: 1px solid #141414;
-	min-height: rvw(45px, 0.8);
-	margin-left: rvw(30px, 0.8);
-	margin-right: rvw(30px, 0.8);
-	width: calc-sub(100%, rvw(60px, 0.8));
+	min-height: rvw(45px);
+	margin-left: rvw(30px);
+	margin-right: rvw(30px);
+	width: calc-sub(100%, rvw(60px));
 
 	&.form-field--empty {
 		@include media-breakpoint-down(sm) {
@@ -47,7 +47,7 @@
 	}
 
 	&:not(:last-child) {
-		margin-bottom: rvw(45px, 0.8);
+		margin-bottom: rvw(45px);
 	}
 
 	&.form-field--error {
@@ -79,12 +79,12 @@
 		@include flex-box;
 		@include flex-row(center, flex-start);
 		color: #000000;
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: 400;
 		letter-spacing: 0.10em;
-		min-height: rvw(45px, 0.8);
-		margin-left: rvw(15px, 0.8);
-		margin-right: rvw(15px, 0.8);
+		min-height: rvw(45px);
+		margin-left: rvw(15px);
+		margin-right: rvw(15px);
 		padding: 0;
 		pointer-events: none;
 		transform-origin: top left;
@@ -112,12 +112,12 @@
 		border-radius: 0;
 		color: #000000;
 		display: block;
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
 		letter-spacing: 0.10em;
-		min-height: rvw(45px, 0.8);
-		padding-left: rvw(15px, 0.8);
-		padding-right: rvw(15px, 0.8);
+		min-height: rvw(45px);
+		padding-left: rvw(15px);
+		padding-right: rvw(15px);
 		width: 100%;
 
 		&[disabled],
@@ -141,12 +141,12 @@
 
 .form-field--textarea {
 
-	height: rvw(80px, 0.8);
+	height: rvw(80px);
 
 	textarea {
 		appearance: none;
-		height: rvw(80px, 0.8);
-		padding-top: rvw(20px, 0.8);
+		height: rvw(80px);
+		padding-top: rvw(20px);
 	}
 }
 
@@ -154,11 +154,11 @@
 
 	@include flex-box;
 	@include flex-row(center, flex-start);
-	min-height: rvw(50px, 0.8);
+	min-height: rvw(50px);
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 	}
 
 	input[type=checkbox] {
@@ -170,10 +170,10 @@
 		border-radius: 0;
 		cursor: pointer;
 		display: block;
-		height: rvw(22px, 0.8);
+		height: rvw(22px);
 		margin: 0px;
-		margin-right: rvw(15px, 0.8);
-		width: rvw(22px, 0.8);
+		margin-right: rvw(15px);
+		width: rvw(22px);
 
 		&:checked {
 			background: url(../images/form-check-checked.svg) no-repeat center center;
@@ -195,11 +195,11 @@
 
 	label {
 		@include relative(top auto left auto);
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
 		height: auto;
 		margin: 0px;
-		margin-bottom: rvw(15px, 0.8);
+		margin-bottom: rvw(15px);
 		min-height: 0;
 		min-width: 0;
 	}
@@ -214,9 +214,9 @@
 		cursor: pointer;
 		display: block;
 		margin: 0;
-		margin-right: rvw(10px, 0.8);
-		height: rvw(22px, 0.8);
-		width: rvw(22px, 0.8);
+		margin-right: rvw(10px);
+		height: rvw(22px);
+		width: rvw(22px);
 
 		&:checked {
 			background: url(../images/form-check-checked.svg) no-repeat center center;
@@ -240,7 +240,7 @@
 			height: auto;
 			min-height: 0;
 			margin: 0;
-			margin-right: rvw(10px, 0.8);
+			margin-right: rvw(10px);
 		}
 	}
 }
@@ -257,14 +257,14 @@
 	}
 
 	.form-file-value {
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
 		letter-spacing: 0.10em;
-		line-height: rvw(45px, 0.8);
-		min-height: rvw(45px, 0.8);
+		line-height: rvw(45px);
+		min-height: rvw(45px);
 		overflow: hidden;
-		padding-left: rvw(15px, 0.8);
-		padding-right: rvw(15px, 0.8);
+		padding-left: rvw(15px);
+		padding-right: rvw(15px);
 		white-space: nowrap;
 	}
 }
@@ -281,7 +281,7 @@
 		border-radius: 0px;
 		color: inherit;
 		cursor: pointer;
-		font-size: rvw(16px, 0.8);
+		font-size: rvw(16px);
 		font-weight: 400;
 		display: block;
 		letter-spacing: 0.15em;
@@ -306,30 +306,30 @@
 		@include absolute;
 		display: block;
 		color: #d71921;
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
-		margin-top: rvw(5px, 0.8);
-		padding-left: rvw(15px, 0.8);
-		padding-right: rvw(15px, 0.8);
+		margin-top: rvw(5px);
+		padding-left: rvw(15px);
+		padding-right: rvw(15px);
 	}
 
 	.wpcf7-validation-errors {
 		border: 2px solid #d71921;
-		border-radius: rvw(4px, 0.8);
+		border-radius: rvw(4px);
 		background: transparent;
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
-		padding: rvw(15px, 0.8);
+		padding: rvw(15px);
 		text-align: center;
 	}
 
 	.wpcf7-mail-sent-ok {
 		border: 2px solid #000;
-		border-radius: rvw(4px, 0.8);
+		border-radius: rvw(4px);
 		background: #ffffff;
-		font-size: rvw(17px, 0.8);
+		font-size: rvw(17px);
 		font-weight: normal;
-		padding: rvw(15px, 0.8);
+		padding: rvw(15px);
 		text-align: center;
 		color: 000;
 	}

@@ -1,31 +1,4 @@
 //------------------------------------------------------------------------------
-// Spinner
-//------------------------------------------------------------------------------
-
-.spinner {
-
-	@include absolute(top 50% left 50%);
-	animation: spinner-rotate 3s linear infinite;
-	border: 2px solid #FFFFFF;
-	border-radius: rvw(60px, 0.8);
-	border-left-color: transparent;
-	height: rvw(60px, 0.8);
-	margin-top: rvw(-30px, 0.8);
-	margin-left: rvw(-30px, 0.8);
-	opacity: 0;
-	transition-property: opacity, transform;
-	transition-duration: transition-duration(soft);
-	transition-timing-function: transition-equation(soft);
-	width: rvw(60px, 0.8);
-
-	@keyframes spinner-rotate {
-		to {
-			transform: rotate(360deg);
-		}
-	}
-}
-
-//------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
 
@@ -98,6 +71,33 @@
 	&.video--playing {
 		.spinner {
 			opacity: 0;
+		}
+	}
+}
+
+//------------------------------------------------------------------------------
+// Spinner
+//------------------------------------------------------------------------------
+
+.spinner {
+
+	@include absolute(top 50% left 50%);
+	animation: spinner-rotate 3s linear infinite;
+	border: 2px solid #FFFFFF;
+	border-radius: rvw(60px);
+	border-left-color: transparent;
+	height: rvw(60px);
+	margin-top: rvw(-30px);
+	margin-left: rvw(-30px);
+	opacity: 0;
+	transition-property: opacity, transform;
+	transition-duration: transition-duration(soft);
+	transition-timing-function: transition-equation(soft);
+	width: rvw(60px);
+
+	@keyframes spinner-rotate {
+		to {
+			transform: rotate(360deg);
 		}
 	}
 }

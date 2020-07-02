@@ -1,0 +1,188 @@
+/**
+ * Converts a value to a relative vw.
+ * @function rvw
+ * @since 1.0.0
+ */
+ @function rvw($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
+
+	@if $val >= 1px and $val <= 5px {
+		@return $val;
+	}
+
+	@if $min == null {
+		$min: 0.55;
+	}
+
+	@if $upr == null {
+		$upr: 1440;
+	}
+
+	@if $lwr == null {
+		$lwr: xs;
+	}
+
+	@if type-of($upr) == string {
+		$upr: strip-unit(breakpoint-get($upr));
+	}
+
+	@if type-of($lwr) == string {
+		$lwr: strip-unit(breakpoint-get($lwr)) + 1;
+	}
+
+	$val: strip-unit($val);
+	$min: strip-unit($min);
+
+	@if $min > 0 and $min < 1 and unitless($min) {
+		$min: $val * $min;
+	}
+
+	@return make-rvw($val, $lwr, $upr, $min, $mul);
+}
+
+/**
+ * Converts a value to a relative vh.
+ * @function rvh
+ * @since 1.0.0
+ */
+ @function rvh($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
+
+	@if $val >= 1px and $val <= 5px {
+		@return $val;
+	}
+
+	@if $min == null {
+		$min: 0.6;
+	}
+
+	@if $upr == null {
+		$upr: 1440;
+	}
+
+	@if $lwr == null {
+		$lwr: xs;
+	}
+
+	@if type-of($upr) == string {
+		$upr: strip-unit(breakpoint-get($upr));
+	}
+
+	@if type-of($lwr) == string {
+		$lwr: strip-unit(breakpoint-get($lwr)) + 1;
+	}
+
+	$val: strip-unit($val);
+	$min: strip-unit($min);
+
+	@if $min > 0 and $min < 1 and unitless($min) {
+		$min: $val * $min;
+	}
+
+	@return make-rvh($val, $lwr, $upr, $min, $mul);
+}
+
+/**
+ * Convenience function to add 2 values.
+ * @function calc-add
+ * @since 1.0.0
+ */
+@function calc-add($a, $b) {
+	@return #{"calc(#{$a} + #{$b})"};
+}
+
+/**
+ * Convenience function to substract 2 values.
+ * @function calc-sub
+ * @since 1.0.0
+ */
+@function calc-sub($a, $b, $m: 1) {
+	@return #{"calc(#{$a} - #{$b})"};
+}
+
+/**
+ * Convenience function to mul 2 values.
+ * @function calc-mul
+ * @since 1.0.0
+ */
+@function calc-mul($a, $b) {
+	@return #{"calc(#{$a} * #{$b})"};
+}
+
+/**
+ * Returns the negative value of a css variable.
+ * @function neg
+ * @since 1.0.0
+ */
+@function neg($var) {
+	@return calc(var(#{$var}) * -1);
+}
+
+//------------------------------------------------------------------------------
+// Private API
+//------------------------------------------------------------------------------
+
+/**
+ * @function make-rvw
+ * @since 1.0.0
+ * @hidden
+ */
+@function make-rvw($val, $lwr, $upr, $min, $mul) {
+
+	$val: strip-unit($val);
+	$min: strip-unit($min);
+
+	$val: $val - $min;
+	$len: $upr - $lwr;
+
+	@if $min == 0 and $lwr == 0 {
+
+		@return ($val / $upr) * 100vw;
+
+	} @else {
+
+		$val: #{"calc(#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len}))"};
+
+		@if $mul == 1 {
+			@return $val;
+		}
+
+		@return calc-mul($val, $mul);
+	}
+}
+
+/**
+ * @function make-rvh
+ * @since 1.0.0
+ * @hidden
+ */
+ @function make-rvh($val, $lwr, $upr, $min, $mul) {
+
+	$val: strip-unit($val);
+	$min: strip-unit($min);
+
+	$val: $val - $min;
+	$len: $upr - $lwr;
+
+	@if $min == 0 and $lwr == 0 {
+
+		@return ($val / $upr) * 100vw;
+
+	} @else {
+
+		$val: #{"calc(#{$min}px + #{$val} * ((100vh - #{$lwr}px) / #{$len}))"};
+
+		@if $mul == 1 {
+			@return $val;
+		}
+
+		@return calc-mul($val, $mul);
+	}
+}
+
+/**
+ * @function strip-unit
+ * @since 1.0.0
+ * @hidden
+ */
+ @function strip-unit($value) {
+	@return $value / ($value * 0 + 1);
+}

@@ -1,9 +1,10 @@
-@import "common/vars";
-@import "include/func";
 @import "include/anim";
 @import "include/flex";
 @import "include/grid";
-@import "include/util";
+@import "include/math";
+@import "include/typo";
+@import "include/vars";
+@import "include/mixin";
 
 /**
  * Initialize the common styles of a block.
@@ -15,12 +16,12 @@
 	@include relative;
 
 	@if ($spacing == spaced) {
-		margin-top: rvw(120px, 0.8);
-		margin-bottom: rvw(120px, 0.8);
+		margin-top: rvw(90px);
+		margin-bottom: rvw(90px);
 	}
 
 	@if ($spacing == padded) {
-		padding-top: rvw(120px, 0.8);
-		padding-bottom: rvw(120px, 0.8);
+		padding-top: rvw(90px);
+		padding-bottom: rvw(90px);
 	}
 }

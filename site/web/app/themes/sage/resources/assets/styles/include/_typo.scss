@@ -1,0 +1,172 @@
+/**
+ * Applies preset typeface attributes.
+ * @mixin typeface
+ * @since 1.0.0
+ */
+@mixin typeface($font, $size, $fill: null, $opts: null) {
+
+	 @if $fill {
+		color: $fill;
+	}
+
+	@if has-typeface-weight($font, Light) {
+		font-weight: 300;
+	}
+
+	@if has-typeface-weight($font, Semi) {
+		font-weight: 500;
+	}
+
+	@if has-typeface-weight($font, Bold) {
+		font-weight: 700;
+	}
+
+	@if has-typeface-style($font, Italic) {
+		font-style: italic;
+	}
+
+	@if has-typeface-option($opts, uppercase) {
+		text-transform: uppercase;
+	}
+
+	@if has-typeface-option($opts, nowrap) {
+		white-space: nowrap;
+	}
+
+	/* ---------------------------------------------------------------------- */
+	/* Helvetica                                                              */
+	/* ---------------------------------------------------------------------- */
+
+	@if has-typeface-family($font, Helvetica) {
+
+		font-family: Helvetica, sans-serif;
+
+		@if has-typeface-size($size, 14px) {
+
+			font-size: rvw(14px * 1.15, 14px, xxxl, xl);
+
+			@include media-breakpoint-down(xl) {
+				font-size: rvw(14px, 11px);
+			}
+		}
+	}
+}
+
+/**
+ * Sets the text antialias;
+ * @mixin text-antialias
+ * @since 1.0.0
+ */
+ @mixin text-antialias() {
+	-moz-osx-font-smoothing: grayscale;
+	 -webkit-font-smoothing: antialiased;
+			 font-smoothing: antialiased;
+}
+
+/**
+ * Convenience mixin to support special writing direction.
+ * @function text-dir
+ * @since 1.0.0
+ */
+@mixin text-dir($dir) {
+	@if $dir == ttb { @include text-dir-ttb; }
+	@if $dir == btt { @include text-dir-btt; }
+}
+
+/**
+ * Convenience mixin.
+ * @function text-dir-ttb
+ * @since 1.0.0
+ */
+@mixin text-dir-ttb {
+	writing-mode: tb;
+	writing-mode: vertical-lr;
+}
+
+/**
+ * Convenience mixin.
+ * @function text-dir-btt
+ * @since 1.0.0
+ */
+@mixin text-dir-btt {
+	transform: rotate(180deg);
+	writing-mode: tb;
+	writing-mode: vertical-lr;
+}
+
+/**
+ * Convenience mixin.
+ * @function text-mask
+ * @since 1.0.0
+ */
+ @mixin text-mask($background) {
+
+	background: $background;
+
+	/*
+	 * This must be done this this exact order otherwise it
+	 * will not work.
+	 */
+
+	-webkit-text-fill-color: transparent;
+	-webkit-background-clip: text;
+}
+
+/**
+ * Converts tracking to letter-spacing.
+ * @function tracking
+ * @since 1.0.0
+ */
+ @function tracking($value) {
+	$val: $value / 1000;
+	@return #{$val}em;
+}
+
+//------------------------------------------------------------------------------
+// Private API
+//------------------------------------------------------------------------------
+
+/**
+ * @function has-typeface-family
+ * @since 1.0.0
+ * @hidden
+ */
+@function has-typeface-family($font, $family) {
+	@return str-index($font, $family) != null;
+}
+
+/**
+ * @function has-typeface-weight
+ * @since 1.0.0
+ * @hidden
+ */
+@function has-typeface-weight($font, $weight) {
+	@return str-index($font, $weight) != null;
+}
+
+/**
+ * @function has-typeface-style
+ * @since 1.0.0
+ * @hidden
+ */
+@function has-typeface-style($font, $style) {
+	@return str-index($font, $style) != null;
+}
+
+/**
+ * @function has-typeface-size
+ * @since 1.0.0
+ * @hidden
+ */
+@function has-typeface-size($font, $size) {
+	@return to-string($font) == to-string($size);
+}
+
+/**
+ * @function has-typeface-option
+ * @since 1.0.0
+ * @hidden
+ */
+@function has-typeface-option($options, $option) {
+	@return $options != null and index($options, $option) != null;
+}

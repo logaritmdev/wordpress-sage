@@ -1,16 +1,8 @@
 /**
- * @function breakpoint-get
- * @since 1.0.0
- */
- @function breakpoint-get($name, $breakpoints: $grid) {
-	@return map-get($breakpoints, $name);
-}
-
-/**
  * @mixin media-breakpoint-up
  * @since 1.0.0
  */
-@mixin media-breakpoint-up($name, $breakpoints: $grid) {
+ @mixin media-breakpoint-up($name, $breakpoints: $grid) {
 	@media (min-width: breakpoint-get($name)) {
 		@content;
 	}
@@ -24,4 +16,17 @@
 	@media (max-width: breakpoint-get($name)) {
 		@content;
 	}
+}
+
+//------------------------------------------------------------------------------
+// Private API
+//------------------------------------------------------------------------------
+
+/**
+ * @function breakpoint-get
+ * @since 1.0.0
+ * @hidden
+ */
+ @function breakpoint-get($name, $breakpoints: $grid) {
+	@return map-get($breakpoints, $name);
 }

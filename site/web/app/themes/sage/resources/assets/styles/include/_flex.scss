@@ -1,113 +1,9 @@
 /**
- * @mixin flexbox
- * @since 1.0.0
- */
- @mixin flexbox {
-	display: flex;
-}
-
-/**
- * @mixin inline-flex
- * @since 1.0.0
- */
-@mixin inline-flex {
-	display: inline-flex;
-}
-
-/**
- * @mixin flex-direction
- * @since 1.0.0
- */
-@mixin flex-direction($value: row) {
-	flex-direction: $value;
-}
-
-/**
- * @mixin flex-wrap
- * @since 1.0.0
- */
-@mixin flex-wrap($value: nowrap) {
-	flex-wrap: $value;
-}
-
-/**
- * @mixin flex-flow
- * @since 1.0.0
- */
-@mixin flex-flow($values: (row nowrap)) {
-	flex-flow: $values;
-}
-
-/**
- * @mixin flex-order
- * @since 1.0.0
- */
-@mixin flex-order($int: 0) {
-	order: $int;
-}
-
-/**
- * @mixin flex-grow
- * @since 1.0.0
- */
-@mixin flex-grow($int: 0) {
-	flex-grow: $int;
-}
-
-/**
- * @mixin flex-shrink
- * @since 1.0.0
- */
-@mixin flex-shrink($int: 1) {
-	flex-shrink: $int;
-}
-
-/**
- * @mixin flex-basis
- * @since 1.0.0
- */
-@mixin flex-basis($value: auto) {
-	flex-basis: $value;
-}
-
-/**
  * @mixin flex
  * @since 1.0.0
  */
-@mixin flex($fg: 1, $fs: null, $fb: null) {
+ @mixin flex($fg: 1, $fs: null, $fb: null) {
 	flex: $fg $fs $fb;
-}
-
-/**
- * @mixin flex-justify-content
- * @since 1.0.0
- */
-@mixin flex-justify-content($value: flex-start) {
-	justify-content: $value;
-}
-
-/**
- * @mixin flex-align-items
- * @since 1.0.0
- */
-@mixin flex-align-items($value: stretch) {
-	align-items: $value;
-}
-
-/**
- * @mixin flex-align-self
- * @since 1.0.0
- */
-@mixin flex-align-self($value: auto) {
-	align-self: $value;
-}
-
-/**
- * @mixin flex-align-content
- * @since 1.0.0
- */
-@mixin flex-align-content($value: stretch) {
-	align-content: $value;
 }
 
 /**
@@ -115,7 +11,7 @@
  * @since 1.0.0
  */
 @mixin flex-box {
-	@include flexbox;
+	display: flex;
 }
 
 /**
@@ -123,37 +19,47 @@
  * @since 1.0.0
  */
 @mixin flex-box-inline {
-	@include inline-flex;
+	display: inline-flex;
 }
 
 /**
  * @mixin flex-row
  * @since 1.0.0
  */
-@mixin flex-row($v, $h, $mode: row) {
+@mixin flex-row($v, $h, $mode: row, $wrap: false) {
 
 	@if $mode == reverse {
 		$mode: row-reverse;
 	}
 
-	@include flex-direction($mode);
-	@include flex-align-items($v);
-	@include flex-justify-content($h);
+	flex-direction: $mode;
+
+	@if $wrap {
+		flex-wrap: wrap;
+	}
+
+	align-items:     $v;
+	justify-content: $h;
 }
 
 /**
  * @mixin flex-col
  * @since 1.0.0
  */
-@mixin flex-col($v, $h, $mode: column) {
+@mixin flex-col($v, $h, $mode: column, $wrap: false) {
 
 	@if $mode == reverse {
 		$mode: column-reverse;
 	}
 
-	@include flex-direction($mode);
-	@include flex-align-items($h);
-	@include flex-justify-content($v);
+	flex-direction: $mode;
+
+	@if $wrap {
+		flex-wrap: wrap;
+	}
+
+	align-items:     $h;
+	justify-content: $v;
 }
 
 /**
@@ -161,5 +67,13 @@
  * @since 1.0.0
  */
 @mixin flex-set($align) {
-	@include flex-align-self($align);
+	align-self: $align;
+}
+
+/**
+ * @mixin flex-ord
+ * @since 1.0.0
+ */
+ @mixin flex-ord($int: 0) {
+	order: $int;
 }

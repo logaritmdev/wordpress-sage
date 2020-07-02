@@ -1,7 +1,5 @@
-import 'jquery'
-import scrollTo from './vendors/jquery-scroll-to.min'
-import './vendors/jquery-global'
-import './vendors/modernizr.min'
+
+import './export'
 import './plugins/jquery-util'
 import './plugins/jquery-css-events'
 import './plugins/jquery-media-events'
@@ -15,42 +13,25 @@ import './plugins/jquery-scroll-watch'
 import './plugins/jquery-slider'
 import './plugins/jquery-break-lines'
 import './plugins/jquery-break-words'
+import './main-layout'
 import './image'
 import './video'
 import './form'
 import './wysiwyg'
-import './main-layout'
 
-$.defineMedia('xs', '(max-width: 375px)')
-$.defineMedia('sm', '(max-width: 575px)')
-$.defineMedia('md', '(max-width: 768px)')
-$.defineMedia('lg', '(max-width: 1024px)')
-$.defineMedia('xl', '(max-width: 1200px)')
-$.defineMedia('xxl', '(max-width: 1600px)')
-$.defineMedia('xxxl', '(max-width: 1920px)')
-
-/*
- * Exposes scrollTo
- */
-
-$.scrollTo = $.fn.scrollTo = scrollTo
+$.defineMedia('xxxl', 1920)
+$.defineMedia('xxl', 1600)
+$.defineMedia('xl', 1440)
+$.defineMedia('lg', 1024)
+$.defineMedia('md', 768)
+$.defineMedia('sm', 575)
+$.defineMedia('xs', 375)
 
 /*
  * Enable smooth scrolling.
  */
 
 $(document).smoothScroll()
-
-/*
- * Adds the ready body class when the document is loaded enough.
- */
-
-$(document.body).on('loading/loadedenough', (e) => {
-    setTimeout(() => {
-        $(document.body).addClass('ready')
-        $(document.body).trigger('ready')
-    }, 1000)
-})
 
 /*
  * Disables animations during previews
