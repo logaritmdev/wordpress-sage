@@ -304,8 +304,6 @@ function preload(i, element) {
 
 		if (image.complete == false) {
 
-			length++
-
 			function onLoad() {
 				clearTimeout(failsafe)
 				image.removeEventListener('load', onLoad)
@@ -465,7 +463,3 @@ function preload(i, element) {
 		})
 	}
 }
-
-$.attach('[data-preload]', (i, element) => {
-	element.preload()
-})
