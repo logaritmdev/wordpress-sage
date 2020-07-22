@@ -66,7 +66,7 @@ function watch(i, element) {
 	 * @var enter
 	 * @since 1.0.0
 	 */
-	let enter = element.fattr('data-watch-enter') || 0.7
+	let enter = element.fattr('data-watch-enter') || 0.6
 
 	/**
 	 * The class to add when an item is visible on screen.

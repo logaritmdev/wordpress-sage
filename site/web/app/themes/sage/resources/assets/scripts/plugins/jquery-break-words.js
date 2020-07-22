@@ -53,6 +53,10 @@ function breakWords(i, element, options) {
 
 		root.appendChild(fragment)
 
+		element.find('.word').each((i, element) => {
+			$(element).attr('data-nth-word', i + 1)
+		})
+
 		if (options &&
 			options.onComplete) {
 			options.onComplete(element)

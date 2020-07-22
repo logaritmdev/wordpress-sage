@@ -114,6 +114,7 @@ function breakLines(i, element, options) {
 		element.find('.line').each((i, line) => {
 
 			line = $(line)
+			line.attr('data-nth-line', i + 1);
 
 			line.attr('data-text', line.text())
 
@@ -138,10 +139,12 @@ function breakLines(i, element, options) {
 	 */
 	function breakNode(root, into) {
 
-		let base = null
 		let line = createLine()
 
 		let nodes = root.childNodes
+
+		let lastWordR = null
+		let lastWordB = null
 
 		for (let i = 0; i < nodes.length; i++) {
 
@@ -158,23 +161,37 @@ function breakLines(i, element, options) {
 
 			if (type == Node.ELEMENT_NODE) {
 
-				let b = nodes[i].getBoundingClientRect()
-				let t = b.top
-				let h = b.height
+				let bounds = nodes[i].getBoundingClientRect()
 
-				if (base == null) {
-					base = t + h
+				let t = bounds.top
+				let l = bounds.left
+				let w = bounds.width
+				let h = bounds.height
+
+				let wordL = l
+				let wordR = l + w
+				let wordB = t + h
+
+				if (lastWordR == null) {
+					lastWordR = wordR
+				}
+
+				if (lastWordB == null) {
+					lastWordB = wordB
 				}
 
 				if (name == 'BR') {
 					continue
 				}
 
-				if (base < t + h) {
-					base = t + h
+				if (wordL < lastWordR &&
+					wordB > lastWordB) {
 					into.appendChild(line)
 					line = createLine()
 				}
+
+				lastWordR = wordR
+				lastWordB = wordB
 
 				line.appendChild(copy)
 
