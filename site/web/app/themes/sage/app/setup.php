@@ -22,9 +22,10 @@ add_action('wp_enqueue_scripts', function () {
 
 	wp_deregister_style('schedule');
 	wp_deregister_script('schedule');
+	wp_deregister_script('jquery');
 
 	wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
-	wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), ['jquery'], null, true);
+	wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), false, null, true);
 
 	wp_localize_script('sage/main.js', 'app', array(
 		'theme' => array(
@@ -209,14 +210,32 @@ add_action('wp_head', function() {
 });
 
 /**
- * Fixed metabox overlap.
+ * Adding admin styles.
  */
 add_action('admin_head', function() {
 	echo '
 		<style>
+
+			.cortex-create-block-page .acf-admin-toolbar,
+			.cortex-update-block-page .acf-admin-toolbar {
+				display: none;
+			}
+
+			.acf-field-wysiwyg.small-editor iframe {
+				min-height: 120px !important;
+				max-height: 120px !important;
+				height: 120px !important;
+			}
+
 			.block-editor-writing-flow {
 				height: auto;
 			}
+
+			.acf-field .acf-radio-list {
+				margin-left: 0px !important;
+				padding-left: 0px !important;
+			}
+
 		</style>
 	';
 });
@@ -289,62 +308,66 @@ add_filter('get_twig', function($twig) {
 	}));
 
 	/**
-	 * @filter embed
-	 * @since 1.0.0
-	 */
-	$twig->addFilter(new \Twig_SimpleFilter('embed', function($image) {
-
-		if (empty($image)) {
-            return;
-		}
-
-		$src = '';
-
-		if (is_string($image)) {
-
-			$src = __DIR__ . '/../dist/' . $image;
-
-		} else {
-
-			if (isset($image['src']) == false) {
-				$image['src'] = get_attached_file($image['id']);
-			}
-
-			$src = $image['src'];
-		}
-
-        if (is_readable($src)) {
-            $contents = file_get_contents($src);
-            $contents = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $contents);
-            return $contents;
-        }
-
-        return null;
-	}));
-
-	/**
 	 * @filter image
 	 * @since 1.0.0
 	 */
-	$twig->addFilter(new \Twig_SimpleFilter('image', function($image, $element = 'div') {
+	$twig->addFilter(new \Twig\TwigFilter('image', function($image, $rw = null, $rh = null, $mode = 'fill') {
 
-		if ($element == 'img') {
-			return sprintf('
-				<div class="image image--mode-foreground">
-					<div class="frame">
-						<img class="layer" src="%s">
-					</div>
-				</div>
-			', $image);
+		if (is_string($rw)) $mode = $rw;
+		if (is_string($rh)) $mode = $rh;
+
+		$image = new \TimberImage($image);
+
+		if ($rw != null ||
+			$rh != null) {
+
+			$w = $image->width();
+			$h = $image->height();
+
+			if (($rw && $w > $rw) ||
+				($rh && $h > $rh)) {
+				$image = \TimberImageHelper::resize($image, $rw, $rh);
+			}
+		}
+
+		switch (pathinfo($image, PATHINFO_EXTENSION)) {
+
+			case 'jpg':
+				$type = 'image/jpeg';
+				break;
+
+			case 'png':
+				$type = 'image/png';
+				break;
+
+			case 'gif':
+				$type = 'image/gif';
+				break;
+
+			case 'svg':
+				$type = 'image/svg';
+				break;
+
+			default;
+				$type = 'image/jpeg';
+				break;
 		}
 
 		return sprintf(
-			'<div class="image image--mode-background">
+			'<div class="image image--%s">
 				<div class="frame">
-					<div class="layer" style="background-image: url(%s)"></div>
+					<picture>
+						<source srcset="%s" type="%s"/>
+						<img src="%s">
+					</picture>
 				</div>
-			</div>
-		', $image);
+			</div>',
+			$mode,
+			$image,
+			$type,
+			$image
+		);
+
 	}));
 
 	/**
@@ -480,9 +503,50 @@ add_filter('get_twig', function($twig) {
 		return sprintf('<%s>%s</%w>', $tag, $text, $tag);
 	}));
 
+
+	/**
+	 * @filter embed
+	 * @since 1.0.0
+	 */
+	$twig->addFunction(new \Twig_SimpleFunction('embed', function($image) {
+
+		if (empty($image)) {
+            return;
+		}
+
+		$src = '';
+
+		if (is_string($image)) {
+
+			$src = __DIR__ . '/../dist/' . $image;
+
+		} else {
+
+			if (isset($image['src']) == false) {
+				$image['src'] = get_attached_file($image['id']);
+			}
+
+			$src = $image['src'];
+		}
+
+        if (is_readable($src)) {
+            $contents = file_get_contents($src);
+            $contents = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $contents);
+            return $contents;
+        }
+
+		return null;
+
+	}));
+
 	return $twig;
 
 });
+
+/**
+ * Disable ACF admin
+ */
+add_filter('acf/settings/show_admin', '__return_false');
 
 /**
  * Options Page
@@ -553,7 +617,6 @@ add_action('admin_head', function() {
 	}
 
 }, 99);
-
 
 /**
  * Sets the block's compiled CSS file path.

@@ -64,6 +64,16 @@
 }
 
 /**
+ * Sets the text adjust.
+ * @mixin text-adjust
+ * @since 1.0.0
+ */
+ @mixin text-adjust() {
+	-webkit-text-size-adjust: none;
+	   -moz-text-size-adjust: none;
+}
+
+/**
  * Convenience mixin to support special writing direction.
  * @function text-dir
  * @since 1.0.0

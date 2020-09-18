@@ -1,17 +1,15 @@
-import 'jquery'
+import $ from 'jquery'
 import scrollTo from './vendors/jquery-scroll-to.min'
 import './vendors/modernizr.min'
 
-let $ = window.$ = jQuery
+/*
+ * JQuery
+ */
+
+window.JQuery = window.jQuery = window.$ = $
 
 /*
  * ScrollTo
  */
 
-if ($.scrollTo == null) {
-	$.scrollTo = scrollTo
-}
-
-if ($.fn.scrollTo == null) {
-	$.fn.scrollTo = scrollTo
-}
+$.scrollTo = $.fn.scrollTo = scrollTo

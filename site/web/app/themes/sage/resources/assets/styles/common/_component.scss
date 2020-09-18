@@ -1,38 +1,45 @@
+
 //------------------------------------------------------------------------------
 // Image
 //------------------------------------------------------------------------------
 
 .image {
 
-	&.image--mode-background {
+	overflow: hidden;
 
-		@include fill;
-
-		.frame {
-			@include fill;
-		}
-
-		.layer {
-			@include fill;
-			background-position: center center;
-			background-repeat: no-repeat;
-			background-size: cover;
-		}
+	img {
+		display: block;
 	}
 
-	&.image--mode-foreground {
+	&.image--fit {
 
 		@include relative;
 
-		.frame {
-			@include relative;
-		}
-
-		.layer {
-			display: block;
+		img {
 			height: auto;
+			object-fit: contain;
+			object-position: center center;
 			width: 100%;
 		}
+	}
+
+	&.image--fill {
+
+		@include fill;
+
+		img {
+			@include absolute(top 0 left 0);
+			height: 100%;
+			object-fit: cover;
+			object-position: center center;
+			width: 100%;
+		}
+	}
+
+	.frame {
+		@include relative;
+		height: 100%;
+		width: 100%;
 	}
 }
 

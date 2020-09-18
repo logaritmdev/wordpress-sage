@@ -3,15 +3,19 @@
 	<style type="text/css">
 
 		.main-layout-loader {
-			align-items: center;
-			background: #fff;
-			bottom: 0px;
+
+			background: #000;
+
 			display: flex;
+			align-items: center;
 			justify-content: center;
-			left: 0px;
+
 			position: fixed;
-			right: 0px;
 			top: 0px;
+			left: 0px;
+			right: 0px;
+			bottom: 0px;
+
 			z-index: 5000;
 		}
 
