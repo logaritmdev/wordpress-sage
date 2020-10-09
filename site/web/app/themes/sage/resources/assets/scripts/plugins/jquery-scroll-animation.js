@@ -31,6 +31,13 @@ $.fn.scrollAnimation = function () {
      */
     let target = element.attr('data-scroll-animation-target')
 
+	/**
+	 * How often to check whether the offset have changed.
+	 * @var check
+	 * @since 1.0.0
+	 */
+    let check = element.fattr('data-scroll-animation-check') || 1000
+
     /**
      * The animated property.
      * @property propertyName
@@ -190,7 +197,7 @@ $.fn.scrollAnimation = function () {
 
             switch (unit) {
 
-                case 'px': value = (value / 16) + 'rem'; break
+                case 'px': value = value + 'px'; break
                 case 'rvw': value = (value / 1440 * 100) + 'vw'; break
                 case 'rvh': value = (value / 1440 * 100) + 'vh'; break
 
@@ -278,6 +285,8 @@ $.fn.scrollAnimation = function () {
     propertyFormat = (element.attr('data-scroll-animation-format') || '%v').split(',').map(trim)
     propertyMinValue = (element.attr('data-scroll-animation-min') || '').split(',').map(trim).map(parseFloat)
     propertyMaxValue = (element.attr('data-scroll-animation-max') || '').split(',').map(trim).map(parseFloat)
+
+    setInterval(onWindowResize, check)
 
     $(window).on('resize', onWindowResize)
     $(window).on('scroll', onWindowScroll)

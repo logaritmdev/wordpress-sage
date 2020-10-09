@@ -103,6 +103,9 @@ $.fn.bounds = function (relative) {
 		rect.left -= relative.left
 	}
 
+	rect.x = rect.left
+	rect.y = rect.top
+
 	return rect
 }
 

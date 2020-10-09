@@ -31,7 +31,7 @@ $.defineMedia('xs', 375)
  * Enable smooth scrolling.
  */
 
-$(document).smoothScroll()
+$(document).smoothScroll('y')
 
 /*
  * Disables animations during previews

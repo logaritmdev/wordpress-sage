@@ -24,6 +24,8 @@ add_action('wp_enqueue_scripts', function () {
 	wp_deregister_script('schedule');
 	wp_deregister_script('jquery');
 
+	wp_register_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), '3.5.1');
+
 	wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
 	wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), false, null, true);
 
@@ -40,22 +42,23 @@ add_action('wp_enqueue_scripts', function () {
  */
 add_action('after_setup_theme', function () {
 
-    load_theme_textdomain('sage', get_template_directory() . '/languages');
+	load_theme_textdomain('sage', get_template_directory() . '/languages');
 
-    add_theme_support('soil-clean-up');
-    add_theme_support('soil-jquery-cdn');
-    add_theme_support('soil-nav-walker');
-    add_theme_support('soil-nice-search');
-    add_theme_support('soil-relative-urls');
+	add_theme_support('soil-clean-up');
+	add_theme_support('soil-jquery-cdn');
+	add_theme_support('soil-nav-walker');
+	add_theme_support('soil-nice-search');
+	add_theme_support('soil-relative-urls');
 
-    register_nav_menus([
+	register_nav_menus([
 		'primary_navigation' => __('Primary Navigation', 'sage'),
-    ]);
+		'secondary_navigation' => __('Secondary Navigation', 'sage'),
+	]);
 
-    add_theme_support('title-tag');
-    add_theme_support('post-thumbnails');
-    add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
-    add_theme_support('customize-selective-refresh-widgets');
+	add_theme_support('title-tag');
+	add_theme_support('post-thumbnails');
+	add_theme_support('html5', ['caption', 'comment-form', 'comment-list', 'gallery', 'search-form']);
+	add_theme_support('customize-selective-refresh-widgets');
 
 	add_editor_style(get_stylesheet_directory_uri() . '/editor-style-shared.css');
 	add_editor_style(get_stylesheet_directory_uri() . '/editor-style.css');
@@ -163,7 +166,7 @@ add_action('after_setup_theme', function () {
  * Note: updated value is only available for subsequently loaded views, such as partials
  */
 add_action('the_post', function ($post) {
-    sage('blade')->share('post', $post);
+	sage('blade')->share('post', $post);
 });
 
 /**
@@ -171,31 +174,31 @@ add_action('the_post', function ($post) {
  */
 add_action('after_setup_theme', function () {
 
-    /**
-     * Add JsonManifest to Sage container
-     */
-    sage()->singleton('sage.assets', function () {
-        return new JsonManifest(config('assets.manifest'), config('assets.uri'));
-    });
+	/**
+	 * Add JsonManifest to Sage container
+	 */
+	sage()->singleton('sage.assets', function () {
+		return new JsonManifest(config('assets.manifest'), config('assets.uri'));
+	});
 
-    /**
-     * Add Blade to Sage container
-     */
-    sage()->singleton('sage.blade', function (Container $app) {
-        $cachePath = config('view.compiled');
-        if (!file_exists($cachePath)) {
-            wp_mkdir_p($cachePath);
-        }
-        (new BladeProvider($app))->register();
-        return new Blade($app['view']);
-    });
+	/**
+	 * Add Blade to Sage container
+	 */
+	sage()->singleton('sage.blade', function (Container $app) {
+		$cachePath = config('view.compiled');
+		if (!file_exists($cachePath)) {
+			wp_mkdir_p($cachePath);
+		}
+		(new BladeProvider($app))->register();
+		return new Blade($app['view']);
+	});
 
-    /**
-     * Create @asset() Blade directive
-     */
-    sage('blade')->compiler()->directive('asset', function ($asset) {
-        return "<?= " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
-    });
+	/**
+	 * Create @asset() Blade directive
+	 */
+	sage('blade')->compiler()->directive('asset', function ($asset) {
+		return "<?= " . __NAMESPACE__ . "\\asset_path({$asset}); ?>";
+	});
 });
 
 /**
@@ -245,7 +248,7 @@ add_action('admin_head', function() {
  * @since 1.0.0
  */
 add_action('get_header', function() {
-    remove_action('wp_head', '_admin_bar_bump_cb');
+	remove_action('wp_head', '_admin_bar_bump_cb');
 });
 
 /**
@@ -290,19 +293,19 @@ add_filter('get_twig', function($twig) {
 	 * @filter date
 	 * @since 1.0.0
 	 */
-    $twig->addFilter('date', new \Twig_Filter_Function(function($date, $format = null) {
+	$twig->addFilter('date', new \Twig_Filter_Function(function($date, $format = null) {
 
 		if ($format === null) {
-            $format = get_option('date_format');
-        }
+			$format = get_option('date_format');
+		}
 
-        if ($date instanceof DateTime) {
-            $timestamp = $date->getTimestamp();
-        } else if (is_numeric($date)) {
-            $timestamp = intval($date);
-        } else {
-            $timestamp = strtotime($date);
-        }
+		if ($date instanceof DateTime) {
+			$timestamp = $date->getTimestamp();
+		} else if (is_numeric($date)) {
+			$timestamp = intval($date);
+		} else {
+			$timestamp = strtotime($date);
+		}
 
 		return date_i18n($format, $timestamp);
 	}));
@@ -484,7 +487,7 @@ add_filter('get_twig', function($twig) {
 	 * @since 1.0.0
 	 */
 	$twig->addFilter(new \Twig_SimpleFilter('phone_link', function($value, $label = null) {
-		return sprintf('<a href="tel:%s">%s</a>', $value, $label ? $label : $value);
+		return sprintf('<a class="phone" href="tel:%s">%s</a>', $value, $label ? $label : $value);
 	}));
 
 	/**
@@ -492,7 +495,7 @@ add_filter('get_twig', function($twig) {
 	 * @since 1.0.0
 	 */
 	$twig->addFilter(new \Twig_SimpleFilter('email_link', function($value, $label = null) {
-		return sprintf('<a href="mailto:%s">%s</a>', $value, $label ? $label : $value);
+		return sprintf('<a class="email" href="mailto:%s">%s</a>', $value, $label ? $label : $value);
 	}));
 
 	/**
@@ -511,7 +514,7 @@ add_filter('get_twig', function($twig) {
 	$twig->addFunction(new \Twig_SimpleFunction('embed', function($image) {
 
 		if (empty($image)) {
-            return;
+			return;
 		}
 
 		$src = '';
@@ -529,11 +532,11 @@ add_filter('get_twig', function($twig) {
 			$src = $image['src'];
 		}
 
-        if (is_readable($src)) {
-            $contents = file_get_contents($src);
-            $contents = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $contents);
-            return $contents;
-        }
+		if (is_readable($src)) {
+			$contents = file_get_contents($src);
+			$contents = str_replace('<?xml version="1.0" encoding="utf-8"?>', '', $contents);
+			return $contents;
+		}
 
 		return null;
 
@@ -639,5 +642,19 @@ add_filter('cortex/enqueued_script_url', function($path, $type) {
 	$link = $type->get_link() . '/dist/scripts.js';
 
 	return file_exists($file) && filesize($file) ? $link : null;
+
+}, 10, 2);
+
+/*
+ * Disalbe CF& Auto Paragraph
+ */
+add_filter('wpcf7_autop_or_not', '__return_false');
+
+/**
+ * Customize block render.
+ */
+add_filter('cortex/render', function($vars, $block) {
+
+	return $vars;
 
 }, 10, 2);

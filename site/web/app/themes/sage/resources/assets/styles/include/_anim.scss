@@ -3,7 +3,7 @@
  * @function transition-duration
  * @since 1.0.0
  */
-@function transition-duration($name, $mul: 1, $map: $transitions) {
+ @function transition-duration($name, $mul: 1, $map: $transitions) {
 	@return map-get(map-get($map, $name), duration) * $mul;
 }
 
@@ -12,6 +12,22 @@
  * @function transition-equation
  * @since 1.0.0
  */
- @function transition-equation($name, $map: $transitions) {
+@function transition-equation($name, $map: $transitions) {
 	@return map-get(map-get($map, $name), equation);
+}
+
+/**
+ * Returns a transition equation by name.
+ * @function transition-delay
+ * @since 1.0.0
+ */
+@function transition-delay($name, $mul: 1, $off: 0) {
+
+	$delay: transition-duration($name, $mul);
+
+	@if $off > 0 {
+		$delay: $delay + transition-duration($name, $off);
+	}
+
+	@return $delay;
 }

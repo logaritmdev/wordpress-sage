@@ -9,6 +9,10 @@
 		@return $val;
 	}
 
+	@if $val == $min {
+		@return $val;
+	}
+
 	@if $min == null {
 		$min: 0.55;
 	}
@@ -47,6 +51,10 @@
  @function rvh($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
 
 	@if $val >= 1px and $val <= 5px {
+		@return $val;
+	}
+
+	@if $val == $min {
 		@return $val;
 	}
 
@@ -139,7 +147,7 @@
 
 	} @else {
 
-		$val: #{"calc(#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len}))"};
+		$val: #{"calc((#{$min}px + #{$val} * ((100vw - #{$lwr}px) / #{$len})) - 0.1px)"};
 
 		@if $mul == 1 {
 			@return $val;
@@ -168,7 +176,7 @@
 
 	} @else {
 
-		$val: #{"calc(#{$min}px + #{$val} * ((100vh - #{$lwr}px) / #{$len}))"};
+		$val: #{"calc((#{$min}px + #{$val} * ((100vh - #{$lwr}px) / #{$len})) - 0.1px)"};
 
 		@if $mul == 1 {
 			@return $val;

@@ -7,6 +7,20 @@ $.fn.watch = function () {
 }
 
 /**
+ * @function unwatch
+ * @since 1.0.0
+ */
+$.fn.unwatch = function () {
+	this.each(unwatch)
+}
+
+/**
+ * @symbol unwatch
+ * @since 1.0.0
+ */
+const $unwatch = Symbol('unwatch')
+
+/**
  * @function watch
  * @since 1.0.0
  * @hidden
@@ -14,6 +28,14 @@ $.fn.watch = function () {
 function watch(i, element) {
 
 	element = $(element)
+
+	let target = element.attr('data-watch')
+	if (target == '' ||
+		target == null) {
+		target = element
+	} else {
+		target = element.find(target)
+	}
 
 	//--------------------------------------------------------------------------
 	// Properties
@@ -56,7 +78,7 @@ function watch(i, element) {
 
 	/**
 	 * How often to check whether the offset have changed.
-	 * @var enter
+	 * @var check
 	 * @since 1.0.0
 	 */
 	let check = element.fattr('data-watch-check') || 1000
@@ -73,7 +95,7 @@ function watch(i, element) {
 	 * @var klass
 	 * @since 1.0.0
 	 */
-	let klass = element.attr('data-watch-class') || 'visible-on-screen'
+	let klass = element.attr('data-watch-class') || element.attr('class')
 
 	/**
 	 * Whether to include margins when computing the element offsets.
@@ -196,11 +218,11 @@ function watch(i, element) {
 	 */
 	function update() {
 
-		let bounds = element.bounds(container)
+		let bounds = target.bounds(container)
 
 		if (margins) {
-			bounds.top -= parseFloat(element.css('margin-top')) || 0
-			bounds.bottom += parseFloat(element.css('margin-bottom')) || 0
+			bounds.top -= parseFloat(target.css('margin-top')) || 0
+			bounds.bottom += parseFloat(target.css('margin-bottom')) || 0
 		}
 
 		let height = getFrameHeight()
@@ -283,29 +305,33 @@ function watch(i, element) {
 
 			if (entered == false && progress == 1) {
 				entered = true
-				element.emit('watch/visible').addClass(klass)
+
+				element
+					.emit('watch/visible')
+					.addClass(klass)
 			}
 
 			if (visible == false) {
 
-				requestAnimationFrame(() => {
+				let options = {
+					delay: 16,
+					enter: true
+				}
 
-					let options = {
-						delay: 16,
-						enter: true
-					}
+				element.emit('watch/beforeenter', [element, options, scroll])
 
-					element.emit('watch/beforeenter', [element, options, scroll])
+				if (options.enter) {
 
-					if (options.enter) {
-						setTimeout(function () {
-							element.emit('watch/enter')
-								.addClass('is-in-viewport')
-								.addClass('was-in-viewport')
-						}, options.delay)
-					}
+					setTimeout(function () {
 
-				})
+						element
+							.emit('watch/enter')
+							.addClass('is-in-viewport')
+							.addClass('was-in-viewport')
+
+					}, options.delay)
+
+				}
 
 				visible = true
 			}
@@ -314,22 +340,23 @@ function watch(i, element) {
 
 			if (visible) {
 
-				requestAnimationFrame(() => {
+				let options = {
+					delay: 16,
+					enter: true
+				}
 
-					let options = {
-						delay: 16,
-						enter: true
-					}
+				element.emit('watch/beforeleave', [element, options, scroll])
 
-					element.emit('watch/beforeleave', [element, options, scroll])
+				if (options.enter) {
 
-					if (options.enter) {
-						setTimeout(function () {
-							element.emit('watch/leave').removeClass('is-in-viewport')
-						}, options.delay)
-					}
+					setTimeout(function () {
 
-				})
+						element
+							.emit('watch/leave')
+							.removeClass('is-in-viewport')
+
+					}, options.delay)
+				}
 
 				visible = false
 			}
@@ -372,6 +399,12 @@ function watch(i, element) {
 		windowH = window.innerHeight
 	}
 
+	if (klass == null) {
+		klass = ''
+	}
+
+	klass = klass.split(/\s+/).map(value => value + '-on-screen').join(' ')
+
 	/**
 	 * Update the offsets when the window scrolls.
 	 * @function onWindowScroll
@@ -396,6 +429,11 @@ function watch(i, element) {
 	// Initialization
 	//--------------------------------------------------------------------------
 
+	let node = element.get(0)
+	let checkTimeout = null
+	let delayTimeout = null
+	let frameTimeout = null
+
 	function start() {
 
 		$(window).on('load', onWindowLoad)
@@ -403,17 +441,44 @@ function watch(i, element) {
 		$(window).on('scroll', onWindowScroll)
 
 		if (check) {
-			setInterval(onWindowResize, check)
+			checkTimeout = setInterval(onWindowResize, check)
 		}
+
+		update()
+		render()
 	}
 
 	if (delay) {
-		delay = parseFloat(delay)
-		setTimeout(start, delay)
-		return
+		delayTimeout = setTimeout(start, parseFloat(delay))
+	} else {
+		frameTimeout = requestAnimationFrame(start)
 	}
 
-	start()
+	node[$unwatch] = function () {
+
+		element.removeClass('is-in-viewport')
+		element.removeClass('was-in-viewport')
+		element.removeClass(klass)
+
+		$(window).off('load', onWindowLoad)
+		$(window).off('resize', onWindowResize)
+		$(window).off('scroll', onWindowScroll)
+
+		clearTimeout(checkTimeout)
+		clearTimeout(delayTimeout)
+		cancelAnimationFrame(frameTimeout)
+	}
+}
+
+/**
+ * @function unwatch
+ * @since 1.0.0
+ * @hidden
+ */
+function unwatch(i, element) {
+	if (element[$unwatch]) {
+		element[$unwatch].call()
+	}
 }
 
 /**

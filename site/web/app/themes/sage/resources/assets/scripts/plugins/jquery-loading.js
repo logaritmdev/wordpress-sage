@@ -1,10 +1,3 @@
-
-$.fn.preload = function () {
-	requestAnimationFrame(() => {
-		this.each(preload)
-	})
-}
-
 /**
  * @function watch
  * @since 1.0.0
@@ -285,6 +278,7 @@ function preload(i, element) {
 				case 'jpg':
 				case 'svg':
 				case 'jpeg':
+				case 'webp':
 					break;
 
 				default:
@@ -435,22 +429,24 @@ function preload(i, element) {
 			preloadImage(element, backgroundImage, 'background')
 		}
 
-		if (element.prop('tagName') === 'IMG') {
+		let tag = element.prop('tagName').toUpperCase()
+
+		if (tag == 'IMG') {
 			preloadImage(element, element.attr('src'), 'img')
 			return
 		}
 
-		if (element.prop('tagName') === 'IMAGE') {
+		if (tag == 'IMAGE') {
 			preloadImage(element, element.attr('xlink:href'), 'svg')
 			return
 		}
 
-		if (element.prop('tagName') === 'VIDEO' && element.attr('preload')) {
+		if (tag == 'VIDEO' && element.attr('preload')) {
 			preloadVideo(element)
 			return
 		}
 
-		if (element.prop('tagName') === 'AUDIO' && element.attr('preload')) {
+		if (tag == 'AUDIO' && element.attr('preload')) {
 			preloadAudio(element)
 			return
 		}
@@ -462,4 +458,10 @@ function preload(i, element) {
 			progress()
 		})
 	}
+}
+
+$.fn.preload = function () {
+	requestAnimationFrame(() => {
+		this.each(preload)
+	})
 }

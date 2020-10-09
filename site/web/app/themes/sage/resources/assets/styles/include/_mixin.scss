@@ -77,11 +77,11 @@
 
 /**
  * Convenience data-nth-item mixin to improve loop readability.
- * @mixin nth-word
+ * @mixin nth-item
  * @since 1.0.0
  */
  @mixin nth-item($i) {
-	&[data-nth-item="#{$i}"], [data-nth-item="#{$i}"] & {
+	[data-nth-item="#{$i}"] & {
 		@content;
 	}
 }
@@ -220,8 +220,18 @@
  * @function elevated
  * @since 1.0.0
  */
-@mixin elevated($name) {
-	z-index: $name;
+@mixin elevated($name, $offset: 0) {
+	@if $name == block {
+		z-index: 10 + $offset;
+	} @else if $name == content {
+		z-index: 15 + $offset;
+	} @else if $name == header {
+		z-index: 50 + $offset;
+	} @else if $name == footer {
+		z-index: 50 + $offset;
+	} @else {
+		z-index: $name + $offset;
+	}
 }
 
 /**
@@ -232,6 +242,244 @@
 @mixin pushable {
 	cursor: pointer;
 	user-select: none;
+}
+
+/**
+ * Convenience transition mixin.
+ * @function transition-property
+ * @since 1.0.0
+ */
+ @mixin transition-property($args...) {
+
+	@if length($args) == 0 {
+
+		transition-property: color, opacity, transform, visibility;
+
+	} @else {
+
+		$items: ();
+
+		@each $value in $args {
+
+			@if $value == background {
+
+				$items: append($items, background-position, $separator: comma);
+				$items: append($items, background-color, $separator: comma);
+				$items: append($items, background-size, $separator: comma);
+
+			} @else {
+
+				$items: append($items, $value, $separator: comma);
+
+			}
+		}
+
+		transition-property: $items;
+	}
+}
+
+/**
+ * Convenience transition mixin.
+ * @function transition-duration
+ * @since 1.0.0
+ */
+@mixin transition-duration($args...) {
+
+	$items: ();
+	$index: 1;
+	$limit: length($args);
+
+	@while $index <= $limit {
+
+		$val: nth-if($args, $index + 0);
+		$mul: nth-if($args, $index + 1);
+		$off: nth-if($args, $index + 2);
+
+		$tval: type-of($val);
+		$tmul: type-of($mul);
+		$toff: type-of($off);
+
+		$umul: if($tmul == number, unit($mul), null);
+		$uoff: if($toff == number, unit($off), null);
+
+		$value: null;
+
+		@if $tval == number {
+
+			$value: $val;
+			$index: $index + 1;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$toff == number and
+			$umul == '' and
+			$uoff == '' {
+
+			$value: transition-duration($val, $mul, $off);
+			$index: $index + 3;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$tmul == '' {
+
+			$value: transition-duration($val, $mul);
+			$index: $index + 2;
+
+		} @else if $tval == string {
+
+			$value: transition-duration($val);
+			$index: $index + 1;
+
+		} @else {
+
+			@error "Invalid format.";
+
+		}
+
+		$items: append($items, $value, $separator: comma);
+	}
+
+	transition-duration: $items;
+}
+
+/**
+ * Convenience transition mixin.
+ * @function transition-equation
+ * @since 1.0.0
+ */
+@mixin transition-equation($args...) {
+
+	$items: ();
+	$index: 1;
+	$limit: length($args);
+
+	@while $index <= $limit {
+
+		$val: nth-if($args, $index + 0);
+		$mul: nth-if($args, $index + 1);
+		$off: nth-if($args, $index + 2);
+
+		$tval: type-of($val);
+		$tmul: type-of($mul);
+		$toff: type-of($off);
+
+		$umul: if($tmul == number, unit($mul), null);
+		$uoff: if($toff == number, unit($off), null);
+
+		$value: null;
+
+		@if $tval == number {
+
+			$value: $val;
+			$index: $index + 1;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$toff == number and
+			$umul == '' and
+			$uoff == '' {
+
+			$value: transition-equation($val, $mul, $off);
+			$index: $index + 3;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$umul == '' {
+
+			$value: transition-equation($val, $mul);
+			$index: $index + 2;
+
+		} @else if $tval == string {
+
+			$value: transition-equation($val);
+			$index: $index + 1;
+
+		} @else {
+
+			@error "Invalid format.";
+
+		}
+
+		$items: append($items, $value, $separator: comma);
+	}
+
+	transition-timing-function: $items;
+}
+
+/**
+ * Convenience transition mixin.
+ * @function transition-delay
+ * @since 1.0.0
+ */
+@mixin transition-delay($args...) {
+
+	$items: ();
+	$index: 1;
+	$limit: length($args);
+
+	@while $index <= $limit {
+
+		$val: nth-if($args, $index + 0);
+		$mul: nth-if($args, $index + 1);
+		$off: nth-if($args, $index + 2);
+
+		$tval: type-of($val);
+		$tmul: type-of($mul);
+		$toff: type-of($off);
+
+		$umul: if($tmul == number, unit($mul), null);
+		$uoff: if($toff == number, unit($off), null);
+
+		$value: null;
+
+		@if $tval == number {
+
+			$value: $val;
+			$index: $index + 1;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$toff == number and
+			$umul == '' and
+			$uoff == '' {
+
+			$value: transition-delay($val, $mul, $off);
+			$index: $index + 3;
+
+		} @else if
+
+			$tval == string and
+			$tmul == number and
+			$umul == '' {
+
+			$value: transition-delay($val, $mul);
+			$index: $index + 2;
+
+		} @else if $tval == string {
+
+			$value: transition-delay($val);
+			$index: $index + 1;
+
+		} @else {
+
+			@error "Invalid format.";
+
+		}
+
+		$items: append($items, $value, $separator: comma);
+	}
+
+	transition-delay: $items;
 }
 
 //------------------------------------------------------------------------------
@@ -281,4 +529,18 @@
  */
  @function is-valid-length($value) {
 	@return (type-of($value) == "number" and not unitless($value)) or (index(auto initial inherit 0, $value) != false);
+}
+
+/**
+ * @function nth-if
+ * @since 1.0.0
+ * @hidden
+ */
+ @function nth-if($list, $index) {
+
+	@if $index <= length($list) {
+		@return nth($list, $index);
+	}
+
+	@return null;
 }

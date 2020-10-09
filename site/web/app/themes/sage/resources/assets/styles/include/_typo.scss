@@ -3,27 +3,31 @@
  * @mixin typeface
  * @since 1.0.0
  */
-@mixin typeface($font, $size, $fill: null, $opts: null) {
+ @mixin typeface($font, $size, $fill: null, $opts: null) {
 
-	 @if $fill {
+	@if $fill {
 		color: $fill;
 	}
 
+	$weight: 400;
+
 	@if has-typeface-weight($font, Light) {
-		font-weight: 300;
+		$weight: 300;
+	}
+
+	@if has-typeface-weight($font, Medium) {
+		$weight: 500;
 	}
 
 	@if has-typeface-weight($font, Semi) {
-		font-weight: 500;
+		$weight: 600;
 	}
 
 	@if has-typeface-weight($font, Bold) {
-		font-weight: 700;
+		$weight: 700;
 	}
 
-	@if has-typeface-style($font, Italic) {
-		font-style: italic;
-	}
+	font-weight: $weight;
 
 	@if has-typeface-option($opts, uppercase) {
 		text-transform: uppercase;
@@ -34,70 +38,79 @@
 	}
 
 	/* ---------------------------------------------------------------------- */
-	/* Helvetica                                                              */
+	/* Circular                                                                   */
 	/* ---------------------------------------------------------------------- */
 
-	@if has-typeface-family($font, Helvetica) {
+	@if has-typeface-family($font, Sans) {
 
-		font-family: Helvetica, sans-serif;
+		font-family: sans-serif, serif;
+		font-size: rvw(
+			$size * 1.15,
+			$size,
+			xxxl,
+			xl
+		);
 
-		@if has-typeface-size($size, 14px) {
+		@include media-breakpoint-down(lg) {
 
-			font-size: rvw(14px * 1.15, 14px, xxxl, xl);
+			$max: $size;
+			$min: $size * 0.65;
 
-			@include media-breakpoint-down(xl) {
-				font-size: rvw(14px, 11px);
+			@if $min < 15px {
+				$min: 15px;
 			}
+
+			font-size: rvw($max, $min, lg, xs);
 		}
 	}
 }
 
 /**
- * Sets the text antialias;
- * @mixin text-antialias
- * @since 1.0.0
- */
- @mixin text-antialias() {
+* Sets the text antialias;
+* @mixin text-antialias
+* @since 1.0.0
+*/
+@mixin text-antialias() {
 	-moz-osx-font-smoothing: grayscale;
-	 -webkit-font-smoothing: antialiased;
-			 font-smoothing: antialiased;
+	-webkit-font-smoothing: antialiased;
+			font-smoothing: antialiased;
 }
 
 /**
- * Sets the text adjust.
- * @mixin text-adjust
- * @since 1.0.0
- */
- @mixin text-adjust() {
+* Sets the text adjust.
+* @mixin text-adjust
+* @since 1.0.0
+*/
+@mixin text-adjust() {
 	-webkit-text-size-adjust: none;
-	   -moz-text-size-adjust: none;
+		-moz-text-size-adjust: none;
 }
 
 /**
- * Convenience mixin to support special writing direction.
- * @function text-dir
- * @since 1.0.0
- */
+* Convenience mixin to support special writing direction.
+* @function text-dir
+* @since 1.0.0
+*/
 @mixin text-dir($dir) {
 	@if $dir == ttb { @include text-dir-ttb; }
 	@if $dir == btt { @include text-dir-btt; }
 }
 
 /**
- * Convenience mixin.
- * @function text-dir-ttb
- * @since 1.0.0
- */
+* Convenience mixin.
+* @function text-dir-ttb
+* @since 1.0.0
+*/
 @mixin text-dir-ttb {
 	writing-mode: tb;
 	writing-mode: vertical-lr;
 }
 
 /**
- * Convenience mixin.
- * @function text-dir-btt
- * @since 1.0.0
- */
+* Convenience mixin.
+* @function text-dir-btt
+* @since 1.0.0
+*/
 @mixin text-dir-btt {
 	transform: rotate(180deg);
 	writing-mode: tb;
@@ -105,29 +118,29 @@
 }
 
 /**
- * Convenience mixin.
- * @function text-mask
- * @since 1.0.0
- */
- @mixin text-mask($background) {
+* Convenience mixin.
+* @function text-mask
+* @since 1.0.0
+*/
+@mixin text-mask($background) {
 
 	background: $background;
 
 	/*
-	 * This must be done this this exact order otherwise it
-	 * will not work.
-	 */
+	* This must be done this this exact order otherwise it
+	* will not work.
+	*/
 
 	-webkit-text-fill-color: transparent;
 	-webkit-background-clip: text;
 }
 
 /**
- * Converts tracking to letter-spacing.
- * @function tracking
- * @since 1.0.0
- */
- @function tracking($value) {
+* Converts tracking to letter-spacing.
+* @function tracking
+* @since 1.0.0
+*/
+@function tracking($value) {
 	$val: $value / 1000;
 	@return #{$val}em;
 }
@@ -137,46 +150,46 @@
 //------------------------------------------------------------------------------
 
 /**
- * @function has-typeface-family
- * @since 1.0.0
- * @hidden
- */
+* @function has-typeface-family
+* @since 1.0.0
+* @hidden
+*/
 @function has-typeface-family($font, $family) {
 	@return str-index($font, $family) != null;
 }
 
 /**
- * @function has-typeface-weight
- * @since 1.0.0
- * @hidden
- */
+* @function has-typeface-weight
+* @since 1.0.0
+* @hidden
+*/
 @function has-typeface-weight($font, $weight) {
 	@return str-index($font, $weight) != null;
 }
 
 /**
- * @function has-typeface-style
- * @since 1.0.0
- * @hidden
- */
+* @function has-typeface-style
+* @since 1.0.0
+* @hidden
+*/
 @function has-typeface-style($font, $style) {
 	@return str-index($font, $style) != null;
 }
 
 /**
- * @function has-typeface-size
- * @since 1.0.0
- * @hidden
- */
+* @function has-typeface-size
+* @since 1.0.0
+* @hidden
+*/
 @function has-typeface-size($font, $size) {
 	@return to-string($font) == to-string($size);
 }
 
 /**
- * @function has-typeface-option
- * @since 1.0.0
- * @hidden
- */
+* @function has-typeface-option
+* @since 1.0.0
+* @hidden
+*/
 @function has-typeface-option($options, $option) {
 	@return $options != null and index($options, $option) != null;
 }

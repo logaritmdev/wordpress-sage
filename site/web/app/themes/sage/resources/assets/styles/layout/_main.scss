@@ -22,7 +22,9 @@
 
 .main-layout-header {
 
-	background: #fff;
+	@include relative;
+	@include elevated(header);
+	background: #000;
 	height: rvw(120px);
 
 	.container {
@@ -120,6 +122,7 @@
 .main-layout-footer {
 
 	@include relative;
+	@include elevated(footer);
 
 	.container {
 		@include relative;
