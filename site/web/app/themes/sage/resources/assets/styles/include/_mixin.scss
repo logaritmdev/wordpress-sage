@@ -81,7 +81,7 @@
  * @since 1.0.0
  */
  @mixin nth-item($i) {
-	[data-nth-item="#{$i}"] & {
+	&.item:nth-child(#{$i}), .item:nth-child(#{$i}) & {
 		@content;
 	}
 }
@@ -245,6 +245,27 @@
 }
 
 /**
+ * Convenience mixin to reset visibility and transform.
+ * @function hidden
+ * @since 1.0.0
+ */
+ @mixin hidden() {
+	opacity: 0;
+	visibility: hidden;
+}
+
+/**
+ * Convenience mixin to reset visibility and transform.
+ * @function reveal
+ * @since 1.0.0
+ */
+@mixin reveal() {
+	opacity: 1;
+	transform: none;
+	visibility: visible;
+}
+
+/**
  * Convenience transition mixin.
  * @function transition-property
  * @since 1.0.0
@@ -304,12 +325,7 @@
 
 		$value: null;
 
-		@if $tval == number {
-
-			$value: $val;
-			$index: $index + 1;
-
-		} @else if
+		@if
 
 			$tval == string and
 			$tmul == number and
@@ -324,7 +340,7 @@
 
 			$tval == string and
 			$tmul == number and
-			$tmul == '' {
+			$umul == '' {
 
 			$value: transition-duration($val, $mul);
 			$index: $index + 2;
@@ -332,6 +348,11 @@
 		} @else if $tval == string {
 
 			$value: transition-duration($val);
+			$index: $index + 1;
+
+		} @else if $tval == number {
+
+			$value: $val;
 			$index: $index + 1;
 
 		} @else {
@@ -482,6 +503,40 @@
 	transition-delay: $items;
 }
 
+/**
+ * Convenience before mixin;
+ * @function before
+ * @since 1.0.0
+ */
+ @mixin before {
+	&:before {
+		content: '';
+		display: block;
+		@content;
+	}
+}
+
+/**
+ * Convenience before mixin;
+ * @function before
+ * @since 1.0.0
+ */
+@mixin after {
+	&:after {
+		content: '';
+		display: block;
+		@content;
+	}
+}
+
+/**
+ * Convenience asset path function
+ * @function asset
+ * @since 1.0.0
+ */
+@function asset($path) {
+	@return url('../../../../dist/' + $path);
+}
 //------------------------------------------------------------------------------
 // Private API
 //------------------------------------------------------------------------------

@@ -5,7 +5,7 @@
  */
  @function rvw($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
 
-	@if $val >= 1px and $val <= 5px {
+	@if $val >= 1px and $val <= 2px {
 		@return $val;
 	}
 
@@ -50,7 +50,7 @@
  */
  @function rvh($val, $min: null, $upr: null, $lwr: null, $mul: 1) {
 
-	@if $val >= 1px and $val <= 5px {
+	@if $val >= 1px and $val <= 2px {
 		@return $val;
 	}
 

@@ -43,6 +43,23 @@
 		}
 	}
 
+	&.image--scale {
+
+		@include relative;
+
+		.frame {
+			@include fill;
+		}
+
+		img {
+			@include absolute(top 0 left 0);
+			height: 100%;
+			object-fit: cover;
+			object-position: center center;
+			width: 100%;
+		}
+	}
+
 	.frame {
 		@include relative;
 		height: 100%;

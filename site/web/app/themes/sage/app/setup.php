@@ -25,6 +25,7 @@ add_action('wp_enqueue_scripts', function () {
 	wp_deregister_script('jquery');
 
 	wp_register_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), '3.5.1');
+	wp_enqueue_script('jquery');
 
 	wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
 	wp_enqueue_script('sage/main.js', asset_path('scripts/main.js'), false, null, true);
@@ -51,8 +52,8 @@ add_action('after_setup_theme', function () {
 	add_theme_support('soil-relative-urls');
 
 	register_nav_menus([
-		'primary_navigation' => __('Primary Navigation', 'sage'),
-		'secondary_navigation' => __('Secondary Navigation', 'sage'),
+		'primary_menu' => __('Primary Menu', 'sage'),
+		'secondary_menu' => __('Secondary Menu', 'sage'),
 	]);
 
 	add_theme_support('title-tag');
@@ -230,6 +231,10 @@ add_action('admin_head', function() {
 				height: 120px !important;
 			}
 
+			.acf-field .acf-radio-list {
+				margin-bottom: 0px;
+			}
+
 			.block-editor-writing-flow {
 				height: auto;
 			}
@@ -314,10 +319,22 @@ add_filter('get_twig', function($twig) {
 	 * @filter image
 	 * @since 1.0.0
 	 */
-	$twig->addFilter(new \Twig\TwigFilter('image', function($image, $rw = null, $rh = null, $mode = 'fill') {
+	$twig->addFilter(new \Twig\TwigFilter('image', function($image, $rw = null, $rh = null, $mode = 'fill', $class = '') {
 
-		if (is_string($rw)) $mode = $rw;
-		if (is_string($rh)) $mode = $rh;
+		if ($image == null ||
+			$image == false) {
+			return '';
+		}
+
+		if (is_string($rw)) {
+			$mode = $rw;
+			$rw = null;
+		}
+
+		if (is_string($rh)) {
+			$mode = $rh;
+			$rh = null;
+		}
 
 		$image = new \TimberImage($image);
 
@@ -357,7 +374,7 @@ add_filter('get_twig', function($twig) {
 		}
 
 		return sprintf(
-			'<div class="image image--%s">
+			'<div class="image image--%s %s">
 				<div class="frame">
 					<picture>
 						<source srcset="%s" type="%s"/>
@@ -366,6 +383,7 @@ add_filter('get_twig', function($twig) {
 				</div>
 			</div>',
 			$mode,
+			$class,
 			$image,
 			$type,
 			$image
@@ -483,11 +501,27 @@ add_filter('get_twig', function($twig) {
 	}));
 
 	/**
+	 * @filter link
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('link', function($value, $label) {
+		return sprintf('<a class="link" href="%s">%s</a>', $value, $label);
+	}));
+
+	/**
+	 * @filter post_link
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('post_link', function($value) {
+		return sprintf('<a class="post-link" href="%s">%s</a>', $post->link(), $post->title());
+	}));
+
+	/**
 	 * @filter phone_link
 	 * @since 1.0.0
 	 */
 	$twig->addFilter(new \Twig_SimpleFilter('phone_link', function($value, $label = null) {
-		return sprintf('<a class="phone" href="tel:%s">%s</a>', $value, $label ? $label : $value);
+		return sprintf('<a class="phone-link" href="tel:%s">%s</a>', $value, $label ? $label : $value);
 	}));
 
 	/**
@@ -495,7 +529,15 @@ add_filter('get_twig', function($twig) {
 	 * @since 1.0.0
 	 */
 	$twig->addFilter(new \Twig_SimpleFilter('email_link', function($value, $label = null) {
-		return sprintf('<a class="email" href="mailto:%s">%s</a>', $value, $label ? $label : $value);
+		return sprintf('<a class="email-link" href="mailto:%s">%s</a>', $value, $label ? $label : $value);
+	}));
+
+	/**
+	 * @filter video_link
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('video_link', function($label, $value) {
+		return sprintf('<a class="video-link" href="%s" data-fancybox>%s</a>', $value, $label);
 	}));
 
 	/**
@@ -505,7 +547,6 @@ add_filter('get_twig', function($twig) {
 	$twig->addFilter(new \Twig_SimpleFilter('wrap', function($text, $tag) {
 		return sprintf('<%s>%s</%w>', $tag, $text, $tag);
 	}));
-
 
 	/**
 	 * @filter embed
@@ -545,11 +586,6 @@ add_filter('get_twig', function($twig) {
 	return $twig;
 
 });
-
-/**
- * Disable ACF admin
- */
-add_filter('acf/settings/show_admin', '__return_false');
 
 /**
  * Options Page
@@ -646,7 +682,7 @@ add_filter('cortex/enqueued_script_url', function($path, $type) {
 }, 10, 2);
 
 /*
- * Disalbe CF& Auto Paragraph
+ * Disalbe CF7 Auto Paragraph
  */
 add_filter('wpcf7_autop_or_not', '__return_false');
 

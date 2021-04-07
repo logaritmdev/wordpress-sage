@@ -12,9 +12,9 @@
 
 	@include flex-box;
 	@include flex-row(flex-start, flex-start);
-	margin-left: rvw(-10px);
-	margin-right: rvw(-10px);
-	width: calc-add(100%, rvw(20px));
+	margin-left: rvw(-15px);
+	margin-right: rvw(-15px);
+	width: calc-add(100%, rvw(30px));
 
 	&.form-row--center {
 		@include flex-row(flex-start, center);
@@ -28,12 +28,12 @@
 .form-field {
 
 	@include relative;
-	@include flex(1, 1, 0);
-	min-height: rvw(50px, 0.75);
-	margin-left: rvw(10px);
-	margin-right: rvw(10px);
-	margin-bottom: rvw(15px);
-	width: calc-sub(100%, rvw(20px));
+	@include flexible(1, 1, 0);
+	min-height: rvw(60px, 0.75);
+	margin-left: rvw(15px);
+	margin-right: rvw(15px);
+	margin-bottom: rvw(30px);
+	width: calc-sub(100%, rvw(30px));
 
 	&.form-field--error {
 
@@ -57,7 +57,16 @@
 	}
 
 	label {
-		display: none;
+
+		@include typeface(
+			RobotoBold,
+			$size: 16px,
+			$fill: inherit
+		);
+
+		display: block;
+		margin: 0px;
+		margin-bottom: rvw(10px);
 	}
 
 	&.form-field--filled {
@@ -76,18 +85,18 @@
 	textarea {
 
 		@include typeface(
-			NeueMontrealBold,
+			Roboto,
 			$size: 16px,
 			$fill: inherit
 		);
 
 		-webkit-appearance: none;
 		background: transparent;
-		border: rvw(1px) solid var(--fg-color);
-		border-radius: 0;
-		color: var(--fg-color);
+		border: rvw(2px) solid #c1c4c7;
+		border-radius: rvw(6px);
+		color: #08141f;
 		display: block;
-		height: rvw(50px, 0.75);
+		height: rvw(60px, 0.75);
 		padding-left: rvw(15px, 0.75);
 		padding-right: rvw(15px, 0.75);
 		width: 100%;
@@ -116,7 +125,7 @@
 
 .form-field--textarea,
 .form-field--textarea textarea {
-	height: rvw(80px, 0.75);
+	height: rvw(180px, 0.75);
 }
 
 .form-field--textarea textarea {
@@ -126,36 +135,39 @@
 .form-action {
 
 	@include flex-box;
-	@include flex-col(flex-start, flex-end);
+	@include flex-col(flex-start, center);
 
 	input[type=submit] {
 
 		@include typeface(
-			NeueMontrealBold,
-			$size: 18px,
-			$fill: #fff
+			RobotoBold,
+			$size: 13px,
+			$fill: #fff,
+			$opts: (uppercase)
 		);
 
-		@include pushable;
-		-webkit-appearance: none;
-		background: #000;
-		border: rvw(1px) solid #000;
-		border-radius: 0px;
-		display: block;
-		color: #fff;
-		margin: 0px;
-		padding: rvw(5px, 0.75);
-		padding-top: rvw(10px, 0.75);
-		padding-right: rvw(10px, 0.75);
-		text-align: right;
-		transition-property: background-color;
-		transition-duration: transition-duration(hover);
-		transition-timing-function: transition-equation(hover);
-		width: rvw(230px, 0.75);
+		@include flex-box;
+		@include flex-row(center, center);
+		border: none;
+		border-radius: rvw(40px);
+		background: #79c14a;
+		height: rvw(40px);
+		padding: 0px;
+		padding-left: rvw(20px);
+		padding-right: rvw(20px);
 
-		.no-touchevents &:hover {
-			background: #fff;
-			color: #000;
+		&.button--stroked {
+
+			@include typeface(
+				RobotoBold,
+				$size: 13px,
+				$fill: #79c14a,
+				$opts: (uppercase)
+			);
+
+			background: none;
+			border: rvw(2px) solid #79c14a;
+			border-radius: rvw(40px);
 		}
 	}
 }

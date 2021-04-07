@@ -146,6 +146,28 @@ class CortexBlock {
 	}
 
 	//--------------------------------------------------------------------------
+	// Convenience
+	//--------------------------------------------------------------------------
+
+	/**
+	 * Returns the block definition's name.
+	 * @method get_block_name
+	 * @since 2.1.1
+	 */
+	public function get_block_name() {
+		return $this->type->get_type();
+	}
+
+	/**
+	 * Returns the block definition's type.
+	 * @method get_block_type
+	 * @since 2.1.1
+	 */
+	public function get_block_type() {
+		return $this->type->get_type();
+	}
+
+	//--------------------------------------------------------------------------
 	// Methods
 	//--------------------------------------------------------------------------
 
@@ -362,6 +384,15 @@ class CortexBlock {
 	}
 
 	/**
+	 * @method get_render_link
+	 * @since 2.1.3
+	 * @hidden
+	 */
+	public function get_render_link() {
+		return $this->append_lang(admin_url('admin-ajax.php') . '?action=render_block&post=' . $this->post . '&id=' . $this->id);
+	}
+
+	/**
 	 * @function render_twig_type
 	 * @since 0.1.0
 	 * @hidden
@@ -407,7 +438,7 @@ class CortexBlock {
 	 * @hidden
 	 */
 	private function do_remove_class($class) {
-		unset($this->attributes['class'][$this->get_class_index($class)]);
+		array_splice($this->attributes['class'], $this->get_class_index($class), 1);
 	}
 
 	/**
@@ -443,7 +474,7 @@ class CortexBlock {
 	 * @hidden
 	 */
 	private function do_remove_style($style, $value) {
-		unset($this->attributes['style'][$this->get_style_index($class)]);
+		array_splice($this->attributes['style'], $this->get_style_index($class), 1);
 	}
 
 	/**
@@ -493,7 +524,16 @@ class CortexBlock {
 	 * @hidden
 	 */
 	private function generate_id_attribute() {
-		return $this->get_id() ? $this->generate_attribute('id', str_replace('block_', 'block-', $this->get_id())) : null;
+
+		$id = isset($this->attributes['id']) ? $this->attributes['id'] : null;
+
+		if ($id == null) {
+			if ($id = $this->get_id()) {
+				$id = str_replace('block_', 'block-', $id);
+			}
+		}
+
+		return $id ? $this->generate_attribute('id', $id) : null;
 	}
 
 	/**
@@ -591,47 +631,47 @@ class CortexBlock {
 	//--------------------------------------------------------------------------
 
 	/**
-	 * @function getId
-	 * @since 1.0.0
+	 * @function id
+	 * @since 2.1.3
 	 * @hidden
 	 */
-	public function getId() {
+	public function id() {
 		return $this->get_id();
 	}
 
 	/**
-	 * @function getType
-	 * @since 1.0.0
+	 * @function type
+	 * @since 2.1.3
 	 * @hidden
 	 */
-	public function getType() {
+	public function type() {
 		return $this->get_type();
 	}
 
 	/**
-	 * @function getLink
-	 * @since 1.0.0
+	 * @function link
+	 * @since 2.1.3
 	 * @hidden
 	 */
-	public function getLink() {
+	public function link() {
 		return $this->get_link();
 	}
 
 	/**
-	 * @function getPost
-	 * @since 1.0.0
+	 * @function post
+	 * @since 2.1.3
 	 * @hidden
 	 */
-	public function getPost() {
-		return $this->get_post();
+	public function post() {
+		return Timber::get_post($this->get_post());
 	}
 
 	/**
-	 * @function getAttributes
-	 * @since 2.1.0
+	 * @function attributes
+	 * @since 2.1.3
 	 * @hidden
 	 */
-	public function getAttributes() {
+	public function attributes() {
 
 		$attrs   = [];
 		$attrs[] = $this->generate_id_attribute();
@@ -652,11 +692,21 @@ class CortexBlock {
 	}
 
 	/**
+	 * @function render_link
+	 * @since 2.1.3
+	 * @hidden
+	 */
+	public function render_link() {
+		return $this->get_render_link();
+	}
+
+	/**
 	 * @function getPreviewLink
 	 * @since 1.0.0
 	 * @hidden
 	 */
 	public function getPreviewLink() {
+		// Deprecated
 		return $this->get_preview_link();
 	}
 }

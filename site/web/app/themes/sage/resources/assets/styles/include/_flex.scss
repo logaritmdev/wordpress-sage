@@ -1,25 +1,36 @@
 /**
- * @mixin flex
+ * @mixin flexible
  * @since 1.0.0
  */
- @mixin flex($fg: 1, $fs: null, $fb: null) {
-	flex: $fg $fs $fb;
+ @mixin flexible($fg: 1, $fs: 0, $fb: auto) {
+	@if $fg == none {
+		flex: none;
+	} @else if $fg == fill {
+		flex: 1 0 auto;
+	} @else if $fg == wrap {
+		flex: 0 1 auto;
+	} @else if $fg == both {
+		flex: 1 1 auto;
+	} @else {
+		flex: $fg $fs $fb;
+	}
 }
 
 /**
  * @mixin flex-box
  * @since 1.0.0
  */
-@mixin flex-box {
-	display: flex;
-}
+ @mixin flex-box($fg: null, $fs: 0, $fb: auto, $mode: null) {
 
-/**
- * @mixin flex-box-inline
- * @since 1.0.0
- */
-@mixin flex-box-inline {
-	display: inline-flex;
+	@if $mode == inline {
+		display: inline-flex;
+	} @else {
+		display: flex;
+	}
+
+	@if $fg != null {
+		@include flexible($fg, $fs, $fb);
+	}
 }
 
 /**
@@ -74,6 +85,42 @@
  * @mixin flex-ord
  * @since 1.0.0
  */
- @mixin flex-ord($int: 0) {
+@mixin flex-ord($int: 0) {
 	order: $int;
+}
+
+/**
+ * @mixin flex-width
+ * @since 1.0.0
+ */
+@mixin flex-width($min, $max, $class, $sub: null, $add: null) {
+
+	@for $i from $min through $max {
+
+		$width: ($i / $max) * 100%;
+
+		&.#{$class}--#{$i} {
+
+			@if $sub == null and $add == null {
+				width: $width
+			} @else if ($sub != null) {
+				width: calc-sub($width, #{$sub});
+			} @else if ($add != null) {
+				width: calc-add($width, #{$add});
+			}
+
+			@include flexible(none);
+		}
+	}
+}
+
+/**
+ * @mixin last-row
+ * @since 1.0.0
+ */
+@mixin last-row($of) {
+	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}),
+	&:nth-child(#{$of}n + 1):nth-last-child(-n + #{$of}) ~ & {
+   		@content;
+	}
 }

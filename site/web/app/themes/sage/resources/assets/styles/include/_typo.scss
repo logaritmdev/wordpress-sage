@@ -38,12 +38,12 @@
 	}
 
 	/* ---------------------------------------------------------------------- */
-	/* Circular                                                                   */
+	/* Sans                                                                   */
 	/* ---------------------------------------------------------------------- */
 
 	@if has-typeface-family($font, Sans) {
 
-		font-family: sans-serif, serif;
+		font-family: Sans-Serif;
 		font-size: rvw(
 			$size * 1.15,
 			$size,
@@ -51,16 +51,18 @@
 			xl
 		);
 
-		@include media-breakpoint-down(lg) {
+		@include media-breakpoint-down(xl) {
 
 			$max: $size;
 			$min: $size * 0.65;
 
-			@if $min < 15px {
-				$min: 15px;
+			@if $max > 16px and $min < 16px {
+				$min: 16px;
+			} @else if $min < 16px {
+				$min: min($max, 16px);
 			}
 
-			font-size: rvw($max, $min, lg, xs);
+			font-size: rvw($max, $min, xl, xs);
 		}
 	}
 }

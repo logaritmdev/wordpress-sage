@@ -55,43 +55,44 @@ $.attach('.main-layout-loader', (i, element) => {
 	}
 
 	/*
-	 * Show the exit animation by delaying external links
+	 * Show the exit animation when clicking on
+	 * any internal links.
 	 */
 
-	$('a:not([data-fancybox])').each(function (i, link) {
+	$(document.body).on('click', 'a:not([data-fancybox])', function (e) {
 
-		if (link.host != location.host) {
+		let link = e.target.closest('a')
+
+		if (link.host == location.host &&
+			link.search == location.search &&
+			link.protocol == location.protocol &&
+			link.pathname == location.pathname) {
 			return
 		}
 
-		if (link.host == location.host &&
-			link.protocol == location.protocol &&
-			link.pathname == location.pathname &&
-			link.search == location.search) {
+		if (link.protocol == 'mailto:' ||
+			link.protocol == 'tel:') {
 			return
 		}
 
 		link = $(link)
 
-		link.on('click', function (e) {
+		let target = link.attr('target')
+		if (target &&
+			target.toLowerCase() == '_blank') {
+			return
+		}
 
-			let target = link.attr('target')
-			if (target &&
-				target.toLowerCase() == '_blank') {
-				return
-			}
+		e.preventDefault()
 
-			e.preventDefault()
+		element.addClass('main-layout-loader--unload')
+		element.addClass('main-layout-loader--unload-active', 50)
+		element.removeClass('main-layout-loader--gone')
 
-			element.addClass('main-layout-loader--unload')
-			element.addClass('main-layout-loader--unload-active', 50)
-			element.removeClass('main-layout-loader--gone')
+		setTimeout(function () {
+			location.href = link.prop('href')
+		}, 500)
 
-			setTimeout(function () {
-				location.href = link.prop('href')
-			}, 500)
-
-		})
 	})
 
 	$('body').preload()

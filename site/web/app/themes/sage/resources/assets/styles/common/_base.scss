@@ -9,12 +9,14 @@
 
 body {
 
+	@include typeface(
+		Sans,
+		$size: 18px,
+		$fill: #000
+	);
+
 	@include text-antialias;
 	@include text-adjust;
-	color: #000000;
-	font-family: sans-serif;
-	font-weight: 400;
-	font-size: rvw(17px);
 	line-height: 1.5;
 	margin: 0;
 	padding: 0;
@@ -35,7 +37,10 @@ body {
 //------------------------------------------------------------------------------
 
 a {
-	color: blue;
+	@include transition-property;
+	@include transition-duration(hover);
+	@include transition-equation(hover);
+	color: red;
 	text-decoration: none;
 }
 
@@ -83,6 +88,14 @@ input, button, textarea {
 
 sup {
 	font-size: 50%;
+}
+
+//------------------------------------------------------------------------------
+// Address
+//------------------------------------------------------------------------------
+
+address {
+	font-style: normal;
 }
 
 //------------------------------------------------------------------------------

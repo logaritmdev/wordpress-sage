@@ -18,6 +18,16 @@
 	}
 }
 
+/**
+ * @mixin media-breakpoint-down
+ * @since 1.0.0
+ */
+ @mixin media-breakpoint-in($max, $min, $breakpoints: $grid) {
+	@media (max-width: breakpoint-get($max)) and (min-width: breakpoint-get($min) + 1) {
+		@content;
+	}
+}
+
 //------------------------------------------------------------------------------
 // Private API
 //------------------------------------------------------------------------------
