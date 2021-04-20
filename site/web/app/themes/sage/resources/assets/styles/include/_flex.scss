@@ -20,18 +20,28 @@
  * @mixin flex-box
  * @since 1.0.0
  */
- @mixin flex-box($fg: null, $fs: 0, $fb: auto, $mode: null) {
+@mixin flex-box($fg: null, $fs: 0, $fb: auto) {
 
-	@if $mode == inline {
-		display: inline-flex;
-	} @else {
-		display: flex;
-	}
+	display: flex;
 
 	@if $fg != null {
 		@include flexible($fg, $fs, $fb);
 	}
 }
+
+/**
+ * @mixin flex-inl
+ * @since 1.0.0
+ */
+@mixin flex-inl($fg: null, $fs: 0, $fb: auto) {
+
+	display: inline-flex;
+
+	@if $fg != null {
+		@include flexible($fg, $fs, $fb);
+	}
+}
+
 
 /**
  * @mixin flex-row

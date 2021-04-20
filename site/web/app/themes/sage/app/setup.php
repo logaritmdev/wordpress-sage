@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Timber;
 use App\Controllers\App;
 use Roots\Sage\Container;
 use Roots\Sage\Assets\JsonManifest;
@@ -691,6 +692,70 @@ add_filter('wpcf7_autop_or_not', '__return_false');
  */
 add_filter('cortex/render', function($vars, $block) {
 
+	$type = $block->get_block_type();
+
+	if (preg_match('/item$/', $type)) {
+		$block->remove_class('block');
+		$block->append_class('item');
+	}
+
+	$hash = isset($vars['hash']) ? $vars['hash'] : null;
+
+	if ($hash) {
+		$block->append_attribute('id', $hash);
+	}
+
 	return $vars;
 
 }, 10, 2);
+
+/**
+ * Address shortcode
+ */
+add_shortcode('address', function() {
+	return sprintf('<address class="address">%s</address>', get_field('contact', 'option')['address']);
+});
+
+/**
+ * Phone shortcode
+ */
+add_shortcode('phone', function() {
+	return sprintf('<a class="phone-link" href="tel:%s">%s</a>', get_field('contact', 'option')['phone'], get_field('contact', 'option')['phone']);
+});
+
+/**
+ * Email shortcode
+ */
+add_shortcode('email', function() {
+	return sprintf('<a class="email-link" href="mailto:%s">%s</a>', get_field('contact', 'option')['email'], get_field('contact', 'option')['email']);
+});
+
+/**
+ * Social Shortcode
+ */
+add_shortcode('social', function() {
+
+	$context = Timber::get_context();
+	$context['items'] = get_field('social', 'options');
+
+	ob_start();
+
+	$content = '
+		<div class="social">
+			{% for item in items %}
+				<a class="social-item" href="{{ item.link }}">{{ embed(item.icon) }}</a>
+			{% endfor %}
+		</div>
+	';
+
+	Timber::render_string(
+		$content,
+		$context
+	);
+
+	$result = ob_get_contents();
+
+	ob_end_clean();
+
+	return $result;
+});

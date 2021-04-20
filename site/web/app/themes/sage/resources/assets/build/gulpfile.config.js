@@ -50,7 +50,7 @@ module.exports = {
 
 	urls: {
 		proxy: 'http://localhost:3000',
-		local: 'http://example.test'
+		local: 'http://EXAMPLE.test'
 	},
 
 	features: {

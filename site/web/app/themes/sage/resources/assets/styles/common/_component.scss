@@ -132,3 +132,30 @@
 		}
 	}
 }
+
+//------------------------------------------------------------------------------
+// Social
+//------------------------------------------------------------------------------
+
+.social {
+	@include flex-box;
+	@include flex-row(center, flex-start);
+	margin: 0px;
+	margin-left: rvw(-10px);
+	margin-right: rvW(-10px);
+}
+
+.social-item {
+
+	@include transition-property;
+	@include transition-duration(hover);
+	@include transition-equation(hover);
+	margin: 0px;
+	margin-left: rvw(10px);
+	margin-right: rvW(10px);
+	width: rvw(20px, 20px);
+
+	.no-touchevents &:hover {
+		transform: scale(1.15);
+	}
+}

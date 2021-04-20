@@ -5,7 +5,7 @@ MAKEFLAGS += --silent
 # ENVIRONMENT
 #############################
 
-export APP_NAME=example
+export APP_NAME=EXAMPLE
 export DB_HOST=mysql
 export DB_NAME=wp
 export DB_USER=wp
