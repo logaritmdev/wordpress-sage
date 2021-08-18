@@ -37,8 +37,8 @@
 
 	&.form-field--error {
 
+		input[type=tel],
 		input[type=text],
-		input[type=phone],
 		input[type=email],
 		input[type=number],
 		input[type=password],
@@ -75,9 +75,9 @@
 		}
 	}
 
+	input[type=tel],
 	input[type=file],
 	input[type=text],
-	input[type=phone],
 	input[type=email],
 	input[type=number],
 	input[type=password],

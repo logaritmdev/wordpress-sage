@@ -61,6 +61,10 @@ $.attach('.main-layout-loader', (i, element) => {
 
 	$(document.body).on('click', 'a:not([data-fancybox])', function (e) {
 
+		if (e.isDefaultPrevented()) {
+			return
+		}
+
 		let link = e.target.closest('a')
 
 		if (link.host == location.host &&

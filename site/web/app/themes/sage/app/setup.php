@@ -25,7 +25,7 @@ add_action('wp_enqueue_scripts', function () {
 	wp_deregister_script('schedule');
 	wp_deregister_script('jquery');
 
-	wp_register_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), '3.5.1');
+	wp_register_script('jquery', 'https://code.jquery.com/jquery-3.5.1.min.js', array(), '3.5.1', true);
 	wp_enqueue_script('jquery');
 
 	wp_enqueue_style('sage/main.css', asset_path('styles/main.css'), false, null);
@@ -320,11 +320,13 @@ add_filter('get_twig', function($twig) {
 	 * @filter image
 	 * @since 1.0.0
 	 */
-	$twig->addFilter(new \Twig\TwigFilter('image', function($image, $rw = null, $rh = null, $mode = 'fill', $class = '') {
+	$twig->addFilter(new \Twig\TwigFilter('image', function($image, $rw = null, $rh = null, $mode = 'fill', $class = null) {
 
-		if ($image == null ||
-			$image == false) {
-			return '';
+		if ($image instanceof \TimberImage == false) {
+			if (isset($image['url']) == false ||
+				empty($image['url'])) {
+				return;
+			}
 		}
 
 		if (is_string($rw)) {
@@ -349,6 +351,11 @@ add_filter('get_twig', function($twig) {
 				($rh && $h > $rh)) {
 				$image = \TimberImageHelper::resize($image, $rw, $rh);
 			}
+
+		}
+
+		if ($image instanceof \TimberImage) {
+			$image = $image->src();
 		}
 
 		switch (pathinfo($image, PATHINFO_EXTENSION)) {
@@ -369,8 +376,23 @@ add_filter('get_twig', function($twig) {
 				$type = 'image/svg';
 				break;
 
+			case 'webp':
+				$type = 'image/webp';
+				break;
+
 			default;
 				$type = 'image/jpeg';
+				break;
+		}
+
+		if ($type == 'image/png' ||
+			$type == 'image/jpeg') {
+			$image = \TimberImageHelper::img_to_webp($image);
+		}
+
+		switch (pathinfo($image, PATHINFO_EXTENSION)) {
+			case 'webp':
+				$type = 'image/webp';
 				break;
 		}
 
@@ -391,7 +413,6 @@ add_filter('get_twig', function($twig) {
 		);
 
 	}));
-
 	/**
 	 * @filter video
 	 * @since 1.0.0
@@ -584,6 +605,57 @@ add_filter('get_twig', function($twig) {
 
 	}));
 
+	/**
+	 * @filter callout
+	 * @since 1.0.0
+	 */
+	$twig->addFilter(new \Twig_SimpleFilter('callout', function($value, $class = '') {
+
+		if (isset($value['text']) == false ||
+			isset($value['type']) == false) {
+			return;
+		}
+
+		$link = '';
+		$text = isset($value['text']) ? $value['text'] : '';
+		$type = isset($value['type']) ? $value['type'] : 'link';
+		$hash = isset($value['hash']) ? $value['hash'] : '';
+
+		$hash = str_replace('#', '', $hash);
+
+		switch ($type) {
+
+			case 'post':
+				$link = $value['post'];
+				break;
+
+			case 'page':
+				$link = $value['page'];
+				break;
+
+			case 'link':
+				$link = $value['link'];
+				break;
+
+			case 'file':
+				$link = $value['file'];
+				break;
+
+		}
+
+		if (empty($hash) == false) $link = $link . '#' . $hash;
+
+		$open = '';
+
+		if (isset($value['open_new_tab']) &&
+			empty($value['open_new_tab']) == false) {
+			$open = 'target="_blank"';
+		}
+
+		return sprintf('<a class="%s" href="%s" %s>%s</a>', $class, $link, $open, $text);
+
+	}));
+
 	return $twig;
 
 });
@@ -599,9 +671,7 @@ if (function_exists('acf_add_options_page')) {
  * Remove default block styles.
  */
 add_action('wp_print_styles', function() {
-
 	wp_dequeue_style('wp-block-library');
-
 }, 100);
 
 /**
@@ -637,8 +707,13 @@ add_filter('allowed_block_types', function($allowed_block_types, $post) {
  */
 add_filter('icl_ls_languages', function($languages) {
 
-	foreach ($languages as & $language) {
-		$language['url'] = str_replace(WP_SITEURL, WP_HOME, $language['url']);
+	if (defined('WP_HOME') &&
+		defined('WP_SITEURL')) {
+
+		foreach ($languages as & $language) {
+			$language['url'] = str_replace(WP_SITEURL, WP_HOME, $language['url']);
+		}
+
 	}
 
 	return $languages;
@@ -680,6 +755,14 @@ add_filter('cortex/enqueued_script_url', function($path, $type) {
 
 	return file_exists($file) && filesize($file) ? $link : null;
 
+}, 10, 2);
+
+/**
+ * Disable gutenberg for blog posts.
+ */
+add_filter('use_block_editor_for_post_type', function($status, $type) {
+    if ($type === 'post') return false;
+    return $status;
 }, 10, 2);
 
 /*

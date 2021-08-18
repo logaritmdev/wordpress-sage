@@ -5,11 +5,10 @@ const gulpif = require('gulp-if')
 const bro = require('gulp-bro')
 const sass = require('gulp-sass')
 const clean = require('gulp-clean')
-const postcss = require('gulp-postcss')
 const cssnano = require('gulp-cssnano')
 const imagemin = require('gulp-imagemin')
 const flatten = require('gulp-flatten')
-const autoprefix = require('autoprefixer')
+const webp = require('gulp-webp')
 const merge = require('merge-stream')
 const fiber = require('fibers')
 const babelify = require('babelify')
@@ -132,6 +131,10 @@ gulp.task('images', function (done) {
 		]))
 	}
 
+	const convert = () => {
+		return webp()
+	}
+
 	const write = () => {
 		return gulp.dest(path.join(config.paths.dist, 'images'))
 	}
@@ -139,6 +142,7 @@ gulp.task('images', function (done) {
 	merged.add(
 		gulp.src(path.join(config.paths.assets, 'images/**/*'))
 			.pipe(build())
+			.pipe(convert())
 			.pipe(write())
 			.pipe(browserSync.stream())
 	)
@@ -152,6 +156,7 @@ gulp.task('images', function (done) {
 		merged.add(
 			gulp.src(path.join(block, 'assets/images/**/*'))
 				.pipe(build())
+				.pipe(convert())
 				.pipe(write())
 				.pipe(browserSync.stream())
 		)
@@ -180,10 +185,6 @@ gulp.task('styles', function () {
 
 	}
 
-	const prefix = () => {
-		return gulpif(config.features.prefix, postcss([/* autoprefix() */]))
-	}
-
 	const minify = () => {
 		return gulpif(config.features.optimize, cssnano({
 			zindex: false,
@@ -205,7 +206,6 @@ gulp.task('styles', function () {
 			gulp.src(src)
 				.pipe(update())
 				.pipe(build())
-				.pipe(prefix())
 				.pipe(minify())
 				.pipe(write(dst))
 				.pipe(browserSync.stream())
