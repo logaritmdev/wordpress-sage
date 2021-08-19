@@ -677,7 +677,7 @@ add_action('wp_print_styles', function() {
 /**
  * Disable unwanted blocks in gutenberg
  */
-add_filter('allowed_block_types', function($allowed_block_types, $post) {
+add_filter('allowed_block_types_all', function($allowed_block_types, $post) {
 
 	$allowed_blocks = array_values(
 
